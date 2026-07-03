@@ -138,7 +138,7 @@
 
 <!-- S1 HERO -->
 <section style="position:relative;height:100vh;min-height:640px;padding:0;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-  <video autoplay muted loop playsinline preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45;">
+  <video autoplay muted loop playsinline preload="metadata" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45;">
     <source src="uploads/Apresentacao inicial.mp4" type="video/mp4">
   </video>
   <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(11,11,13,0.2) 0%,rgba(11,11,13,0.55) 100%);"></div>
@@ -484,8 +484,8 @@
 <section id="scroll-video" style="position:relative;height:700vh;">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden;background:#000000;">
 
-    <video id="scrub-video" muted playsinline preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(0.8,0.8);opacity:0.9;">
-      <source src="uploads/camera-scrub.mp4" type="video/mp4">
+    <video id="scrub-video" muted playsinline preload="none" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transform:scale(0.8,0.8);opacity:0.9;">
+      <source data-src="uploads/camera-scrub.mp4" type="video/mp4">
     </video>
 
     <!-- Placeholder fundo -->
@@ -694,6 +694,22 @@ class Component extends DCLogic {
     let targetTime = 0;
     let currentTime = 0;
     let videoReady = false;
+
+    // Lazy-load: only fetch the (heavy) scrub video once user scrolls near this section.
+    const lazyObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const source = video.querySelector('source[data-src]');
+          if (source) {
+            source.src = source.getAttribute('data-src');
+            source.removeAttribute('data-src');
+            video.load();
+          }
+          lazyObserver.disconnect();
+        }
+      });
+    }, { rootMargin: '150% 0px 150% 0px' });
+    lazyObserver.observe(section);
 
     video.addEventListener('loadedmetadata', () => { videoReady = true; });
 
