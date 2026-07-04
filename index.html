@@ -179,7 +179,7 @@
 
 <!-- S1 HERO -->
 <section style="position:relative;height:100vh;min-height:640px;padding:0;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-  <video autoplay muted loop playsinline preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45;">
+  <video id="hero-video" autoplay muted loop playsinline preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45;">
     <source src="uploads/hero-bg.mp4" type="video/mp4">
   </video>
   <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(11,11,13,0.2) 0%,rgba(11,11,13,0.55) 100%);"></div>
@@ -699,6 +699,23 @@ class Component extends DCLogic {
         observer.observe(el);
       }
     });
+
+    // Hero video — HTML autoplay can silently fail/stall (browser policy or DOM
+    // timing races), leaving the video frozen on frame 1 with no error thrown.
+    // Force play() explicitly and retry on the first user gesture as a fallback.
+    const heroVideo = document.getElementById('hero-video');
+    if (heroVideo) {
+      const tryPlay = () => heroVideo.play().catch(() => {});
+      tryPlay();
+      heroVideo.addEventListener('loadeddata', tryPlay);
+      const retryOnGesture = () => {
+        if (heroVideo.paused) tryPlay();
+        window.removeEventListener('pointerdown', retryOnGesture);
+        window.removeEventListener('scroll', retryOnGesture);
+      };
+      window.addEventListener('pointerdown', retryOnGesture, { passive: true });
+      window.addEventListener('scroll', retryOnGesture, { passive: true, once: true });
+    }
 
     // Slide cards — bidirectional
     const slideObserver = new IntersectionObserver((entries) => {
