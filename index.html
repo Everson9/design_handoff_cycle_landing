@@ -791,6 +791,7 @@ class Component extends DCLogic {
     let currentTime = 0;
     let videoReady = false;
     let videoBuffered = false;
+    window.__scrubDebug2 = { get videoReady(){return videoReady}, get videoBuffered(){return videoBuffered}, get targetTime(){return targetTime}, get currentTime(){return currentTime} };
 
     const checkFullyBuffered = () => {
       if (videoBuffered || !video.duration) return;
