@@ -847,15 +847,23 @@ class Component extends DCLogic {
 
     // Smooth scrub loop — lerps video.currentTime toward scroll target every frame,
     // decoupled from scroll events so fast/janky scrolling doesn't stutter the video.
-    // (Previously gated new seeks on waiting for a `seeked` event from the last one —
-    // if that event ever failed to fire, every future seek was blocked forever and
-    // the video froze. A simple time-based threshold is enough throttling on its own.)
+    // Throttle actual seeks so we don't fire one every animation frame (a "seek storm"
+    // that starves the browser's fetch/decode pipeline and stalls buffering over a real
+    // network) — but self-heal on a timeout instead of waiting forever on `seeked`,
+    // since that event can fail to fire and would otherwise lock this permanently.
+    let seeking = false;
+    let seekTimeout = null;
+    const clearSeekLock = () => { seeking = false; if (seekTimeout) { clearTimeout(seekTimeout); seekTimeout = null; } };
+    video.addEventListener('seeked', clearSeekLock);
+
     const scrubLoop = () => {
       if (videoReady) {
         currentTime += (targetTime - currentTime) * 0.12;
         if (Math.abs(targetTime - currentTime) < 0.03) currentTime = targetTime;
-        if (Math.abs(video.currentTime - currentTime) > 0.03) {
+        if (!seeking && Math.abs(video.currentTime - currentTime) > 0.05) {
+          seeking = true;
           video.currentTime = currentTime;
+          seekTimeout = setTimeout(clearSeekLock, 200);
         }
       }
       requestAnimationFrame(scrubLoop);
