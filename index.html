@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<title>Cycle — Consultoria Estratégica de Conteúdo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="./support.js"></script>
 </head>
@@ -121,6 +122,47 @@
     .diff-card { transition:background 0.3s ease,transform 0.3s ease,border-color 0.3s ease; cursor:default; }
     .diff-card:hover { background:rgba(61,126,255,0.1); border-color:rgba(61,126,255,0.4); transform:translateY(-4px); }
     .diff-card:hover .diff-num { color:rgba(61,126,255,0.6); }
+    .ig-cta:hover { border-color:transparent!important;background:linear-gradient(135deg,#4f5bd5,#962fbf,#d62976,#fa7e1e,#feda75)!important; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      #main-nav { padding:14px 20px!important; }
+      #main-nav img { height:70px!important; }
+      #main-nav .nav-link { display:none; }
+      .nav-cta { padding:9px 18px!important;font-size:11px!important; }
+
+      section { padding-left:0;padding-right:0; }
+      section > div, footer > div { padding-left:20px!important;padding-right:20px!important; }
+
+      .g2 { grid-template-columns:1fr!important;gap:32px!important; }
+      .g2[style*="gap:2px"] { gap:2px!important; }
+      .g2[style*="gap:16px"] { gap:16px!important; }
+
+      .process-grid { grid-template-columns:repeat(2,1fr)!important; }
+      .process-item { padding:16px 12px!important;border-right:none!important;border-bottom:1px solid rgba(255,255,255,0.06); }
+
+      .diff-grid { grid-template-columns:repeat(2,1fr)!important; }
+
+      #panel-como > div, #panel-porque > div { padding:28px 20px!important; }
+      #panel-intro h2 { font-size:clamp(24px,7vw,40px)!important; }
+
+      .fan-wrap { height:360px!important;transform:scale(0.62);transform-origin:top center;margin-top:20px; }
+
+      #scroll-video { height:500vh!important; }
+
+      .tablet-frame { max-width:100%; }
+    }
+
+    @media (max-width: 560px) {
+      #main-nav img { height:52px!important; }
+      .nav-cta { padding:8px 14px!important;font-size:10px!important; }
+      section > div, footer > div { padding-left:16px!important;padding-right:16px!important; }
+      .process-grid { grid-template-columns:1fr!important; }
+      .process-item { border-bottom:1px solid rgba(255,255,255,0.06); }
+      .diff-grid { grid-template-columns:1fr!important; }
+      .fan-wrap { height:300px!important;transform:scale(0.5); }
+      #scroll-video { height:420vh!important; }
+    }
   </style>
 </helmet>
 
@@ -174,7 +216,7 @@
       <p style="font-size:clamp(22px,2.5vw,38px);font-weight:300;color:var(--blue);">É falta de direção.</p>
     </div>
     <!-- Cards animados -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
+    <div class="g2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
       <!-- Empresa Comum — deslizam da esquerda -->
       <div style="display:flex;flex-direction:column;gap:8px;">
         <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-left:4px;">Empresa comum</p>
@@ -230,7 +272,7 @@
 <!-- S5 SISTEMA CYCLE -->
 <section id="sistema" style="padding:120px 0;padding-bottom:200px;">
   <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
-    <div class="fi" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:80px;">
+    <div class="fi g2" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:80px;">
       <div>
         <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Sistema Cycle</p>
         <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;line-height:1.2;">Conteúdo que fortalece a percepção da sua marca.</h2>
@@ -295,7 +337,7 @@
       <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Incluso em todos os planos</p>
       <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;">O que você recebe.</h2>
     </div>
-    <div class="fi" style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;">
+    <div class="fi g2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;">
       <div class="inc-card">
         <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">01</p>
         <p style="font-size:16px;font-weight:500;">Diagnóstico Estratégico</p>
@@ -349,7 +391,7 @@
       <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Investimento</p>
       <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;">Escolha seu sistema.</h2>
     </div>
-    <div class="fi" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
+    <div class="fi g2" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
       <!-- Performance — destaque -->
       <div class="plan-card highlight">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;">
@@ -408,7 +450,7 @@
       <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;">Resultados na prática.</h2>
     </div>
     <!-- Case 1: Esthilion — mockup esquerda, info direita -->
-    <div class="fi" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+    <div class="fi g2" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
       <!-- tablet mockup -->
       <div style="padding:20px;">
         <div class="tablet-frame">
@@ -422,8 +464,8 @@
         </div>
       </div>
       <!-- info -->
-      <div style="display:flex;flex-direction:column;gap:32px;">
-        <img src="uploads/logo-esthilion.png" alt="Esthilion" style="height:52px;object-fit:contain;object-position:left;filter:brightness(0) invert(1);opacity:0.85;">
+      <div style="display:flex;flex-direction:column;align-self:start;gap:32px;">
+        <img src="uploads/logo-esthilion.png" alt="Esthilion" style="height:180px;object-fit:contain;align-self:center;filter:brightness(0) invert(1);opacity:0.85;">
         <div style="display:flex;flex-direction:column;gap:24px;">
           <div>
             <p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Objetivo</p>
@@ -446,10 +488,10 @@
 <section style="padding:120px 0;">
   <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
     <!-- Case 2: Downtown — info esquerda, mockup direita -->
-    <div class="fi" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
+    <div class="fi g2" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
       <!-- info -->
-      <div style="display:flex;flex-direction:column;gap:32px;">
-        <img src="uploads/logo-downtown.png" alt="Downtown Beer Garden" style="height:60px;object-fit:contain;object-position:left;filter:brightness(0) invert(1);opacity:0.85;">
+      <div style="display:flex;flex-direction:column;align-self:start;gap:32px;">
+        <img src="uploads/logo-downtown.png" alt="Downtown Beer Garden" style="height:150px;object-fit:contain;align-self:center;filter:brightness(0) invert(1);opacity:0.85;">
         <div style="display:flex;flex-direction:column;gap:24px;">
           <div>
             <p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Objetivo</p>
@@ -522,7 +564,7 @@
       <div style="width:100%;padding:60px 80px;background:linear-gradient(to top,rgba(8,8,10,0.98) 60%,transparent);">
         <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;">Processo</p>
         <h2 style="font-size:clamp(22px,2.5vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:40px;">Como funciona.</h2>
-        <div style="display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid rgba(255,255,255,0.08);">
+        <div class="process-grid" style="display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid rgba(255,255,255,0.08);">
           <div class="process-item" style="padding:28px 20px 28px 0;border-right:1px solid rgba(255,255,255,0.06);">
             <p class="process-num" style="font-size:28px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s ease;">01</p>
             <p style="font-size:13px;font-weight:600;margin-bottom:6px;">Diagnóstico</p>
@@ -562,7 +604,7 @@
       <div style="width:100%;padding:60px 80px;background:linear-gradient(to top,rgba(8,8,10,0.98) 60%,transparent);">
         <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;">Diferenciais</p>
         <h2 style="font-size:clamp(22px,2.5vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:40px;">Por que a Cycle?</h2>
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;">
+        <div class="diff-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;">
           <div class="diff-card" style="padding:32px 28px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
             <p class="diff-num" style="font-size:32px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:14px;line-height:1;transition:color 0.3s ease;">01</p>
             <h3 style="font-size:15px;font-weight:500;line-height:1.4;">Estratégia antes da produção.</h3>
@@ -599,13 +641,20 @@
     <div class="fi">
       <h2 style="font-size:clamp(32px,5.5vw,80px);font-weight:300;letter-spacing:-0.03em;line-height:1.08;">Vamos construir a forma<br>como o mercado percebe<br>sua empresa.</h2>
     </div>
-    <div class="fi" style="display:flex;flex-direction:column;align-items:center;gap:28px;">
-      <img src="uploads/logo-cycle.png" alt="Cycle" style="height:32px;object-fit:contain;opacity:0.5;">
-      <!-- TODO: número WhatsApp -->
-      <a href="https://wa.me/5500000000000" target="_blank" style="display:inline-flex;align-items:center;gap:12px;background:var(--blue);color:#fff;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:opacity 0.3s ease;">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-        Falar no WhatsApp
-      </a>
+    <div class="fi" style="display:flex;flex-direction:column;align-items:center;gap:32px;">
+      <img src="uploads/logo-cycle.png" alt="Cycle" style="height:64px;object-fit:contain;opacity:0.6;">
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
+        <!-- TODO: número WhatsApp -->
+        <a href="https://wa.me/558293270904" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:12px;background:var(--blue);color:#fff;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:opacity 0.3s ease;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          Falar no WhatsApp
+        </a>
+        <!-- TODO: link Instagram -->
+        <a href="https://www.instagram.com/cycleprod?igsh=MWd1bWx4Mjc5Z3F3Yw==" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:12px;background:transparent;border:1px solid var(--border);color:#F5F5F5;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:border-color 0.3s ease,background 0.3s ease;" class="ig-cta">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+          Ver bastidores no Instagram
+        </a>
+      </div>
     </div>
   </div>
 </section>
@@ -615,12 +664,15 @@
 <!-- S12 FOOTER -->
 <footer style="padding:56px 0;">
   <div style="max-width:1200px;margin:0 auto;padding:0 40px;display:flex;flex-direction:column;align-items:center;gap:36px;">
-    <img src="uploads/logo-cycle.png" alt="Cycle" style="height:28px;object-fit:contain;opacity:0.4;">
-    <div style="display:flex;align-items:center;gap:40px;">
+    <img src="uploads/logo-cycle.png" alt="Cycle" style="height:64px;object-fit:contain;opacity:0.55;">
+    <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:center;">
       <!-- TODO: número WhatsApp -->
-      <a href="https://wa.me/5500000000000" target="_blank" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" class="nav-link">WhatsApp</a>
-      <!-- TODO: Instagram -->
-      <a href="#" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" class="nav-link">Instagram</a>
+      <a href="https://wa.me/558293270904" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" class="nav-link">WhatsApp</a>
+      <!-- TODO: link Instagram -->
+      <a href="https://www.instagram.com/cycleprod?igsh=MWd1bWx4Mjc5Z3F3Yw==" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" class="nav-link">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
       <!-- TODO: e-mail -->
       <a href="mailto:contato@cycle.com.br" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" class="nav-link">E-mail</a>
     </div>
