@@ -797,6 +797,11 @@ class Component extends DCLogic {
         if (entry.isIntersecting) {
           const source = video.querySelector('source[data-src]');
           if (source) {
+            // preload="none" (used to defer the fetch until now) tells the browser to
+            // keep fetching minimal — it never eagerly buffers past the first instant,
+            // so scrubbing past that point shows a frozen frame. Switch to "auto" now
+            // that we've deliberately decided to fetch it, so it buffers the whole file.
+            video.preload = 'auto';
             source.src = source.getAttribute('data-src');
             source.removeAttribute('data-src');
             video.load();
