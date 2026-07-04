@@ -790,6 +790,16 @@ class Component extends DCLogic {
     let targetTime = 0;
     let currentTime = 0;
     let videoReady = false;
+    let videoBuffered = false;
+
+    const checkFullyBuffered = () => {
+      if (videoBuffered || !video.duration) return;
+      for (let i = 0; i < video.buffered.length; i++) {
+        if (video.buffered.end(i) >= video.duration - 0.2) { videoBuffered = true; break; }
+      }
+    };
+    video.addEventListener('progress', checkFullyBuffered);
+    video.addEventListener('canplaythrough', () => { videoBuffered = true; });
 
     // Lazy-load: only fetch the (heavy) scrub video once user scrolls near this section.
     const lazyObserver = new IntersectionObserver((entries) => {
@@ -862,7 +872,11 @@ class Component extends DCLogic {
     video.addEventListener('seeked', clearSeekLock);
 
     const scrubLoop = () => {
-      if (videoReady) {
+      // Wait for the file to fully buffer before reacting to scroll — seeking into a
+      // spot with no data yet is what caused the "stuck on an early frame" symptom for
+      // anyone scrolling fast enough to outrun the ~1-2s load. currentTime keeps its
+      // scroll-synced target meanwhile, so it catches up smoothly the instant it's ready.
+      if (videoReady && videoBuffered) {
         currentTime += (targetTime - currentTime) * 0.12;
         if (Math.abs(targetTime - currentTime) < 0.03) currentTime = targetTime;
         if (!seeking && Math.abs(video.currentTime - currentTime) > 0.05) {
