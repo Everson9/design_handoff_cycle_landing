@@ -791,7 +791,6 @@ class Component extends DCLogic {
     let currentTime = 0;
     let videoReady = false;
     let videoBuffered = false;
-    window.__scrubDebug2 = { get videoReady(){return videoReady}, get videoBuffered(){return videoBuffered}, get targetTime(){return targetTime}, get currentTime(){return currentTime} };
 
     const checkFullyBuffered = () => {
       if (videoBuffered || !video.duration) return;
@@ -800,7 +799,9 @@ class Component extends DCLogic {
       }
     };
     video.addEventListener('progress', checkFullyBuffered);
-    video.addEventListener('canplaythrough', () => { videoBuffered = true; });
+    // (canplaythrough fires once there's enough to play smoothly forward from 0 —
+    // that's a much weaker signal than "fully downloaded" and let scrubbing start
+    // before the tail of the file existed, so it's intentionally not used here.)
 
     // Lazy-load: only fetch the (heavy) scrub video once user scrolls near this section.
     const lazyObserver = new IntersectionObserver((entries) => {
