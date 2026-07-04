@@ -179,7 +179,7 @@
 
 <!-- S1 HERO -->
 <section style="position:relative;height:100vh;min-height:640px;padding:0;display:flex;align-items:center;justify-content:center;overflow:hidden;">
-  <video id="hero-video" muted loop playsinline preload="none" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45;">
+  <video id="hero-video" muted playsinline preload="none" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.45;">
     <source data-src="uploads/hero-bg.mp4" type="video/mp4">
   </video>
   <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(11,11,13,0.2) 0%,rgba(11,11,13,0.55) 100%);"></div>
@@ -736,11 +736,12 @@ class Component extends DCLogic {
       window.addEventListener('pointerdown', retryOnGesture, { passive: true });
       window.addEventListener('scroll', retryOnGesture, { passive: true, once: true });
 
-      // Don't rely solely on the `loop` attribute — manually restart on `ended`
-      // as a fallback for browsers/situations where native loop doesn't kick back in.
+      // Last frame is the logo — hold on it for a beat before looping back to start.
       heroVideo.addEventListener('ended', () => {
-        heroVideo.currentTime = 0;
-        tryPlay();
+        setTimeout(() => {
+          heroVideo.currentTime = 0;
+          tryPlay();
+        }, 6000);
       });
     }
 
@@ -846,17 +847,14 @@ class Component extends DCLogic {
 
     // Smooth scrub loop — lerps video.currentTime toward scroll target every frame,
     // decoupled from scroll events so fast/janky scrolling doesn't stutter the video.
-    let seeking = false;
-    video.addEventListener('seeked', () => { seeking = false; });
-
+    // (Previously gated new seeks on waiting for a `seeked` event from the last one —
+    // if that event ever failed to fire, every future seek was blocked forever and
+    // the video froze. A simple time-based threshold is enough throttling on its own.)
     const scrubLoop = () => {
       if (videoReady) {
         currentTime += (targetTime - currentTime) * 0.12;
         if (Math.abs(targetTime - currentTime) < 0.03) currentTime = targetTime;
-        // Only issue a new seek once the previous one finished, and only if the
-        // gap is big enough to matter — constant sub-frame seeks are what caused the stutter.
-        if (!seeking && Math.abs(video.currentTime - currentTime) > 0.08) {
-          seeking = true;
+        if (Math.abs(video.currentTime - currentTime) > 0.03) {
           video.currentTime = currentTime;
         }
       }
