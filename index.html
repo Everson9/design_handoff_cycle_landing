@@ -28,7 +28,7 @@
   <script src="_ds/photographer-x-c3d7aab7-d639-401f-82bd-9354e60db94a/_ds_bundle.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
+    html { scroll-behavior: smooth; }
     body {
       background: #0B0B0D;
       color: #F5F5F5;
@@ -143,6 +143,11 @@
       #scroll-video { height:320vh!important; }
 
       .tablet-frame { max-width:100%; }
+
+      /* These slide in from +-72px off-screen — that transform paints past the
+         viewport edge and can leak into document scrollWidth on some engines.
+         Fade only below 900px, no horizontal displacement, no overflow risk. */
+      .slide-left, .slide-right, .slide-left.in, .slide-right.in, .slide-left.out, .slide-right.out { transform: none!important; }
     }
 
     /* Fan-of-cards effect needs ~1150px of horizontal room to not overlap/overflow —
@@ -152,8 +157,14 @@
       .fan-card { position:static!important;flex:0 0 auto!important;width:220px!important;height:340px!important;transform:none!important;opacity:1!important;scroll-snap-align:start;margin-right:14px; }
     }
 
-    .mobile-menu-link { font-size:18px;font-weight:500;color:#F5F5F5;text-decoration:none;letter-spacing:0.02em; }
-    #mobile-menu.open { display:flex!important; }
+    .mobile-menu-link { font-size:18px;font-weight:500;color:#F5F5F5;text-decoration:none;letter-spacing:0.02em;opacity:0;transform:translateY(14px);transition:opacity 0.35s ease,transform 0.35s ease,color 0.3s ease; }
+    .mobile-menu-link:hover { color:var(--blue); }
+    #mobile-menu.open { opacity:1!important;visibility:visible!important;pointer-events:auto!important;transition:opacity 0.3s ease!important; }
+    #mobile-menu.open .mobile-menu-link { opacity:1;transform:translateY(0); }
+    .mobile-menu-link:nth-child(1) { transition-delay:0.05s; }
+    .mobile-menu-link:nth-child(2) { transition-delay:0.1s; }
+    .mobile-menu-link:nth-child(3) { transition-delay:0.15s; }
+    .mobile-menu-link:nth-child(4) { transition-delay:0.2s; }
 
     @media (max-width: 560px) {
       #main-nav { padding:8px 16px!important; }
@@ -191,7 +202,7 @@
 </nav>
 
 <!-- MOBILE MENU -->
-<div id="mobile-menu" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;background:rgba(11,11,13,0.98);backdrop-filter:blur(12px);flex-direction:column;align-items:center;justify-content:center;gap:28px;">
+<div id="mobile-menu" style="display:flex;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;background:rgba(11,11,13,0.98);backdrop-filter:blur(12px);flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s ease,visibility 0s linear 0.3s;">
   <a href="#percepcao" class="mobile-menu-link">Percepção</a>
   <a href="#sistema" class="mobile-menu-link">Sistema</a>
   <a href="#planos" class="mobile-menu-link">Planos</a>
