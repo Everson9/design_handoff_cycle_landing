@@ -160,6 +160,13 @@
       #scroll-video { height:260vh!important; }
       .fan-card { width:180px!important;height:290px!important; }
     }
+
+    /* Both videos are 16:9 landscape footage — object-fit:cover on a tall/narrow
+       (portrait) viewport crops in hard, blowing the framing up way past intended.
+       Switch to contain there so the full shot stays visible instead of zoomed in. */
+    @media (max-width: 700px), (max-aspect-ratio: 4/5) {
+      #hero-video, #scrub-video { object-fit: contain!important; }
+    }
   </style>
 </helmet>
 
