@@ -137,30 +137,28 @@
       .g2[style*="gap:2px"] { gap:2px!important; }
       .g2[style*="gap:16px"] { gap:16px!important; }
 
-      .process-grid { grid-template-columns:repeat(2,1fr)!important; }
-      .process-item { padding:16px 12px!important;border-right:none!important;border-bottom:1px solid rgba(255,255,255,0.06); }
-
-      .diff-grid { grid-template-columns:repeat(2,1fr)!important; }
-
-      #panel-como > div, #panel-porque > div { padding:28px 20px!important; }
+      #panel-como > div, #panel-porque > div { padding:16px 20px 24px!important; }
       #panel-intro h2 { font-size:clamp(24px,7vw,40px)!important; }
-
-      .fan-wrap { height:360px!important;transform:scale(0.62);transform-origin:top center;margin-top:20px; }
 
       #scroll-video { height:320vh!important; }
 
       .tablet-frame { max-width:100%; }
     }
 
+    /* Fan-of-cards effect needs ~1150px of horizontal room to not overlap/overflow —
+       below that (tablets, notebooks, phones alike) it becomes a plain scroll strip. */
+    @media (max-width: 1150px) {
+      .fan-wrap { height:auto!important;min-height:0!important;overflow-x:auto!important;overflow-y:visible!important;justify-content:flex-start!important;padding:4px 20px 24px;scroll-snap-type:x proximity; }
+      .fan-card { position:static!important;flex:0 0 auto!important;width:220px!important;height:340px!important;transform:none!important;opacity:1!important;scroll-snap-align:start;margin-right:14px; }
+    }
+
     @media (max-width: 560px) {
       #main-nav img { height:52px!important; }
       .nav-cta { padding:8px 14px!important;font-size:10px!important; }
       section > div, footer > div { padding-left:16px!important;padding-right:16px!important; }
-      .process-grid { grid-template-columns:1fr!important; }
-      .process-item { border-bottom:1px solid rgba(255,255,255,0.06); }
-      .diff-grid { grid-template-columns:1fr!important; }
-      .fan-wrap { height:300px!important;transform:scale(0.5); }
+      .inc-card { padding:20px!important; }
       #scroll-video { height:260vh!important; }
+      .fan-card { width:180px!important;height:290px!important; }
     }
   </style>
 </helmet>
@@ -563,36 +561,36 @@
       <div style="width:100%;padding:16px 80px 28px;background:linear-gradient(to top,rgba(8,8,10,0.98) 48%,transparent);">
         <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;">Processo</p>
         <h2 style="font-size:clamp(22px,2.5vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:14px;">Como funciona.</h2>
-        <div class="process-grid" style="display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid rgba(255,255,255,0.08);">
-          <div class="process-item" style="padding:18px 30px 18px 0;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:48px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:16px;line-height:1;transition:color 0.3s ease;">01</p>
-            <p style="font-size:17px;font-weight:600;margin-bottom:9px;">Diagnóstico</p>
-            <p style="font-size:14px;color:var(--muted);line-height:1.5;">Análise da percepção atual</p>
+        <div class="process-grid" style="display:flex;overflow-x:auto;gap:0;border-top:1px solid rgba(255,255,255,0.08);scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;">
+          <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px 18px 0;border-right:1px solid rgba(255,255,255,0.06);">
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">01</p>
+            <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Diagnóstico</p>
+            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Análise da percepção atual</p>
           </div>
-          <div class="process-item" style="padding:18px 30px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:48px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:16px;line-height:1;transition:color 0.3s ease;">02</p>
-            <p style="font-size:17px;font-weight:600;margin-bottom:9px;">Planejamento</p>
-            <p style="font-size:14px;color:var(--muted);line-height:1.5;">Estratégia e calendário</p>
+          <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">02</p>
+            <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Planejamento</p>
+            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Estratégia e calendário</p>
           </div>
-          <div class="process-item" style="padding:18px 30px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:48px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:16px;line-height:1;transition:color 0.3s ease;">03</p>
-            <p style="font-size:17px;font-weight:600;margin-bottom:9px;">Captação</p>
-            <p style="font-size:14px;color:var(--muted);line-height:1.5;">Produção no cliente</p>
+          <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">03</p>
+            <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Captação</p>
+            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Produção no cliente</p>
           </div>
-          <div class="process-item" style="padding:18px 30px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:48px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:16px;line-height:1;transition:color 0.3s ease;">04</p>
-            <p style="font-size:17px;font-weight:600;margin-bottom:9px;">Produção</p>
-            <p style="font-size:14px;color:var(--muted);line-height:1.5;">Edição e direção criativa</p>
+          <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">04</p>
+            <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Produção</p>
+            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Edição e direção criativa</p>
           </div>
-          <div class="process-item" style="padding:18px 30px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:48px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:16px;line-height:1;transition:color 0.3s ease;">05</p>
-            <p style="font-size:17px;font-weight:600;margin-bottom:9px;">Entrega</p>
-            <p style="font-size:14px;color:var(--muted);line-height:1.5;">Conteúdos publicados</p>
+          <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">05</p>
+            <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Entrega</p>
+            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Conteúdos publicados</p>
           </div>
-          <div class="process-item" style="padding:18px 0 18px 30px;">
-            <p class="process-num" style="font-size:48px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:16px;line-height:1;transition:color 0.3s ease;">06</p>
-            <p style="font-size:17px;font-weight:600;margin-bottom:9px;">Evolução</p>
-            <p style="font-size:14px;color:var(--muted);line-height:1.5;">Melhoria contínua</p>
+          <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 0 18px 22px;">
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">06</p>
+            <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Evolução</p>
+            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Melhoria contínua</p>
           </div>
         </div>
       </div>
@@ -603,22 +601,22 @@
       <div style="width:100%;padding:16px 80px 28px;background:linear-gradient(to top,rgba(8,8,10,0.98) 48%,transparent);">
         <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;">Diferenciais</p>
         <h2 style="font-size:clamp(22px,2.5vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:14px;">Por que a Cycle?</h2>
-        <div class="diff-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:2px;">
-          <div class="diff-card" style="padding:32px 28px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:32px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:14px;line-height:1;transition:color 0.3s ease;">01</p>
-            <h3 style="font-size:15px;font-weight:500;line-height:1.4;">Estratégia antes da produção.</h3>
+        <div class="diff-grid" style="display:flex;overflow-x:auto;gap:2px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;">
+          <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s ease;">01</p>
+            <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Estratégia antes da produção.</h3>
           </div>
-          <div class="diff-card" style="padding:32px 28px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:32px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:14px;line-height:1;transition:color 0.3s ease;">02</p>
-            <h3 style="font-size:15px;font-weight:500;line-height:1.4;">Conteúdo com propósito.</h3>
+          <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s ease;">02</p>
+            <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Conteúdo com propósito.</h3>
           </div>
-          <div class="diff-card" style="padding:32px 28px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:32px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:14px;line-height:1;transition:color 0.3s ease;">03</p>
-            <h3 style="font-size:15px;font-weight:500;line-height:1.4;">Consistência acima de volume.</h3>
+          <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s ease;">03</p>
+            <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Consistência acima de volume.</h3>
           </div>
-          <div class="diff-card" style="padding:32px 28px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:32px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:14px;line-height:1;transition:color 0.3s ease;">04</p>
-            <h3 style="font-size:15px;font-weight:500;line-height:1.4;">Fortalecimento da percepção da marca.</h3>
+          <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s ease;">04</p>
+            <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Fortalecimento da percepção da marca.</h3>
           </div>
         </div>
       </div>
