@@ -80,9 +80,9 @@
     .step-row { transition:background 0.3s,transform 0.25s ease; }
     .step-row:hover { background:rgba(61,126,255,0.03);transform:translateX(4px); }
     /* FAN CARDS */
-    .fan-wrap { display:flex;align-items:flex-end;justify-content:center;height:560px;position:relative;margin-top:80px;overflow:visible; }
+    .fan-wrap { display:flex;align-items:flex-end;justify-content:center;height:680px;position:relative;margin-top:80px;overflow:visible; }
     .fan-card {
-      width:220px;height:360px;border-radius:16px;overflow:hidden;
+      width:280px;height:460px;border-radius:16px;overflow:hidden;
       position:absolute;bottom:0;
       border:1px solid #1e1e26;
       transition:transform 0.55s cubic-bezier(0.34,1.15,0.64,1),box-shadow 0.4s ease,opacity 0.45s ease;
@@ -900,11 +900,11 @@ class Component extends DCLogic {
     const n = cards.length;
 
     const resting = [
-      { rotate: -20, tx: -320, ty: 40, z: 1 },
-      { rotate: -10, tx: -160, ty: 14, z: 2 },
+      { rotate: -20, tx: -407, ty: 51, z: 1 },
+      { rotate: -10, tx: -204, ty: 18, z: 2 },
       { rotate: 0,   tx: 0,    ty: 0,  z: 3 },
-      { rotate: 10,  tx: 160,  ty: 14, z: 2 },
-      { rotate: 20,  tx: 320,  ty: 40, z: 1 },
+      { rotate: 10,  tx: 204,  ty: 18, z: 2 },
+      { rotate: 20,  tx: 407,  ty: 51, z: 1 },
     ];
 
     const applyResting = (i) => {
