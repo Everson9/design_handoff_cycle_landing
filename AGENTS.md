@@ -57,6 +57,32 @@ node ~/Vault/scripts/investimento.js decidir "<parte do nome>" --vale sim|nao|de
 painel mostra o selo (vale a pena / não vale / fica pra depois) e o motivo junto do item, e conta
 quantos ainda estão **sem veredito** — é o que sobra pra decidir.
 
+
+**Gatilho — "faz o plano financeiro de plataformas" / "monta o plano de custos":**
+
+1. `node ~/Vault/scripts/investimento.js plano --projeto design-handoff` — cria a base inteira já
+   classificada (obrigatório / escala / decisão), com gatilho e motivo em cada item. Não duplica:
+   pula o que já existe pra aquela plataforma.
+2. `node ~/Vault/scripts/investimento.js revisar --projeto design-handoff --medir` — mede o banco de
+   produção e separa o que só o dono confirma. **Perguntar o que não dá pra medir**, e corrigir os
+   itens (`add` com o mesmo nome atualiza).
+3. O que for decisão de produto: decidir aqui dentro e gravar com `decidir --vale ... --porque ...`.
+4. Fechar em três linhas: obrigatório pra lançar, primeiro degrau de escala, o que ficou sem decidir.
+
+**Gatilho — "assinei X" / "paguei X" / "contratei X":**
+
+```
+node ~/Vault/scripts/investimento.js assinei "<parte do nome>" --em AAAA-MM-DD [--valor N] [--proximo AAAA-MM-DD]
+node ~/Vault/scripts/investimento.js paguei  "<parte do nome>" [--em AAAA-MM-DD] [--valor N]
+```
+
+Isso muda o item de previsão pra **cobrança viva**: entra no calendário de 12 meses do painel e
+passa a avisar por notificação do Windows 10, 5, 3, 2 e 1 dia antes, no dia, e todo dia enquanto
+estiver atrasado (tarefa `Cobrancas_9h`). Sem a data, o painel marca o item como *sem data de
+cobrança* e diz, na cara, que o aviso não sai — pago sem data é pior que não registrado.
+
+Ver o que vem: `node ~/Vault/scripts/investimento.js vencimentos --projeto design-handoff`.
+
 **Gatilho — "revisa os custos" / "o que eu tenho que pagar" / "quanto isso vai me custar":**
 
 1. `node ~/Vault/scripts/investimento.js revisar --projeto design-handoff --medir`
