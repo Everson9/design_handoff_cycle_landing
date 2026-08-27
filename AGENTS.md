@@ -22,6 +22,22 @@ trabalho, planos, cases e CTA pro WhatsApp. No ecossistema aparece como **design
 5. Se houve mudança versionável no projeto, commitar e empurrar.
 6. Mostrar em 3 linhas o que gravou, pra confirmar.
 
+## Custo / upgrade de plano — vai pro PAINEL, não pras pendências
+Quando aparecer algo que se resolve com CARTÃO e não com código — conta de loja, plano que vai ter
+que subir (Free → Pro), domínio, taxa de gateway, ferramenta paga, limite de plano chegando perto —
+registrar na hora, sem perguntar:
+
+```
+node ~/Vault/scripts/investimento.js add "<o quê>" --projeto design-handoff --plataforma "<serviço>" --gatilho "<o que faz o custo aparecer>" --quando agora|lancamento|crescer|futuro [--custo N --moeda USD|BRL] [--ciclo unico|mensal|anual|variavel] [--de "<plano de hoje>" --para "<plano depois>"] [--porque "<por quê>"] [--conferir]
+```
+
+- **Não sabe o preço: omitir `--custo`.** O item entra sem valor, fica fora das somas e o painel diz
+  quantos ficaram de fora. Chutar valor estraga o único número que essa tela tem pra dar.
+- Preço lembrado de cabeça: `--conferir`, que marca "conferir preço" na tela.
+- `--gatilho` é obrigatório: é ele que diz se o custo é de hoje ou de um dia. Sem ele a lista vira medo.
+- Isso **não** entra no `pendencias.md`. Pendência se fecha com código; isso se fecha pagando, e no dia certo.
+- O comando já regenera o `PAINEL.html`: aparece na aba **Investimentos** e no card **custo que vem** deste projeto.
+
 ## GATILHOS (agir automático, sem pedir detalhes)
 Quando o usuário disser "encerra", "vou fechar", "fim", "tchau", "vou sair", "salva aí" ou "parar por aqui":
 executar os 6 passos acima SOZINHO. Não perguntar "quer que eu atualize o STATE?" — o gatilho JÁ é a autorização.
