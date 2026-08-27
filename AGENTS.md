@@ -77,7 +77,7 @@ node ~/Vault/scripts/investimento.js paguei  "<parte do nome>" [--em AAAA-MM-DD]
 ```
 
 Isso muda o item de previsão pra **cobrança viva**: entra no calendário de 12 meses do painel e
-passa a avisar por notificação do Windows 10, 5, 3, 2 e 1 dia antes, no dia, e todo dia enquanto
+passa a avisar por notificação do Windows 60, 30, 10, 5, 3, 2 e 1 dia antes quando é **anual** (domínio, conta de loja: renovar leva dias, e domínio que expira derruba o app junto) e 5, 3, 2 e 1 dia antes quando é mensal — no dia, e todo dia enquanto
 estiver atrasado (tarefa `Cobrancas_9h`). Sem a data, o painel marca o item como *sem data de
 cobrança* e diz, na cara, que o aviso não sai — pago sem data é pior que não registrado.
 
