@@ -38,6 +38,37 @@ node ~/Vault/scripts/investimento.js add "<o quê>" --projeto design-handoff --p
 - Isso **não** entra no `pendencias.md`. Pendência se fecha com código; isso se fecha pagando, e no dia certo.
 - O comando já regenera o `PAINEL.html`: aparece na aba **Investimentos** e no card **custo que vem** deste projeto.
 
+
+**Três leituras diferentes — declarar qual delas o item responde:**
+
+- **Obrigatório** (`--obrigatorio`): sem isso o app não lança nem pode cobrar. Não há decisão a
+  tomar, só a data de pagar. Ex: conta da Play, Vercel Pro (o Hobby proíbe uso comercial).
+- **Escala** (`--assinantes N`): só entra quando a base chegar em N assinaturas **ativas**.
+  Enquanto não chega, esse dinheiro não existe. O painel monta a escada e mostra o total de cada
+  degrau já somado ao obrigatório.
+- **Vale a pena** (nem um nem outro): é decisão de produto, e ela se toma AQUI dentro, olhando o
+  SaaS — não no painel. Quando decidir, gravar o veredito com o motivo:
+
+```
+node ~/Vault/scripts/investimento.js decidir "<parte do nome>" --vale sim|nao|depois --porque "<o motivo, olhando este produto>" --quando "<o que faz revisitar>" --por "sessão design-handoff"
+```
+
+`--porque` é obrigatório: veredito sem motivo escrito volta como dúvida daqui a duas semanas. O
+painel mostra o selo (vale a pena / não vale / fica pra depois) e o motivo junto do item, e conta
+quantos ainda estão **sem veredito** — é o que sobra pra decidir.
+
+**Gatilho — "revisa os custos" / "o que eu tenho que pagar" / "quanto isso vai me custar":**
+
+1. `node ~/Vault/scripts/investimento.js revisar --projeto design-handoff --medir`
+   O `--medir` consulta o banco de produção pela Supabase CLI linkada (sem senha) e diz o quão
+   longe o gatilho do plano Free está — tamanho do banco e usuários ativos em 30 dias. Em projeto
+   sem Supabase linkada, essa parte só avisa que a query não rodou; o resto da revisão vale igual.
+2. A lista **[1]** é o que só o dono confirma: preço de hoje na conta da plataforma e se a conta já
+   existe. Perguntar, não chutar — e o que dá pra medir, medir.
+3. Corrigir com `investimento.js add "<nome exato>"` (mesmo nome atualiza, não duplica) ou
+   `investimento.js pago "<parte do nome>"`. O painel se regenera sozinho.
+4. Fechar em três linhas: o que muda hoje, o que muda no lançamento, o que ainda não dá pra saber.
+
 ## GATILHOS (agir automático, sem pedir detalhes)
 Quando o usuário disser "encerra", "vou fechar", "fim", "tchau", "vou sair", "salva aí" ou "parar por aqui":
 executar os 6 passos acima SOZINHO. Não perguntar "quer que eu atualize o STATE?" — o gatilho JÁ é a autorização.
