@@ -83,6 +83,25 @@ cobrança* e diz, na cara, que o aviso não sai — pago sem data é pior que n�
 
 Ver o que vem: `node ~/Vault/scripts/investimento.js vencimentos --projeto design-handoff`.
 
+
+**Antes de perguntar preço/data ao dono: procurar o comprovante.**
+
+```
+python ~/Vault/scripts/comprovantes.py --dias 540 [--plataforma hostinger] [--conta gmail-pessoal.json]
+```
+
+Varre a caixa por IMAP atrás de recibo de plataforma (Hostinger, Play, Vercel, Supabase, Expo,
+Apple, Stripe/Asaas, Cloudflare, Brevo) e devolve **data + valor**. O dado de "quanto pagou e
+quando" não está no código nem no banco: está no recibo. Perguntar isso pro dono é o pior
+caminho — ele não lembra, e o que lembra costuma vir errado.
+
+Achou? Grava com `investimento.js paguei "<item>" --em <data> --valor <N>`. **Confira o valor no
+próprio email antes de gravar** — o número é extraído por padrão de texto e pode pegar o valor errado
+(imposto, total de outra linha). Não achou, não invente: pergunte, e diga onde procurou.
+
+O cofre padrão (`~/.jarvis-secrets/gmail.json`) é a caixa do SaaS. Recibo de domínio e de loja
+costuma cair no email **pessoal** — nesse caso é preciso um segundo cofre e `--conta`.
+
 **Gatilho — "revisa os custos" / "o que eu tenho que pagar" / "quanto isso vai me custar":**
 
 1. `node ~/Vault/scripts/investimento.js revisar --projeto design-handoff --medir`
