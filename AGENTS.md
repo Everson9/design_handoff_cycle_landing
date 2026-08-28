@@ -16,10 +16,10 @@ trabalho, planos, cases e CTA pro WhatsApp. No ecossistema aparece como **design
 
 ## Ao encerrar / pausar (fazer sem o usuário pedir)
 1. Atualizar `.specs/STATE.md`: o que foi feito, o que ficou aberto, próximo passo.
-2. Atualizar `~/Vault/pendencias.md` (seção deste projeto).
+2. Atualizar `~/Vault/pendencias.md` (seção deste projeto) — **ler o arquivo antes de escrever.** Item que já está `[x]` ou sumiu de lá foi fechado pelo dono no painel (vem carimbado *feita pelo dono no painel*): é palavra final — não reabrir nem recriar a partir do STATE; refletir o fechamento no STATE do projeto. Antes de escrever pendência nova, **reler cada `[ ]` da seção contra o que o STATE diz que foi feito hoje**: item que o STATE fecha, o vault fecha junto, com nota do que provou (commit/migration/arquivo) — senão STATE e vault discordam (aconteceu em 28/08: DPAs feitos no commit, `[ ]` no vault). O `encerra.js` cruza `[ ]` × commits × STATE e solta `AVISO` por item suspeito: responder a cada um, fechando ou dizendo por que fica. Item novo: uma linha só, sem quebrar em 80 colunas.
 3. Aprendizado reusável → `~/Vault/design-handoff/RESUMO.md` (a regra destilada, com o porquê).
-4. **Rodar `node ~/Vault/scripts/sync-vault.js`.** Sem isto, tudo que a sessão gravou fica só nesta máquina, sem backup no GitHub.
-5. Se houve mudança versionável no projeto, commitar e empurrar.
+4. **Rodar `node ~/Vault/scripts/encerra.js --msg "<o que mudou e por quê>"`** — gate mecânico: confere se STATE e pendências foram tocados, roda o sync (backup no GitHub + painel) e commita/empurra o projeto com essa mensagem. Linha `FALTA` na saída = corrigir e rodar de novo; **não** dizer que encerrou enquanto houver FALTA.
+5. Repassar as linhas do `encerra.js` ao dono.
 6. Mostrar em 3 linhas o que gravou, pra confirmar.
 
 ## Custo / upgrade de plano — vai pro PAINEL, não pras pendências
