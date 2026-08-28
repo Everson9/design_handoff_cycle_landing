@@ -7,6 +7,10 @@ trabalho, planos, cases e CTA pro WhatsApp. No ecossistema aparece como **design
 1. Ler o `README.md` (é o handoff em si: fidelidade, assets, estrutura).
 2. Design system em `_ds/`, imagens em `uploads/`.
 
+- **Vídeos trazidos pelo dono:** ler `~/Vault/design-handoff/videos.md` se existir — links de YouTube/Instagram que a skill
+  `video-nota` transcreveu e classificou pra este projeto. Cada entrada aponta pro `.md` completo em `~/Vault/_inbox/videos/`;
+  É **pauta pra discutir com o dono**, não regra pra aplicar: ele decide ali o que entra, o que adapta e o que descarta. Abrir a transcrição só quando a conversa pedir. Gatilho: "tem vídeo pra discutir", "o que eu trouxe do radar", "vamos ver aquele vídeo".
+
 ## Regra que define este projeto
 - **O HTML aqui é protótipo de referência, NÃO é código de produção.** `index.html` e `support.js` existem
   pra mostrar o resultado pixel-perfect — cor, tipografia, espaçamento, interação.
