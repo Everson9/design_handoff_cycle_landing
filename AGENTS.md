@@ -129,3 +129,26 @@ sem ele precisar pedir os detalhes.
 ## Ecossistema
 Memória em `~/Vault` (backup: github hxdgDES/vault-cerebro). Notas deste projeto em `~/Vault/design-handoff/`.
 Painel de controle do ecossistema: `~/Desktop/jarvis`. Guia de uso: `~/Vault/COMO-USAR.md`.
+
+## Outro motor — quando NÃO é o Claude que faz
+Doutrina: `~/Vault/delegacao.md`. Um lembrete mecânico dispara sozinho (`delegar.js hook`), mas a decisão é sua.
+- **Revisar código → sempre outro motor.** `codex exec "revisa <alvo>: bug, regressão, segurança"`
+  ou o subagente `codex:codex-rescue`. Auto-revisão é o pior caso conhecido: o autor defende o que escreveu.
+- **Changelog / doc externa / versão nova → `opencode run "<pergunta>"`** (Nemotron, fora da cota do plano).
+- **Varredura ampla → script primeiro.** Extrai e filtra com grep/script; o modelo julga a lista curta.
+- **Classificar/extrair/resumir em lote → `node ~/Vault/scripts/roteador.js <classe> --prompt - --json`.**
+- **Paralelo só com contrato fechado**, um escritor por pasta (worktree). `~/Vault` é compartilhado.
+
+**Dentro da Orca, delegacao abre TERMINAL — nao roda escondido na sessao.**
+
+```
+node ~/Vault/scripts/delegar-terminal.js abrir codex "revisa <alvo>: bug, regressao, seguranca"
+node ~/Vault/scripts/delegar-terminal.js abrir opencode "<pergunta longa / changelog / doc>"
+```
+
+Duas razoes, as duas medidas: no app **mobile** da Orca a chamada do Codex por dentro da
+sessao **travava a tela**; e delegacao invisivel nao se audita — o dono lia "chamei o Codex"
+e tinha que acreditar. No terminal ele le a saida inteira, rola, copia e mata se quiser.
+Um terminal por motor/worktree, reusado a sessao toda; o `encerra.js` fecha o que abriu.
+Fora da Orca (sem `ORCA_TERMINAL_HANDLE`), segue valendo `codex exec` / `opencode run` direto.
+
