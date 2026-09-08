@@ -208,6 +208,9 @@ transform, 6 hovers neutralizados, zero erro de JS, sem overflow horizontal.
 - **Destaque de plano movido para o Presença** (R$ 2.790). Estava no Performance, o mais barato, o
   que contradizia a aposta de ticket. Trocaram borda, badge, rótulo e a cor das bolinhas de item.
 - Plano Essencial: dono confirmou que existe, sob consulta. A nota do rodapé fica.
+- **CSS morto removido:** `.step-track`, `.step-cell` e `.step-row` (19 regras) ficaram órfãos quando
+  o trilho virou ciclo — nenhum deles era usado em outro lugar. O `DESIGN.md` afirmava que o trilho
+  era usado no "Como funciona" do scroll-scrub, o que era falso: aquela seção usa `.process-item`.
 
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport

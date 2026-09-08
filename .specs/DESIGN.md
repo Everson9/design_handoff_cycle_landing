@@ -82,9 +82,6 @@ Fora display, tracking negativo é proibido.
 
 ## Dispositivos estruturais
 
-- **Trilho de etapas (`.step-track` / `.step-cell`)** — sequência numerada sem caixa: fio de cabelo
-  no topo, células separadas por fio vertical, número em `38px/700` `--blue`, nome em `16px/600`.
-  6 colunas → 3 (≤900px) → 2 (≤560px). Usado hoje no "Como funciona" do scroll-scrub.
 - **Ciclo (`.ciclo`)** — a seção de entregas. As 6 etapas em volta de um anel de `470px` que se
   desenha quando a seção entra (`stroke-dashoffset` de 100 a 0 em 1,6s), com os marcos acendendo em
   cascata de 250ms e a frase de apoio no miolo. A marca se chama Cycle e o logo é um círculo de

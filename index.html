@@ -108,17 +108,7 @@
       .ciclo-etapa .n { font-size:22px;margin-bottom:0;min-width:34px; }
       .ciclo-etapa .t { font-size:16px; }
     }
-    /* ESTEIRA — mesmo dispositivo que a pagina ja usa em "Como funciona":
-       trilho de fio de cabelo e numero grande em azul, sem caixa em volta. */
-    .step-track { display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--border); }
-    .step-cell { padding:32px 20px 36px 0;border-right:1px solid var(--border);transition:background var(--d-state) var(--e-ui); }
-    .step-cell:last-child { border-right:0; }
-    .step-cell:hover { background:rgba(61,126,255,0.04); }
-    .step-cell .n { font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;line-height:1;margin-bottom:14px; }
-    .step-cell .t { font-size:16px;font-weight:600;letter-spacing:0.01em; }
     /* STEP */
-    .step-row { padding:36px 0;border-top:1px solid var(--border);display:grid;grid-template-columns:140px 1fr;gap:24px;align-items:start;transition:background var(--d-state) var(--e-ui); }
-    .step-row:hover { background:rgba(61,126,255,0.03); }
     /* SLIDE CARDS */
     .slide-left  { opacity:0;transform:translateX(-72px);transition:opacity var(--d-travel) var(--e-ui),transform var(--d-travel) var(--e-ui); }
     .slide-right { opacity:0;transform:translateX(72px);transition:opacity var(--d-travel) var(--e-ui),transform var(--d-travel) var(--e-ui); }
@@ -128,7 +118,6 @@
     /* Hover lift global */
     .plan-card { transition:border-color var(--d-state) var(--e-ui),transform 0.25s var(--e-ui),box-shadow 0.25s var(--e-ui); }
     .phone-frame { transition:transform var(--d-state) var(--e-ui),box-shadow var(--d-state) var(--e-ui); }
-    .step-row { transition:background var(--d-state) var(--e-ui),transform 0.25s var(--e-ui); }
     /* FAN CARDS */
     .fan-wrap { display:flex;align-items:flex-end;justify-content:center;height:540px;position:relative;margin-top:0px;overflow:visible; }
     .fan-card {
@@ -194,9 +183,6 @@
     /* ===== RESPONSIVE ===== */
     @media (max-width: 900px) {
       .hero-copy { padding:0 24px 108px; }
-      .step-track { grid-template-columns:repeat(3,1fr); }
-      .step-cell:nth-child(3n) { border-right:0; }
-      .step-cell:nth-child(n+4) { border-top:1px solid var(--border); }
       #main-nav { padding:14px 20px!important; }
       #main-nav img { height:70px!important; }
       #main-nav .nav-link { display:none; }
@@ -232,7 +218,6 @@
       .slide-left:hover, .slide-right:hover { transform:translateX(0) translateY(-5px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.4); }
       .plan-card:hover { transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.5); }
       .phone-frame:hover { transform:translateY(-6px);box-shadow:0 0 0 1px #1A1A22,0 40px 100px rgba(0,0,0,0.8)!important; }
-      .step-row:hover { background:rgba(61,126,255,0.03);transform:translateX(4px); }
       .phone-screen:hover .phone-poster { transform:scale(1.03); }
       .process-item:hover { background:rgba(61,126,255,0.06); transform:translateY(-4px); }
       .diff-card:hover { background:rgba(61,126,255,0.1); border-color:rgba(61,126,255,0.4); transform:translateY(-4px); }
@@ -259,11 +244,6 @@
       section > div, footer > div { padding-left:16px!important;padding-right:16px!important; }
       .hero-copy { padding:0 16px 88px; }
       .hero-copy p { font-size:15px;margin-top:22px; }
-      .step-track { grid-template-columns:repeat(2,1fr); }
-      .step-cell { padding:24px 16px 26px 0; }
-      .step-cell:nth-child(3n) { border-right:1px solid var(--border); }
-      .step-cell:nth-child(2n) { border-right:0; }
-      .step-cell:nth-child(n+3) { border-top:1px solid var(--border); }
       #scroll-video { height:340vh!important; }
       .fan-card { width:180px!important;height:290px!important; }
     }
@@ -300,8 +280,7 @@
          acima nao os alcanca. */
       .fan-card { transform:none !important; }
       .phone-frame:hover, .plan-card:hover, .process-item:hover,
-      .diff-card:hover, .step-row:hover, .phone-screen:hover .phone-poster { transform:none !important; }
-    }
+      .diff-card:hover,    }
   </style>
 </head>
 <body>
