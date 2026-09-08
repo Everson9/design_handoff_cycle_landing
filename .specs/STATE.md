@@ -181,6 +181,18 @@ Verificado no browser contra a seção de verificação de cada plano: 1 bloco d
 quarta célula, 6 células visíveis, bloco de movimento reduzido preservando opacidade e cor e cortando
 transform, 6 hovers neutralizados, zero erro de JS, sem overflow horizontal.
 
+## 2026-09-08 (parte 8) — o corte do vídeo era do arquivo, não do CSS
+- Dono reportou que o logo continuava cortado mesmo depois de `object-fit:contain`.
+- **Não era CSS.** A animação dá zoom ao longo dos 8s e, a partir de ~5s, os anéis saem do quadro
+  **na própria exportação**. Medido frame a frame (brilho máximo das linhas de borda, escala 0–255):
+  limpo até 4,5s (≤7), estoura em 5,00–5,25s (98) e de novo em 6,75–7,00s (49).
+  Os pixels que faltam não existem no arquivo — `transform: scale()` só encolheria o corte.
+- **Vídeo cortado em 4,6s**, que é onde o enquadramento ainda é limpo. Reverificado: pior brilho de
+  borda 7 de 255. Arquivo caiu de 1,8 MB para 704 KB.
+- Custo: perde-se o clímax da animação (os rastros orbitando, entre 6,5 e 7,5s). **Para usar a
+  animação inteira, o vídeo precisa ser reexportado com margem** — pedido em aberto com o dono.
+- Receita de medição gravada no `CONVENTIONS.md`.
+
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
   (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.

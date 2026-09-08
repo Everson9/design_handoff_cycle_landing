@@ -65,6 +65,13 @@ Decisão de 08/09/2026, com motivo escrito em `AGENTS.md`.
 
 - Vídeos já foram comprimidos até o limite sem perder qualidade (dono, 08/09/2026). **Não
   recomprimir sem falar com ele.**
+- **Antes de usar vídeo em fundo, medir se o conteúdo encosta na borda do quadro.** O export do
+  `cycle-logo-scrub.mp4` dava zoom e cortava os anéis do logo na própria exportação — nenhum
+  `object-fit` conserta isso, porque os pixels não existem no arquivo. Medição, sem abrir editor:
+  `ffmpeg -i <v> -vf "scale=160:90,fps=8" -pix_fmt gray -f rawvideo saida.raw` e checar o brilho
+  máximo das duas primeiras e duas últimas linhas de cada frame. Acima de ~40 (de 255) o conteúdo
+  está sendo cortado; abaixo de ~12 está limpo. Foi assim que se achou que o trecho bom ia só até
+  4,6s dos 8s.
 - **Receita de vídeo desta LP** (usada no `cycle-logo-scrub.mp4`, 2,6 MB → 1,8 MB, SSIM 0,996):
   `ffmpeg -i <src> -an -c:v libx264 -preset veryslow -tune animation -crf 23 -pix_fmt yuv420p -g 24 -keyint_min 24 -sc_threshold 0 -movflags +faststart <out>`
   - **`-an` sempre**: todo vídeo aqui é `muted`, a faixa de áudio é peso morto.
