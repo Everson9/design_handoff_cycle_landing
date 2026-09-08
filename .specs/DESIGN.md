@@ -82,18 +82,13 @@ Fora display, tracking negativo é proibido.
 
 ## Dispositivos estruturais
 
-- **Ciclo (`.ciclo`)** — a seção de entregas. As 6 etapas em volta de um anel de `470px` que se
-  desenha quando a seção entra (`stroke-dashoffset` de 100 a 0 em 1,6s), com os marcos acendendo em
-  cascata de 250ms e a frase de apoio no miolo. A marca se chama Cycle e o logo é um círculo de
-  raios: aqui o processo *é* a identidade, não uma lista com enfeite. Abaixo de 760px o anel some e
-  vira coluna, com um fio vertical que desce no mesmo tempo.
-- **Hero (`.hero-copy`)** — a linha da marca em `clamp(34px,5.4vw,72px)`, peso 300, tracking
-  `-0.03em`, ancorada à esquerda na mesma coluna de 1200px do resto da página, com o subtítulo em
-  `16px` `#C9C9CE` logo abaixo. O gradiente do vídeo fecha em `rgba(11,11,13,0.9)` embaixo
-  justamente para o display ter contraste.
-- **Texto sobre vídeo fica no rodapé do quadro, nunca no centro.** O centro é onde o assunto do
-  vídeo está; texto ali disputa com a imagem e perde. Vale para o hero e para o painel de abertura
-  do scroll-scrub, que era centralizado em cima do logo e desceu.
+- **Mapa das entregas (`.mapa` / `.mapa-est`)** — percurso horizontal de **borda a borda da tela**,
+  fora da coluna de 1200px. Um fio atravessa a largura toda e seis estações se distribuem de 6% a
+  94%. A linha azul avança conforme a seção cruza a viewport; cada estação acende quando a linha
+  passa (número de `--border` para `--blue`, nome de `--mid` para `--text`, ponto preenchido). Com
+  mouse, o ponto cresce 45%, o número sobe 3px e a descrição aparece — o espaço dela fica sempre
+  reservado, então nada salta. Sem mouse, a descrição já nasce visível. Abaixo de 900px vira faixa
+  rolável. **É a única coisa da página que atravessa a tela inteira**, e é isso que lhe dá peso.
 - **Mockup de case:** `max-width:392px` (320px abaixo de 900px) e **capa do vídeo obrigatória**
   (`.phone-poster`, servida do próprio domínio). Tela preta com um play não diz o que é o case.
 

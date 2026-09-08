@@ -212,13 +212,41 @@ transform, 6 hovers neutralizados, zero erro de JS, sem overflow horizontal.
   o trilho virou ciclo — nenhum deles era usado em outro lugar. O `DESIGN.md` afirmava que o trilho
   era usado no "Como funciona" do scroll-scrub, o que era falso: aquela seção usa `.process-item`.
 
+## 2026-09-08 (parte 10) — o ciclo vira mapa, e o DESIGN.md fecha o drift
+- O ciclo em anel durou pouco: o dono achou **vago, sem interação, e com as laterais da LP vazias**.
+  As três críticas tinham a mesma resposta.
+- **A seção virou um mapa horizontal de borda a borda.** Sai da coluna de 1200px e atravessa a tela;
+  um fio percorre a largura toda com seis estações de 6% a 94%. A linha azul **avança conforme a
+  seção cruza a viewport** e cada estação acende quando a linha passa por ela. Medido no browser:
+  0% (0 acesas) → 38% (2) → 73% (4) → 100% (6).
+- **Interação:** com mouse, o ponto cresce 45%, o número sobe 3px e a descrição aparece. O espaço da
+  descrição fica sempre reservado, então não há salto de layout. Sem mouse (toque), a descrição já
+  nasce visível — o hover nunca seria disparado ali.
+- Descrições **adaptadas das que já existiam** no "Como funciona", a pedido do dono, não inventadas:
+  Diagnóstico → análise da percepção atual · Reunião → alinhamento de estratégia e calendário ·
+  Roteirização → roteiros e direção criativa · Captação → produção no cliente · Edição → edição e
+  finalização · Entrega → conteúdos publicados.
+- Custo de performance: **zero loop permanente**. O listener de scroll só age com a seção por perto
+  (IntersectionObserver com margem de 60%), é throttled por `requestAnimationFrame` e só escreve no
+  DOM quando o estágio muda de verdade.
+- **Drift do DESIGN.md fechado.** Com o arquivo na raiz, o detector passou a validar a página contra
+  os tokens e acusou 29 achados. Não era a página que estava errada: era o `DESIGN.md` que estava
+  incompleto. Documentados 5 neutros que a página realmente usa (`Chalk`, `Bone`, `Dusk`, `Ring`,
+  `Signal Lit`) e 13 papéis de tipo. **29 → 14**, e os 14 que ficam são justificados: 5 de label
+  11px (nosso piso), 5 da gradiente do Instagram (marca de terceiro, documentada em prosa), 1 falso
+  positivo (`background:#000` lido como cor de texto), marquee e travessão intencionais.
+
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
   (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.
 - **6,1 MB de assets órfãos em `uploads/`** (nenhum referenciado no HTML): `Design sem nome.mp4`
   (2,3 MB), `hero-video.mp4` e `Apresentacao inicial.mp4` (860 KB cada, sobras do hero antigo) e
   dois PNGs do ElevenLabs (2,2 MB). Apagar depende do dono dizer que não vai usar.
-- Esperando do dono: arquivo novo do vídeo de scroll-scrub (câmera 3D).
+- **Nada pendente do lado do código.** O que resta é decisão de conteúdo com a Cycle: as seções
+  "O que você recebe" e "Como funciona" descrevem processos que se sobrepõem (Diagnóstico e Captação
+  aparecem nas duas). Visualmente já são bem diferentes — mapa horizontal vs. faixa no scroll-scrub —
+  mas o texto ainda concorre. Sugestão: uma vira **o que se entrega** e a outra **como se trabalha**,
+  com nomes vindos deles.
 - Número de WhatsApp do CTA (`558293270904`) por confirmar com o cliente.
 - Tracking negativo em display (`-0.02em` a `-0.03em`) passa de -0,5px em tamanhos grandes:
   assumido junto com o peso 300, mas marcado como "a confirmar" no `DESIGN.md`.

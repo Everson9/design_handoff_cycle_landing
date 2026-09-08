@@ -9,7 +9,12 @@ colors:
   ash: "#888888"
   smoke: "#555555"
   signal: "#3D7EFF"
+  signal-lit: "#6D9FFF"
   signal-veil: "rgba(61,126,255,0.12)"
+  chalk: "#C9C9CE"
+  bone: "#CCCCCC"
+  dusk: "#666666"
+  ring: "rgba(255,255,255,0.15)"
 typography:
   display:
     fontFamily: "Manrope, sans-serif"
@@ -41,6 +46,78 @@ typography:
     fontWeight: 700
     lineHeight: 1.4
     letterSpacing: "0.2em"
+  hero:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "clamp(26px, 3.9vw, 52px)"
+    fontWeight: 300
+    lineHeight: 1.12
+    letterSpacing: "-0.02em"
+  statement:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "clamp(36px, 5.5vw, 72px)"
+    fontWeight: 300
+    lineHeight: 1.1
+    letterSpacing: "-0.025em"
+  numeral:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "38px"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "-0.02em"
+  numeral-sm:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "30px"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "-0.02em"
+  price:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "52px"
+    fontWeight: 700
+    lineHeight: 1
+    letterSpacing: "-0.02em"
+  price-unit:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "18px"
+    fontWeight: 400
+    lineHeight: 1.4
+    letterSpacing: "normal"
+  list-item:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "14px"
+    fontWeight: 400
+    lineHeight: 1.6
+    letterSpacing: "normal"
+  caption:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "normal"
+  micro:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "12px"
+    fontWeight: 500
+    lineHeight: 1.5
+    letterSpacing: "0.06em"
+  closing:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "clamp(32px, 5.5vw, 80px)"
+    fontWeight: 300
+    lineHeight: 1.02
+    letterSpacing: "-0.03em"
+  section-lead:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "clamp(28px, 4vw, 56px)"
+    fontWeight: 300
+    lineHeight: 1.1
+    letterSpacing: "-0.02em"
+  panel-sm:
+    fontFamily: "Manrope, sans-serif"
+    fontSize: "clamp(24px, 7vw, 40px)"
+    fontWeight: 300
+    lineHeight: 1.1
+    letterSpacing: "-0.02em"
 rounded:
   hair: "3px"
   sm: "8px"
@@ -79,10 +156,11 @@ components:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.paper}"
     rounded: "{rounded.sm}"
-  step-cell:
+  map-station:
     backgroundColor: "{colors.ink}"
     textColor: "{colors.paper}"
-    padding: "32px 20px 36px 0"
+    typography: "{typography.numeral-sm}"
+    width: "172px"
 ---
 
 # Design System: Cycle
@@ -129,7 +207,21 @@ Uma escala de cinzas frios sobre quase-preto, cortada por um único azul de sina
 - **Hairline** (`#1C1C20`): a divisão. Faz o trabalho que uma caixa faria.
 - **Paper** (`#F5F5F5`): texto principal e display. 18:1 sobre Ink.
 - **Ash** (`#888888`): todo texto de apoio — subtítulo, label, link de rodapé, numeração. 5,4:1.
+- **Chalk** (`#C9C9CE`): subtítulo do hero, sobre vídeo. Mais claro que `Ash` porque ali disputa com
+  imagem em movimento.
+- **Bone** (`#CCCCCC`): item de lista dentro do cartão de plano.
+- **Dusk** (`#666666`): link de navegação em repouso — só na navbar, onde o hover devolve `Paper`.
+- **Ring** (`rgba(255,255,255,0.15)`): contorno do botão de play. É borda, nunca texto.
 - **Smoke** (`#555555`): 2,6:1. Não é cor de texto.
+
+### Acento
+
+**Signal Lit** (`#6D9FFF`): o azul um passo mais claro, usado só no hover da numeração de etapa.
+Não é um segundo acento — é o mesmo azul respondendo ao mouse.
+
+A gradiente do Instagram (`#4f5bd5 → #962fbf → #d62976 → #fa7e1e → #feda75`) aparece uma vez, no
+hover do CTA do Instagram. É marca de terceiro, não faz parte do sistema, e não deve ser reutilizada
+em nada.
 
 ### Named Rules
 
@@ -242,10 +334,21 @@ plano em destaque (`1px solid Signal`).
 - Links em `12px/500`, `#666` em repouso, `Paper` no hover
 - Abaixo de 560px vira menu de tela cheia com `blur(12px)`
 
-### Trilho de etapas (assinatura)
-Sequência numerada **sem caixa**: fio de cabelo no topo, células divididas por fio vertical, número
-em `38px/700 Signal`, nome em `16px/600`. 6 colunas → 3 (≤900px) → 2 (≤560px). É o dispositivo
-estrutural da casa para qualquer sequência.
+### Mapa das entregas (assinatura)
+Percurso horizontal de **borda a borda da tela**, fora da coluna de 1200px: um fio de cabelo
+atravessa a largura toda e seis estações se distribuem sobre ele, de 6% a 94%. A linha azul avança
+conforme a seção cruza a viewport, e cada estação acende quando a linha passa por ela — número de
+`--border` para `--blue`, nome de `--mid` para `--text`, ponto preenchido.
+
+Com mouse, a estação responde: o ponto cresce 45%, o número sobe 3px e a descrição aparece. O espaço
+da descrição fica sempre reservado, então nada salta. Sem mouse não há hover, então a descrição já
+nasce visível.
+
+Abaixo de 900px seis estações não cabem lado a lado: vira faixa rolável na horizontal, o mesmo
+recurso que a página já usa em "Como funciona".
+
+**É aqui que a página usa as laterais.** O resto respira dentro de 1200px; este percurso, não —
+é a única coisa que atravessa a tela inteira, e essa exclusividade é o que lhe dá peso.
 
 ### Moldura de celular (assinatura)
 `aspect-ratio: 9/16`, `max-width: 392px`, raio `38px`, tela `30px`, notch de `3px`. Sempre com capa
