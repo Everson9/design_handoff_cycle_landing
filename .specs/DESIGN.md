@@ -122,6 +122,21 @@ Escala de duração: `0.3s` (hover/estado) · `0.4s` (entrada) · `0.45s` (deslo
 | `--e-ui` | `cubic-bezier(0.23, 1, 0.32, 1)` | tudo que é controle e entrada: hover, fade, slide, nav |
 | `--e-drawer` | `cubic-bezier(0.32, 0.72, 0, 1)` | menu mobile — painel que cobre a tela |
 | `--e-pop` | `cubic-bezier(0.34, 1.15, 0.64, 1)` | entrada dos fan cards — a única curva com overshoot da página |
+
+Durações também são token: `--d-press` 0.16s (retorno de toque) · `--d-state` 0.3s (hover e estado) ·
+`--d-enter` 0.4s (entrada) · `--d-travel` 0.45s (deslocamento maior) · `--d-panel` 0.6s (painel do
+scrub). Valor de uso único continua literal — forçá-lo na escala mudaria o movimento, não o
+consolidaria.
+
+**Retorno de pressão é obrigatório em botão e CTA:** `:active` com `transform: scale(0.97)` em
+`--d-press`. É o que confirma o toque antes de a ação acontecer.
+
+**Movimento no hover só existe com mouse.** Toda regra de `:hover` que desloca ou escala vive dentro
+de `@media (hover: hover) and (pointer: fine)`. Em tela de toque o tap dispara hover falso e o
+elemento fica preso elevado. Hover que só troca cor fica fora do gate: no toque ele some sozinho.
+
+**Escalonamento (`.fi.stagger`):** 80ms entre irmãos, só onde a ordem *é* o conteúdo — hoje o trilho
+de etapas e os cartões de plano. É decorativo, então nunca toca `pointer-events`.
 | `--e-pop` | `cubic-bezier(0.34,1.15,0.64,1)` | **só** a entrada do fan card — passa de 1 e volta (overshoot). Curva de chegada, nunca de hover nem de controle |
 | `linear` | — | só a barra de progresso do scrub e a marquee, onde velocidade constante é o certo |
 
@@ -138,6 +153,12 @@ grande dispara enjoo e enxaqueca em quem tem sensibilidade vestibular, e esta p�
 quase toda movimento. O que sai é o **deslocamento**, não o conteúdo — os elementos
 continuam aparecendo, só que sem viajar pela tela. O scroll-scrub congela no primeiro
 frame, porque vídeo amarrado ao scroll é o pior caso dessa lista.
+
+O bloco **não zera transição**: ele troca `transition-property` por uma lista de propriedades sem
+deslocamento (`opacity`, `color`, `background-color`, `border-color`, `box-shadow`,
+`backdrop-filter`) em 200ms. Fade e troca de cor ajudam a entender a interface e não provocam enjoo;
+zerar tudo faria a página piscar de estado em estado. O retorno de pressão também fica — é feedback,
+não decoração.
 
 **Scroll-scrub:** a seção de câmera 3D amarra `video.currentTime` ao progresso do scroll
 (`height:500vh`, filho `sticky` de `100vh`). É a única animação dirigida por scroll contínuo.

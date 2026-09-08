@@ -26,6 +26,13 @@
     --e-ui: cubic-bezier(0.23, 1, 0.32, 1);
     --e-drawer: cubic-bezier(0.32, 0.72, 0, 1);
     --e-pop: cubic-bezier(0.34, 1.15, 0.64, 1);
+    /* Escala de duracao. So entram aqui os degraus reutilizados; valor de uso
+       unico continua literal, porque forcar na escala mudaria o movimento. */
+    --d-press: 0.16s;
+    --d-state: 0.3s;
+    --d-enter: 0.4s;
+    --d-travel: 0.45s;
+    --d-panel: 0.6s;
       --blue-dim: rgba(61,126,255,0.12);
       --bg: #0B0B0D;
       --surface: #101012;
@@ -35,15 +42,24 @@
       --mid: #888;
     }
     /* NAV */
-    .nav-link { font-size:12px;font-weight:500;letter-spacing:0.1em;color:#666;text-decoration:none;transition:color 0.3s var(--e-ui); }
+    .nav-link { font-size:12px;font-weight:500;letter-spacing:0.1em;color:#666;text-decoration:none;transition:color var(--d-state) var(--e-ui); }
     .nav-link:hover { color:#F5F5F5; }
-    .nav-cta { font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#0B0B0D;background:#F5F5F5;text-decoration:none;padding:10px 24px;border-radius:100px;transition:background 0.3s var(--e-ui),color 0.3s var(--e-ui); }
+    .nav-cta { font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#0B0B0D;background:#F5F5F5;text-decoration:none;padding:10px 24px;border-radius:100px;transition:background var(--d-state) var(--e-ui),color var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
     .nav-cta:hover { background:#3D7EFF;color:var(--bg); }
     /* FADE */
-    .fi { opacity:0;transform:translateY(24px);transition:opacity 0.4s var(--e-ui),transform 0.4s var(--e-ui); }
+    .fi { opacity:0;transform:translateY(24px);transition:opacity var(--d-enter) var(--e-ui),transform var(--d-enter) var(--e-ui); }
+    /* Escalonamento: usado so onde a ordem E o conteudo (o trilho de etapas e os
+       planos). 80ms entre irmaos. Decorativo, entao nunca toca pointer-events. */
+    .fi.stagger > * { opacity:0;transform:translateY(16px);transition:opacity var(--d-enter) var(--e-ui),transform var(--d-enter) var(--e-ui); }
+    .fi.stagger.up > * { opacity:1;transform:none; }
+    .fi.stagger > *:nth-child(2) { transition-delay:80ms; }
+    .fi.stagger > *:nth-child(3) { transition-delay:160ms; }
+    .fi.stagger > *:nth-child(4) { transition-delay:240ms; }
+    .fi.stagger > *:nth-child(5) { transition-delay:320ms; }
+    .fi.stagger > *:nth-child(6) { transition-delay:400ms; }
     .fi.up { opacity:1;transform:translateY(0); }
     /* CARDS */
-    .card-hover { transition:border-color 0.3s var(--e-ui),background 0.3s var(--e-ui); }
+    .card-hover { transition:border-color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui); }
     .card-hover:hover { border-color:rgba(61,126,255,0.35)!important;background:#12121A!important; }
     /* HERO — a linha da Cycle no tamanho de display do proprio sistema,
        ancorada na mesma coluna de 1200px do resto da pagina. */
@@ -54,35 +70,31 @@
     /* ESTEIRA — mesmo dispositivo que a pagina ja usa em "Como funciona":
        trilho de fio de cabelo e numero grande em azul, sem caixa em volta. */
     .step-track { display:grid;grid-template-columns:repeat(6,1fr);border-top:1px solid var(--border); }
-    .step-cell { padding:32px 20px 36px 0;border-right:1px solid var(--border);transition:background 0.3s var(--e-ui); }
+    .step-cell { padding:32px 20px 36px 0;border-right:1px solid var(--border);transition:background var(--d-state) var(--e-ui); }
     .step-cell:last-child { border-right:0; }
     .step-cell:hover { background:rgba(61,126,255,0.04); }
     .step-cell .n { font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;line-height:1;margin-bottom:14px; }
     .step-cell .t { font-size:16px;font-weight:600;letter-spacing:0.01em; }
     /* STEP */
-    .step-row { padding:36px 0;border-top:1px solid var(--border);display:grid;grid-template-columns:140px 1fr;gap:24px;align-items:start;transition:background 0.3s var(--e-ui); }
+    .step-row { padding:36px 0;border-top:1px solid var(--border);display:grid;grid-template-columns:140px 1fr;gap:24px;align-items:start;transition:background var(--d-state) var(--e-ui); }
     .step-row:hover { background:rgba(61,126,255,0.03); }
     /* SLIDE CARDS */
-    .slide-left  { opacity:0;transform:translateX(-72px);transition:opacity 0.45s var(--e-ui),transform 0.45s var(--e-ui); }
-    .slide-right { opacity:0;transform:translateX(72px);transition:opacity 0.45s var(--e-ui),transform 0.45s var(--e-ui); }
+    .slide-left  { opacity:0;transform:translateX(-72px);transition:opacity var(--d-travel) var(--e-ui),transform var(--d-travel) var(--e-ui); }
+    .slide-right { opacity:0;transform:translateX(72px);transition:opacity var(--d-travel) var(--e-ui),transform var(--d-travel) var(--e-ui); }
     .slide-left.in, .slide-right.in { opacity:1;transform:translateX(0); }
     .slide-left.out  { opacity:0;transform:translateX(-72px); }
     .slide-right.out { opacity:0;transform:translateX(72px); }
     /* Hover lift global */
-    .slide-left:hover, .slide-right:hover { transform:translateX(0) translateY(-5px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.4); }
-    .plan-card { transition:border-color 0.3s var(--e-ui),transform 0.25s var(--e-ui),box-shadow 0.25s var(--e-ui); }
-    .plan-card:hover { transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.5); }
-    .phone-frame { transition:transform 0.3s var(--e-ui),box-shadow 0.3s var(--e-ui); }
-    .phone-frame:hover { transform:translateY(-6px);box-shadow:0 0 0 1px #1A1A22,0 40px 100px rgba(0,0,0,0.8)!important; }
-    .step-row { transition:background 0.3s var(--e-ui),transform 0.25s var(--e-ui); }
-    .step-row:hover { background:rgba(61,126,255,0.03);transform:translateX(4px); }
+    .plan-card { transition:border-color var(--d-state) var(--e-ui),transform 0.25s var(--e-ui),box-shadow 0.25s var(--e-ui); }
+    .phone-frame { transition:transform var(--d-state) var(--e-ui),box-shadow var(--d-state) var(--e-ui); }
+    .step-row { transition:background var(--d-state) var(--e-ui),transform 0.25s var(--e-ui); }
     /* FAN CARDS */
     .fan-wrap { display:flex;align-items:flex-end;justify-content:center;height:540px;position:relative;margin-top:0px;overflow:visible; }
     .fan-card {
       width:230px;height:370px;border-radius:16px;overflow:hidden;
       position:absolute;bottom:0;
       border:1px solid #1e1e26;
-      transition:transform 0.55s var(--e-pop),box-shadow 0.4s var(--e-ui),opacity 0.45s var(--e-ui);
+      transition:transform 0.55s var(--e-pop),box-shadow var(--d-enter) var(--e-ui),opacity var(--d-travel) var(--e-ui);
       transform-origin:bottom center;
       opacity:0;
     }
@@ -98,43 +110,43 @@
     @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
     .marquee-track { display:flex;width:max-content;animation:marquee 18s linear infinite; }
     /* PLANS */
-    .plan-card { padding:52px 44px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.3s var(--e-ui); }
+    .plan-card { padding:52px 44px;border:1px solid var(--border);background:var(--surface);transition:border-color var(--d-state) var(--e-ui); }
     .plan-card.highlight { border-color:var(--blue); }
     /* CASES */
-    .case-video { aspect-ratio:16/9;background:#0D0D11;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;cursor:pointer;transition:background 0.3s var(--e-ui); }
+    .case-video { aspect-ratio:16/9;background:#0D0D11;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;cursor:pointer;transition:background var(--d-state) var(--e-ui); }
     .case-video:hover { background:#111118; }
-    .play-btn { width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;transition:border-color 0.3s var(--e-ui),background 0.3s var(--e-ui); }
+    .play-btn { width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;transition:border-color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
     .case-video:hover .play-btn { border-color:var(--blue);background:rgba(61,126,255,0.1); }
     @keyframes scrollLine { 0%{opacity:0;transform:scaleY(0);transform-origin:top} 50%{opacity:1;transform:scaleY(1);transform-origin:top} 100%{opacity:0;transform:scaleY(1);transform-origin:bottom} }
     #main-nav.scrolled { background:rgba(11,11,13,0.95)!important;border-bottom-color:var(--border)!important;backdrop-filter:blur(16px); }
     /* DEVICE MOCKUP — celular. Os cases sao Shorts (9:16): moldura vertical, que e
        tambem o formato em que o cliente final assiste o conteudo da Cycle. */
     .phone-frame { width:100%;max-width:392px;margin:0 auto;background:#0A0A0D;border-radius:38px;border:2px solid #2A2A32;padding:9px;box-shadow:0 0 0 1px #1A1A22,0 32px 80px rgba(0,0,0,0.7);position:relative; }
-    .phone-screen { border-radius:30px;overflow:hidden;aspect-ratio:9/16;background:#0D0D11;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:background 0.3s var(--e-ui); }
+    .phone-screen { border-radius:30px;overflow:hidden;aspect-ratio:9/16;background:#0D0D11;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:background var(--d-state) var(--e-ui); }
     .phone-screen:hover { background:#111118; }
     .phone-screen:hover .play-btn { border-color:var(--blue);background:rgba(61,126,255,0.12); }
     .phone-screen:focus-visible { outline:2px solid var(--blue);outline-offset:3px; }
     .phone-screen.playing .play-btn, .phone-screen.playing .phone-notch, .phone-screen.playing .phone-poster { opacity:0;pointer-events:none; }
     /* Capa do Short, servida do proprio dominio: a tela preta nao dizia nada e a
        thumb do YouTube contataria o youtube antes do clique. */
-    .phone-poster { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 0.4s var(--e-ui),transform 0.5s var(--e-ui); }
-    .phone-screen:hover .phone-poster { transform:scale(1.03); }
-    .phone-screen::after { content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,10,0.15),rgba(8,8,10,0.55));transition:opacity 0.4s var(--e-ui); }
+    .phone-poster { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity var(--d-enter) var(--e-ui),transform 0.5s var(--e-ui); }
+    .phone-screen::after { content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,10,0.15),rgba(8,8,10,0.55));transition:opacity var(--d-enter) var(--e-ui); }
     .phone-screen.playing::after { opacity:0; }
     .play-btn { position:relative;z-index:2; }
     .phone-screen iframe { position:absolute;inset:0;width:100%;height:100%;border:0; }
     /* Sem isto o video comeca e nao para: o iframe cobria a tela inteira do celular
        e nao sobrava nada clicavel para fechar. */
-    .phone-close { position:absolute;top:10px;right:10px;z-index:4;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);background:rgba(8,8,10,0.72);backdrop-filter:blur(6px);color:var(--text);display:none;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:background 0.3s var(--e-ui),border-color 0.3s var(--e-ui); }
+    .phone-close { position:absolute;top:10px;right:10px;z-index:4;width:32px;height:32px;border-radius:50%;border:1px solid rgba(255,255,255,0.25);background:rgba(8,8,10,0.72);backdrop-filter:blur(6px);color:var(--text);display:none;align-items:center;justify-content:center;cursor:pointer;padding:0;transition:background var(--d-state) var(--e-ui),border-color var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
     .phone-close:hover { background:rgba(8,8,10,0.9);border-color:var(--blue); }
     .phone-close:focus-visible { outline:2px solid var(--blue);outline-offset:2px; }
+    /* Retorno de pressao: o controle confirma que registrou o toque antes de a
+       acao acontecer. 0.97 e o teto do sutil; abaixo disso vira brinquedo. */
+    .nav-cta:active, .play-btn:active, .phone-close:active, .wa-cta:active { transform:scale(0.97); }
     .phone-screen.playing .phone-close { display:flex; }
-    .phone-notch { position:absolute;top:14px;left:50%;transform:translateX(-50%);width:74px;height:5px;border-radius:3px;background:#1A1A20;z-index:2;transition:opacity 0.3s var(--e-ui); }
-    .process-item { transition:background 0.3s var(--e-ui),transform 0.3s var(--e-ui); cursor:default; }
-    .process-item:hover { background:rgba(61,126,255,0.06); transform:translateY(-4px); }
+    .phone-notch { position:absolute;top:14px;left:50%;transform:translateX(-50%);width:74px;height:5px;border-radius:3px;background:#1A1A20;z-index:2;transition:opacity var(--d-state) var(--e-ui); }
+    .process-item { transition:background var(--d-state) var(--e-ui),transform var(--d-state) var(--e-ui); cursor:default; }
     .process-item:hover .process-num { color:#6d9fff; }
-    .diff-card { transition:background 0.3s var(--e-ui),transform 0.3s var(--e-ui),border-color 0.3s var(--e-ui); cursor:default; }
-    .diff-card:hover { background:rgba(61,126,255,0.1); border-color:rgba(61,126,255,0.4); transform:translateY(-4px); }
+    .diff-card { transition:background var(--d-state) var(--e-ui),transform var(--d-state) var(--e-ui),border-color var(--d-state) var(--e-ui); cursor:default; }
     .diff-card:hover .diff-num { color:rgba(61,126,255,0.6); }
     .ig-cta:hover { border-color:transparent!important;background:linear-gradient(135deg,#4f5bd5,#962fbf,#d62976,#fa7e1e,#feda75)!important; }
 
@@ -171,12 +183,25 @@
 
     /* Fan-of-cards effect needs ~1150px of horizontal room to not overlap/overflow —
        below that (tablets, notebooks, phones alike) it becomes a plain scroll strip. */
+    /* Movimento no hover so existe com mouse. Em tela de toque o tap dispara um
+       hover falso e o elemento fica preso no estado elevado ate o usuario tocar
+       em outro lugar; esta LP e vista sobretudo no celular. Hover que so troca
+       cor/fundo/borda fica fora deste gate: no toque ele some sozinho. */
+    @media (hover: hover) and (pointer: fine) {
+      .slide-left:hover, .slide-right:hover { transform:translateX(0) translateY(-5px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.4); }
+      .plan-card:hover { transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.5); }
+      .phone-frame:hover { transform:translateY(-6px);box-shadow:0 0 0 1px #1A1A22,0 40px 100px rgba(0,0,0,0.8)!important; }
+      .step-row:hover { background:rgba(61,126,255,0.03);transform:translateX(4px); }
+      .phone-screen:hover .phone-poster { transform:scale(1.03); }
+      .process-item:hover { background:rgba(61,126,255,0.06); transform:translateY(-4px); }
+      .diff-card:hover { background:rgba(61,126,255,0.1); border-color:rgba(61,126,255,0.4); transform:translateY(-4px); }
+    }
     @media (max-width: 1150px) {
       .fan-wrap { height:auto!important;min-height:0!important;overflow-x:auto!important;overflow-y:visible!important;justify-content:flex-start!important;padding:4px 20px 24px;scroll-snap-type:x proximity; }
       .fan-card { position:static!important;flex:0 0 auto!important;width:220px!important;height:340px!important;transform:none!important;opacity:1!important;scroll-snap-align:start;margin-right:14px; }
     }
 
-    .mobile-menu-link { font-size:18px;font-weight:500;color:#F5F5F5;text-decoration:none;letter-spacing:0.02em;opacity:0;transform:translateY(14px);transition:opacity 0.35s var(--e-drawer),transform 0.35s var(--e-drawer),color 0.3s var(--e-ui); }
+    .mobile-menu-link { font-size:18px;font-weight:500;color:#F5F5F5;text-decoration:none;letter-spacing:0.02em;opacity:0;transform:translateY(14px);transition:opacity 0.35s var(--e-drawer),transform 0.35s var(--e-drawer),color var(--d-state) var(--e-ui); }
     .mobile-menu-link:hover { color:var(--blue); }
     #mobile-menu.open { opacity:1!important;visibility:visible!important;pointer-events:auto!important;transition:opacity 0.3s var(--e-drawer)!important; }
     #mobile-menu.open .mobile-menu-link { opacity:1;transform:translateY(0); }
@@ -214,21 +239,30 @@
        Os elementos continuam aparecendo — o que sai e o deslocamento. */
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
+      /* Movimento reduzido nao e ausencia de movimento: fade e troca de cor ficam,
+         porque ajudam a entender a interface e nao provocam enjoo. O que sai e
+         deslocamento e escala. Zerar tudo faria a pagina piscar de estado em estado. */
       *, *::before, *::after {
+        transition-property: opacity, color, background-color, border-color, box-shadow, backdrop-filter !important;
+        transition-duration: 0.2s !important;
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
       }
       .fi, .slide-left, .slide-right { opacity:1 !important;transform:none !important; }
+      .fi.stagger > * { opacity:1 !important;transform:none !important;transition-delay:0ms !important; }
       .marquee-track { animation: none !important; }
-      .phone-frame:hover { transform:none !important; }
+      /* Os fan cards recebem transform por JavaScript, entao o seletor universal
+         acima nao os alcanca. */
+      .fan-card { transform:none !important; }
+      .phone-frame:hover, .plan-card:hover, .process-item:hover,
+      .diff-card:hover, .step-row:hover, .phone-screen:hover .phone-poster { transform:none !important; }
     }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav id="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:100;padding:8px 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:transparent;border-bottom:1px solid transparent;transition:background 0.4s var(--e-ui),border-color 0.4s var(--e-ui);">
+<nav id="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:100;padding:8px 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:transparent;border-bottom:1px solid transparent;transition:background var(--d-enter) var(--e-ui),border-color var(--d-enter) var(--e-ui);">
   <img src="uploads/logo-cycle.png" alt="Cycle" style="height:110px;object-fit:contain;flex-shrink:0;">
   <div style="display:flex;align-items:center;gap:36px;">
     <a href="#percepcao" class="nav-link">Percepção</a>
@@ -243,7 +277,7 @@
 </nav>
 
 <!-- MOBILE MENU -->
-<div id="mobile-menu" style="display:flex;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;background:rgba(11,11,13,0.98);backdrop-filter:blur(12px);flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s var(--e-ui),visibility 0s linear 0.3s;">
+<div id="mobile-menu" style="display:flex;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;background:rgba(11,11,13,0.98);backdrop-filter:blur(12px);flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity var(--d-state) var(--e-ui),visibility 0s linear 0.3s;">
   <a href="#percepcao" class="mobile-menu-link">Percepção</a>
   <a href="#sistema" class="mobile-menu-link">Sistema</a>
   <a href="#planos" class="mobile-menu-link">Planos</a>
@@ -398,7 +432,7 @@
       <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;">O que você recebe.</h2>
       <p style="margin-top:16px;font-size:15px;font-weight:400;color:var(--mid);line-height:1.6;">Do diagnóstico à entrega, incluso em todos os planos.</p>
     </div>
-    <div class="fi step-track">
+    <div class="fi stagger step-track">
       <div class="step-cell">
         <p class="n">01</p>
         <p class="t">Diagnóstico</p>
@@ -435,7 +469,7 @@
     <div class="fi" style="margin-bottom:64px;">
       <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;">Escolha seu sistema.</h2>
     </div>
-    <div class="fi g2" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
+    <div class="fi stagger g2" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
       <!-- Performance — destaque -->
       <div class="plan-card highlight">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;">
@@ -609,37 +643,37 @@
     </div>
 
     <!-- PANEL 2: Como funciona (sobe do baixo) -->
-    <div id="panel-como" style="position:absolute;inset:0;z-index:3;display:flex;align-items:flex-end;opacity:0;transform:translateY(80px);transition:opacity 0.6s var(--e-ui),transform 0.6s var(--e-ui);pointer-events:none;">
+    <div id="panel-como" style="position:absolute;inset:0;z-index:3;display:flex;align-items:flex-end;opacity:0;transform:translateY(80px);transition:opacity var(--d-panel) var(--e-ui),transform var(--d-panel) var(--e-ui);pointer-events:none;">
       <div style="width:100%;padding:16px 80px 28px;background:linear-gradient(to top,rgba(8,8,10,0.98) 48%,transparent);">
         <h2 style="font-size:clamp(24px,2.5vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:14px;">Como funciona.</h2>
         <div class="process-grid" style="display:flex;overflow-x:auto;gap:0;border-top:1px solid rgba(255,255,255,0.08);scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;">
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px 18px 0;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">01</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color var(--d-state) var(--e-ui);">01</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Diagnóstico</p>
             <p style="font-size:12px;color:var(--mid);line-height:1.5;">Análise da percepção atual</p>
           </div>
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">02</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color var(--d-state) var(--e-ui);">02</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Planejamento</p>
             <p style="font-size:12px;color:var(--mid);line-height:1.5;">Estratégia e calendário</p>
           </div>
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">03</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color var(--d-state) var(--e-ui);">03</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Captação</p>
             <p style="font-size:12px;color:var(--mid);line-height:1.5;">Produção no cliente</p>
           </div>
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">04</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color var(--d-state) var(--e-ui);">04</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Produção</p>
             <p style="font-size:12px;color:var(--mid);line-height:1.5;">Edição e direção criativa</p>
           </div>
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">05</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color var(--d-state) var(--e-ui);">05</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Entrega</p>
             <p style="font-size:12px;color:var(--mid);line-height:1.5;">Conteúdos publicados</p>
           </div>
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 0 18px 22px;">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">06</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color var(--d-state) var(--e-ui);">06</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Evolução</p>
             <p style="font-size:12px;color:var(--mid);line-height:1.5;">Melhoria contínua</p>
           </div>
@@ -648,24 +682,24 @@
     </div>
 
     <!-- PANEL 3: Por que a Cycle (sobe do baixo) -->
-    <div id="panel-porque" style="position:absolute;inset:0;z-index:4;display:flex;align-items:flex-end;opacity:0;transform:translateY(80px);transition:opacity 0.6s var(--e-ui),transform 0.6s var(--e-ui);pointer-events:none;">
+    <div id="panel-porque" style="position:absolute;inset:0;z-index:4;display:flex;align-items:flex-end;opacity:0;transform:translateY(80px);transition:opacity var(--d-panel) var(--e-ui),transform var(--d-panel) var(--e-ui);pointer-events:none;">
       <div style="width:100%;padding:16px 80px 28px;background:linear-gradient(to top,rgba(8,8,10,0.98) 48%,transparent);">
         <h2 style="font-size:clamp(24px,2.5vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:14px;">Por que a Cycle?</h2>
         <div class="diff-grid" style="display:flex;overflow-x:auto;gap:2px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;">
           <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s var(--e-ui);">01</p>
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color var(--d-state) var(--e-ui);">01</p>
             <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Estratégia antes da produção.</h3>
           </div>
           <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s var(--e-ui);">02</p>
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color var(--d-state) var(--e-ui);">02</p>
             <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Conteúdo com propósito.</h3>
           </div>
           <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s var(--e-ui);">03</p>
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color var(--d-state) var(--e-ui);">03</p>
             <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Consistência acima de volume.</h3>
           </div>
           <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s var(--e-ui);">04</p>
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color var(--d-state) var(--e-ui);">04</p>
             <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Fortalecimento da percepção da marca.</h3>
           </div>
         </div>
@@ -692,12 +726,12 @@
       <img loading="lazy" src="uploads/logo-cycle.png" alt="Cycle" style="height:64px;object-fit:contain;opacity:0.6;">
       <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
         <!-- TODO: número WhatsApp -->
-        <a href="https://wa.me/558293270904" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:12px;background:var(--blue);color:var(--bg);font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:opacity 0.3s var(--e-ui);">
+        <a class="wa-cta" href="https://wa.me/558293270904" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:12px;background:var(--blue);color:var(--bg);font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:opacity var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           Falar no WhatsApp
         </a>
         <!-- TODO: link Instagram -->
-        <a href="https://www.instagram.com/cycleprod/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:12px;background:transparent;border:1px solid var(--border);color:#F5F5F5;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:border-color 0.3s var(--e-ui),background 0.3s var(--e-ui);" class="ig-cta">
+        <a href="https://www.instagram.com/cycleprod/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:12px;background:transparent;border:1px solid var(--border);color:#F5F5F5;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:border-color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui);" class="ig-cta">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
           Ver bastidores no Instagram
         </a>
@@ -714,14 +748,14 @@
     <img loading="lazy" src="uploads/logo-cycle.png" alt="Cycle" style="height:64px;object-fit:contain;opacity:0.55;">
     <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:center;">
       <!-- TODO: número WhatsApp -->
-      <a href="https://wa.me/558293270904" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.3s var(--e-ui);" class="nav-link">WhatsApp</a>
+      <a href="https://wa.me/558293270904" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color var(--d-state) var(--e-ui);" class="nav-link">WhatsApp</a>
       <!-- TODO: link Instagram -->
-      <a href="https://www.instagram.com/cycleprod/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.3s var(--e-ui);" class="nav-link">
+      <a href="https://www.instagram.com/cycleprod/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color var(--d-state) var(--e-ui);" class="nav-link">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
         Instagram
       </a>
       <!-- TODO: e-mail -->
-      <a href="mailto:contato@cycle.com.br" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.3s var(--e-ui);" class="nav-link">E-mail</a>
+      <a href="mailto:contato@cycle.com.br" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color var(--d-state) var(--e-ui);" class="nav-link">E-mail</a>
     </div>
     <p style="font-size:11px;color:var(--mid);letter-spacing:0.02em;">© 2025 Cycle. Todos os direitos reservados.</p>
   </div>

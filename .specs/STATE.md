@@ -158,6 +158,29 @@ em `scaleX(0.75)`, painéis corretos e os 5 fan cards abrindo.
 - **Teste de disparo automático das skills de movimento: passou.** A frase "audita o movimento da LP
   inteira e me diz o que tá ruim", sem citar nome nenhum, carregou a skill de auditoria de animação.
 
+## 2026-09-08 (parte 7) — planos de movimento aplicados
+Quatro planos escritos em `plans/` (formato da skill: problema com código verbatim, alvo com valor
+exato, convenções do repo, passos, fronteiras, verificação) e aplicados na ordem 001 → 002 → 004 → 003.
+
+- **001 (ALTA):** as 7 regras de `:hover` que deslocam foram para dentro de
+  `@media (hover: hover) and (pointer: fine)`. No celular o tap disparava hover falso e o card ficava
+  preso elevado — e o celular é onde esta LP vive. Hover que só troca cor ficou fora do gate.
+- **002 (ALTA):** `:active` com `scale(0.97)` em `--d-press` no CTA da navbar, botão de play, botão
+  de fechar e CTA de WhatsApp (que ganhou a classe `.wa-cta`). A página tinha **zero** `:active`:
+  nenhum botão confirmava o toque.
+- **003 (MÉDIA):** o bloco de movimento reduzido zerava toda transição com seletor universal —
+  padrão que a própria doutrina desaconselha. Agora troca `transition-property` por uma lista sem
+  deslocamento em 200ms: fade e cor ficam, movimento sai. Ganhou também `.fan-card`, que escapava do
+  seletor universal por receber `transform` via JavaScript.
+- **004 (MÉDIA):** 5 tokens de duração (`--d-press/state/enter/travel/panel`) e escalonamento de 80ms
+  no trilho de etapas e nos cartões de plano, via modificador `.fi.stagger` no observer que já
+  existia. Durações de uso único ficaram literais de propósito.
+
+Verificado no browser contra a seção de verificação de cada plano: 1 bloco de gate com 7 regras,
+`.nav-cta` transicionando `transform`, 1 `.wa-cta`, 2 `.fi.stagger`, `transition-delay` de 0.24s na
+quarta célula, 6 células visíveis, bloco de movimento reduzido preservando opacidade e cor e cortando
+transform, 6 hovers neutralizados, zero erro de JS, sem overflow horizontal.
+
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
   (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.
