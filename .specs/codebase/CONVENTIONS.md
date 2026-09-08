@@ -52,6 +52,13 @@ Decisão de 08/09/2026, com motivo escrito em `AGENTS.md`.
 
 - Vídeos já foram comprimidos até o limite sem perder qualidade (dono, 08/09/2026). **Não
   recomprimir sem falar com ele.**
+- **Receita de vídeo desta LP** (usada no `cycle-logo-scrub.mp4`, 2,6 MB → 1,8 MB, SSIM 0,996):
+  `ffmpeg -i <src> -an -c:v libx264 -preset veryslow -tune animation -crf 23 -pix_fmt yuv420p -g 24 -keyint_min 24 -sc_threshold 0 -movflags +faststart <out>`
+  - **`-an` sempre**: todo vídeo aqui é `muted`, a faixa de áudio é peso morto.
+  - **`-g 24`** (keyframe a cada segundo) é o que o scroll-scrub precisa para buscar rápido.
+    Keyframe mais denso (`-g 12`) fica *maior que o original* e não melhora nada visível.
+  - **`-tune animation`** porque o conteúdo é sintético; em vídeo filmado, tirar.
+  - Conferir com SSIM **e olhando um frame lado a lado** — SSIM não enxerga banding em gradiente.
 - Nomes com espaço e parênteses (`Apresentacao inicial.mp4`, `ElevenLabs_image_...(1).png`) são
   legado. Arquivo **novo** entra em kebab-case.
 - `muted playsinline preload="none"` em todo vídeo; `autoplay` só no hero.

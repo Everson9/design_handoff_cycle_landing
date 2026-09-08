@@ -90,10 +90,25 @@ Stack: **HTML + CSS + JS puro**, sem framework e sem bundler.
 - Verificado no browser: sem overflow horizontal, trilho em 6 colunas, h1 em 2 linhas a 88px, e as
   regras de 900px/560px conferidas pelo CSSOM.
 
+## 2026-09-08 (parte 4) — vídeo novo do scrub
+- Dono confirmou: **WhatsApp `558293270904` está certo** e a **responsividade está ok**.
+- Vídeo novo (`Cycle_logo_rotation_animation_1080p`, 1920×1080, 24fps, 8s, 2,6 MB com áudio AAC)
+  entrou no lugar do `camera-scrub.mp4`, agora como `uploads/cycle-logo-scrub.mp4`.
+- **Comprimido para 1,8 MB (−31%), SSIM 0,996**, áudio removido. Varredura de 8 variantes:
+  CRF 20 com keyframe a cada 0,5s saiu *maior* que o original (2,9 MB) — keyframe denso custa mais
+  do que o CRF economiza. CRF 23 com `-g 24` foi o joelho da curva. Frame conferido lado a lado
+  contra o original: anéis finos e gradiente das hastes intactos, sem banding.
+- `camera-scrub.mp4` (4,8 MB) removido, já substituído. `uploads/` foi de 13 MB para 9,5 MB.
+- Receita de compressão gravada no `CONVENTIONS.md`.
+- Verificado no browser: o vídeo carrega, `duration` 8s, scrub responde ao scroll.
+
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
   (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.
 - **Deploy não foi feito.** `vercel --prod` está pendente de aprovação do dono.
+- **6,1 MB de assets órfãos em `uploads/`** (nenhum referenciado no HTML): `Design sem nome.mp4`
+  (2,3 MB), `hero-video.mp4` e `Apresentacao inicial.mp4` (860 KB cada, sobras do hero antigo) e
+  dois PNGs do ElevenLabs (2,2 MB). Apagar depende do dono dizer que não vai usar.
 - Esperando do dono: arquivo novo do vídeo de scroll-scrub (câmera 3D).
 - Número de WhatsApp do CTA (`558293270904`) por confirmar com o cliente.
 - Tracking negativo em display (`-0.02em` a `-0.03em`) passa de -0,5px em tamanhos grandes:
