@@ -1,0 +1,129 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-08T22:10:00Z",
+  "title": "Design System: Cycle",
+  "extensions": {
+    "colorMeta": {
+      "ink": { "role": "neutral", "displayName": "Ink", "canonical": "#0B0B0D", "tonalRamp": ["#050506", "#0B0B0D", "#101012", "#16161A", "#1C1C20", "#2A2A32", "#555555", "#888888"] },
+      "surface": { "role": "neutral", "displayName": "Surface", "canonical": "#101012", "tonalRamp": ["#070708", "#0B0B0D", "#101012", "#15151A", "#1C1C20", "#26262E", "#3A3A44", "#5A5A66"] },
+      "hairline": { "role": "neutral", "displayName": "Hairline", "canonical": "#1C1C20", "tonalRamp": ["#0B0B0D", "#101012", "#16161A", "#1C1C20", "#26262E", "#33333C", "#4A4A56", "#6E6E7C"] },
+      "paper": { "role": "neutral", "displayName": "Paper", "canonical": "#F5F5F5", "tonalRamp": ["#1F1F1F", "#3D3D3D", "#5C5C5C", "#7A7A7A", "#999999", "#B8B8B8", "#D6D6D6", "#F5F5F5"] },
+      "ash": { "role": "neutral", "displayName": "Ash", "canonical": "#888888", "tonalRamp": ["#161616", "#2C2C2C", "#424242", "#585858", "#6E6E6E", "#888888", "#B0B0B0", "#D8D8D8"] },
+      "smoke": { "role": "neutral", "displayName": "Smoke", "canonical": "#555555", "tonalRamp": ["#0E0E0E", "#1C1C1C", "#2A2A2A", "#383838", "#464646", "#555555", "#7C7C7C", "#A8A8A8"] },
+      "signal": { "role": "primary", "displayName": "Signal Blue", "canonical": "#3D7EFF", "tonalRamp": ["#04102B", "#0A1B3D", "#12306B", "#1B47A0", "#2A62D6", "#3D7EFF", "#7BA5FF", "#BDD2FF"] }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "A frase da marca no hero e nos paineis do scroll-scrub. Peso 300, so a partir de 24px." },
+      "headline": { "displayName": "Headline", "purpose": "Abertura de secao. Nunca recebe rotulo em caixa alta acima." },
+      "title": { "displayName": "Title", "purpose": "Nome de etapa no trilho, titulo de card." },
+      "body": { "displayName": "Body", "purpose": "Paragrafo. Medida de 42-46ch no hero, 65ch em texto corrido." },
+      "label": { "displayName": "Label", "purpose": "Numeracao, badge, link de rodape. Piso absoluto de 11px." }
+    },
+    "shadows": [
+      { "name": "card-lift", "value": "0 12px 32px rgba(0,0,0,0.4)", "purpose": "Hover de card de etapa e de plano. Nunca em repouso." },
+      { "name": "image-lift", "value": "0 16px 40px rgba(0,0,0,0.5)", "purpose": "Hover em elemento com imagem." },
+      { "name": "device-rest", "value": "0 0 0 1px #1A1A22, 0 32px 80px rgba(0,0,0,0.7)", "purpose": "Moldura de celular em repouso. Unica sombra em repouso do sistema: e um objeto, nao uma superficie." },
+      { "name": "device-hover", "value": "0 0 0 1px #1A1A22, 0 40px 100px rgba(0,0,0,0.8)", "purpose": "Moldura de celular em hover." }
+    ],
+    "motion": [
+      { "name": "e-ui", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Curva padrao de controle e entrada: hover, fade, slide, navbar. Substitui o `ease` do navegador, que desacelera de menos." },
+      { "name": "e-drawer", "value": "cubic-bezier(0.32, 0.72, 0, 1)", "purpose": "Menu mobile: painel que cobre a tela." },
+      { "name": "e-pop", "value": "cubic-bezier(0.34, 1.15, 0.64, 1)", "purpose": "Entrada dos fan cards. A unica curva com overshoot da pagina." },
+      { "name": "dur-state", "value": "0.3s", "purpose": "Hover e troca de estado." },
+      { "name": "dur-enter", "value": "0.4s", "purpose": "Entrada por IntersectionObserver." },
+      { "name": "dur-travel", "value": "0.45s", "purpose": "Deslocamento maior (slide lateral)." },
+      { "name": "stagger-column", "value": "60ms", "purpose": "Atraso entre irmaos em coluna." },
+      { "name": "stagger-fan", "value": "90ms", "purpose": "Atraso entre os fan cards." }
+    ],
+    "breakpoints": [
+      { "name": "fan", "value": "1150px" },
+      { "name": "md", "value": "900px" },
+      { "name": "video", "value": "700px" },
+      { "name": "sm", "value": "560px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button (WhatsApp)",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "CTA principal da pagina. Texto escuro sobre azul, nunca branco.",
+      "html": "<a class=\"ds-btn-primary\" href=\"#\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"currentColor\"><path d=\"M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.5 14.1c-.2.6-1.2 1.2-1.7 1.2-.4 0-1 .1-3.2-.8-2.7-1.1-4.4-3.8-4.5-4-.1-.2-1.1-1.4-1.1-2.7s.7-1.9.9-2.1c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.3.3c-.1.1-.2.3-.1.5.2.3.8 1.3 1.7 2.1 1.1 1 2 1.3 2.3 1.4.2.1.4.1.5-.1l.7-.8c.2-.2.3-.2.5-.1l2 .9c.2.1.4.2.4.3.1.2.1.7-.1 1.3z\"/></svg>FALAR COM A CYCLE</a>",
+      "css": ".ds-btn-primary { display:inline-flex; align-items:center; gap:12px; background:var(--blue,#3D7EFF); color:var(--bg,#0B0B0D); font-family:'Manrope',sans-serif; font-size:12px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; text-decoration:none; padding:16px 40px; border-radius:100px; transition:opacity 0.3s cubic-bezier(0.23,1,0.32,1); } .ds-btn-primary:hover { opacity:0.88; } .ds-btn-primary:focus-visible { outline:2px solid var(--blue,#3D7EFF); outline-offset:2px; }"
+    },
+    {
+      "name": "Nav CTA",
+      "kind": "button",
+      "refersTo": "nav-cta",
+      "description": "Pilula invertida fixa na navbar. No hover troca para o azul de sinal.",
+      "html": "<a class=\"ds-nav-cta\" href=\"#\">Falar com a Cycle</a>",
+      "css": ".ds-nav-cta { display:inline-block; background:var(--text,#F5F5F5); color:var(--bg,#0B0B0D); font-family:'Manrope',sans-serif; font-size:12px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; text-decoration:none; padding:11px 22px; border-radius:100px; transition:background 0.3s cubic-bezier(0.23,1,0.32,1), color 0.3s cubic-bezier(0.23,1,0.32,1); } .ds-nav-cta:hover { background:#3D7EFF; color:#0B0B0D; } .ds-nav-cta:focus-visible { outline:2px solid #3D7EFF; outline-offset:2px; }"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Link de navegacao. Cinza em repouso, papel no hover.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">Percepção</a><a href=\"#\">Sistema</a><a href=\"#\">Planos</a><a href=\"#\">Cases</a></nav>",
+      "css": ".ds-nav { display:flex; gap:36px; font-family:'Manrope',sans-serif; } .ds-nav a { font-size:12px; font-weight:500; letter-spacing:0.06em; color:#666; text-decoration:none; transition:color 0.3s cubic-bezier(0.23,1,0.32,1); } .ds-nav a:hover { color:#F5F5F5; }"
+    },
+    {
+      "name": "Step Track",
+      "kind": "custom",
+      "refersTo": "step-cell",
+      "description": "Dispositivo de assinatura para sequencia numerada: fio de cabelo, numero grande em azul, sem caixa.",
+      "html": "<div class=\"ds-step-track\"><div class=\"ds-step-cell\"><p class=\"ds-step-n\">01</p><p class=\"ds-step-t\">Diagnóstico</p></div><div class=\"ds-step-cell\"><p class=\"ds-step-n\">02</p><p class=\"ds-step-t\">Reunião</p></div><div class=\"ds-step-cell\"><p class=\"ds-step-n\">03</p><p class=\"ds-step-t\">Roteirização</p></div></div>",
+      "css": ".ds-step-track { display:grid; grid-template-columns:repeat(3,1fr); border-top:1px solid #1C1C20; font-family:'Manrope',sans-serif; color:#F5F5F5; } .ds-step-cell { padding:32px 20px 36px 0; border-right:1px solid #1C1C20; transition:background 0.3s cubic-bezier(0.23,1,0.32,1); } .ds-step-cell:last-child { border-right:0; } .ds-step-cell:hover { background:rgba(61,126,255,0.04); } .ds-step-n { font-size:38px; font-weight:700; color:#3D7EFF; letter-spacing:-0.02em; line-height:1; margin:0 0 14px; } .ds-step-t { font-size:16px; font-weight:600; letter-spacing:0.01em; margin:0; }"
+    },
+    {
+      "name": "Plan Card (highlight)",
+      "kind": "card",
+      "refersTo": "plan-card-highlight",
+      "description": "Cartao de plano. A diferenca entre planos e borda e badge, nunca tamanho.",
+      "html": "<div class=\"ds-plan ds-plan-hl\"><div class=\"ds-plan-top\"><span class=\"ds-plan-kicker\">Destaque</span><span class=\"ds-plan-badge\">Performance</span></div><p class=\"ds-plan-price\">R$ 1.790<span>/mês</span></p></div>",
+      "css": ".ds-plan { background:#101012; border:1px solid #1C1C20; border-radius:8px; padding:44px; font-family:'Manrope',sans-serif; color:#F5F5F5; transition:border-color 0.3s cubic-bezier(0.23,1,0.32,1); } .ds-plan-hl { border-color:#3D7EFF; } .ds-plan-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:40px; } .ds-plan-kicker { font-size:11px; font-weight:700; letter-spacing:0.18em; text-transform:uppercase; color:#3D7EFF; } .ds-plan-badge { font-size:11px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:#0B0B0D; background:#3D7EFF; padding:5px 12px; border-radius:100px; } .ds-plan-price { font-size:52px; font-weight:700; letter-spacing:-0.02em; line-height:1; margin:0; } .ds-plan-price span { font-size:18px; font-weight:400; color:#888; }"
+    },
+    {
+      "name": "Phone Frame",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Moldura de celular dos cases. Unico objeto do sistema que nasce com sombra.",
+      "html": "<div class=\"ds-phone\"><div class=\"ds-phone-screen\"><div class=\"ds-phone-notch\"></div><div class=\"ds-play\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"#F5F5F5\"><polygon points=\"6,4 20,12 6,20\"/></svg></div></div></div>",
+      "css": ".ds-phone { width:100%; max-width:240px; background:#0A0A0D; border:2px solid #2A2A32; border-radius:38px; padding:9px; box-shadow:0 0 0 1px #1A1A22, 0 32px 80px rgba(0,0,0,0.7); transition:transform 0.3s cubic-bezier(0.23,1,0.32,1), box-shadow 0.3s cubic-bezier(0.23,1,0.32,1); } .ds-phone:hover { transform:translateY(-6px); box-shadow:0 0 0 1px #1A1A22, 0 40px 100px rgba(0,0,0,0.8); } .ds-phone-screen { position:relative; aspect-ratio:9/16; border-radius:30px; background:#0D0D11; display:flex; align-items:center; justify-content:center; overflow:hidden; } .ds-phone-notch { position:absolute; top:14px; left:50%; transform:translateX(-50%); width:74px; height:5px; border-radius:3px; background:#1A1A20; } .ds-play { width:52px; height:52px; border-radius:50%; border:1px solid rgba(255,255,255,0.15); display:flex; align-items:center; justify-content:center; transition:border-color 0.3s cubic-bezier(0.23,1,0.32,1), background 0.3s cubic-bezier(0.23,1,0.32,1); } .ds-phone-screen:hover .ds-play { border-color:#3D7EFF; background:rgba(61,126,255,0.12); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "A Sala Escura de Projeção",
+    "overview": "O sistema se comporta como uma sala de exibição: o ambiente desaparece para que a imagem apareça. O fundo quase-preto (#0B0B0D) não é uma escolha de moda por tema escuro — é a parede atrás da tela. Tudo que a Cycle vende é imagem em movimento, e cada decisão aqui existe para tirar o cenário da frente do conteúdo: superfícies separadas por um fio de 1px em vez de caixas, um único azul que funciona como a luz do projetor, e tipografia de display em peso Light que ocupa muito espaço sem pesar.\n\nA densidade é baixa e deliberada. Seções respiram em 120px de padding vertical, e a página aceita grandes áreas vazias como parte do argumento: uma consultoria que fala sobre percepção não pode se apresentar entulhada. O contraponto dessa calma é a escala — quando algo importa, ele é grande de verdade, não um pouco maior.\n\nA página rejeita explicitamente a estética de LP escura genérica: nada de rótulo em caixa alta acima de título, nada de grade de cards iguais com um ícone e uma palavra, nada de gradiente em texto.",
+    "keyCharacteristics": [
+      "Fundo quase-preto como parede, não como tema",
+      "Um acento só, usado com parcimônia",
+      "Fio de 1px no lugar de caixa",
+      "Display em peso 300, corpo em 400–600",
+      "Vazio como argumento, não como sobra"
+    ],
+    "rules": [
+      { "name": "A Regra da Fumaça", "body": "Smoke (#555) existe para apagar uma palavra de propósito, nunca para escrever com ela. Hoje tem exatamente um uso legítimo na página inteira: \"Depois de um clique.\", na seção Percepção, onde o texto sumir é o efeito. Qualquer outro uso em texto é bug de acessibilidade.", "section": "colors" },
+      { "name": "A Regra do Texto Sobre Azul", "body": "Texto sobre preenchimento Signal é Ink, nunca branco. Branco sobre esse azul dá 2,7:1 e reprova; Ink dá 5,1:1.", "section": "colors" },
+      { "name": "A Regra dos 11 Pixels", "body": "Nada de texto abaixo de 11px, em nenhum lugar, nem label nem legenda.", "section": "typography" },
+      { "name": "A Regra do Peso Leve Grande", "body": "Peso 300 só existe a partir de 24px. Abaixo disso a página usa 400 para corpo e 600–700 para interface. Light pequeno é ilegível no celular, que é onde esta LP é vista.", "section": "typography" },
+      { "name": "A Regra do Título Sozinho", "body": "Título não recebe rótulo em caixa alta acima dele. Se há informação que só o rótulo dava, ela vira subtítulo em corpo, embaixo. Esse é o tique que fazia a página parecer gerada por máquina, e ele está banido.", "section": "typography" },
+      { "name": "A Regra do Plano Chato", "body": "Superfície em repouso é chata. Sombra só aparece quando o usuário faz alguma coisa. A única exceção é a moldura de celular, que é um objeto e não uma superfície.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do usar Ash (#888) para todo texto de apoio; ele passa em 5,4:1.",
+      "Do separar superfícies com fio de 1px Hairline antes de considerar uma caixa.",
+      "Do usar o trilho de etapas para qualquer sequência numerada nova.",
+      "Do dar :focus-visible a todo controle novo, com anel de 2px Signal.",
+      "Do pôr texto sobre vídeo no rodapé do quadro, não no centro — o centro é onde o assunto está."
+    ],
+    "donts": [
+      "Don't pôr rótulo em caixa alta acima de um título. Nunca.",
+      "Don't usar Smoke (#555) em texto que precisa ser lido.",
+      "Don't usar branco sobre o azul de sinal.",
+      "Don't montar grade de cards iguais com uma palavra dentro; isso lê como placeholder.",
+      "Don't usar peso 300 abaixo de 24px, nem qualquer texto abaixo de 11px.",
+      "Don't dar sombra a superfície em repouso."
+    ]
+  }
+}

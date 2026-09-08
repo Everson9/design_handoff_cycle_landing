@@ -142,6 +142,22 @@ na troca de estágio. E o `offsetHeight`, que forçava layout todo frame, é med
 Conferido com a página aberta: nenhum erro de JS, scrub em 5,96s a 75% do progresso (exato), barra
 em `scaleX(0.75)`, painéis corretos e os 5 fan cards abrindo.
 
+## 2026-09-08 (parte 6) — ajustes finais + teste das skills
+- **Hero, terceira passada:** display para `clamp(26px,3.9vw,52px)` (49px na tela) e `padding-bottom`
+  de 88px para 56px. Sai de cima do assunto do vídeo.
+- **Vídeo do case não parava.** O iframe cobria a tela inteira do celular e não sobrava nada
+  clicável. Agora tem botão de fechar (canto superior direito, aparece só tocando), que remove o
+  iframe e devolve a capa; `Esc` faz o mesmo, e dá pra reabrir.
+- **Scrub 1080p → 720p com keyframe a cada 4 frames.** Mesmo tamanho (1,8 MB), mas a busca decodifica
+  no máximo 3 frames em 720p em vez de até 24 em 1080p. É o que faltava pro scrub parar de arrastar.
+- **`/impeccable document`:** escreveu `DESIGN.md` na raiz + `.impeccable/design.json` (6 componentes
+  com HTML/CSS, 6 regras nomeadas, 8 tokens de movimento). O `.specs/DESIGN.md` da casa **não foi
+  tocado** — conferido por hash contra backup. A entrevista qualitativa da Step 3 da skill foi
+  pulada porque o dono pediu pra finalizar; o North Star ("A Sala Escura de Projeção") e os nomes de
+  cor foram derivados do código, não perguntados.
+- **Teste de disparo automático das skills de movimento: passou.** A frase "audita o movimento da LP
+  inteira e me diz o que tá ruim", sem citar nome nenhum, carregou a skill de auditoria de animação.
+
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
   (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.
