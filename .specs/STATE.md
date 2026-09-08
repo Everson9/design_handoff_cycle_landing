@@ -67,9 +67,33 @@ Stack: **HTML + CSS + JS puro**, sem framework e sem bundler.
 - `DESIGN.md` atualizado: tabela de curvas, regra de movimento reduzido, mockup de celular e o
   padrão facade viraram vocabulário travado.
 
+## 2026-09-08 (parte 3) — conteúdo do cliente + passada `impeccable bolder`
+- **Planos:** Performance R$ 1.790 (era 2.790) e Presença R$ 2.790 (era 3.790), com as listas
+  exatas que o dono passou. Saiu o "Tudo do X incluído" dos dois.
+- **"O que você recebe":** de 10 itens para 6 — Diagnóstico, Reunião, Roteirização, Captação,
+  Edição, Entrega (sem "estratégico" no nome).
+- **Passada de front** com a skill `impeccable` (comando `bolder`, escopo fechado em três alvos;
+  paleta, fonte, planos, cases e scrub não foram tocados):
+  - **Hero ganhou headline.** Não tinha nenhuma — só vídeo, nav e um rótulo de 12px. Subiu a linha
+    que a própria página já tinha na seção 4, *"O conteúdo passa. A percepção permanece."*, no
+    display do sistema, ancorada à esquerda na coluna de 1200px. **A seção 4 foi removida**, porque
+    passaria a repetir a mesma frase. O hero virou o `<h1>`; o da Percepção virou `<h2>`.
+  - **Os seis eyebrows foram deletados.** A craft floor da skill bane rótulo em caps acima de título
+    ("no brief earns it back") e era o tique que fazia a página parecer gerada. O único que carregava
+    informação ("Incluso em todos os planos") virou subtítulo abaixo do título.
+  - **As 6 caixas viraram trilho de etapas** (`.step-track`), o mesmo dispositivo que a página já
+    usava em "Como funciona": fio de cabelo, número grande em azul, sem borda em volta.
+- Detector da skill: 13 achados → 10. Corrigidos os reais: branco sobre azul dava 2,7:1 nos dois
+  CTAs (agora `--bg`, 5,1:1), e a barra do scrub animava `width` (agora `scaleX`). Os 10 que ficam
+  são justificados: 11px em label (nosso piso, documentado), marquee proposital, travessão em texto
+  em português, e um falso positivo (`background:#000` lido como cor de texto).
+- Verificado no browser: sem overflow horizontal, trilho em 6 colunas, h1 em 2 linhas a 88px, e as
+  regras de 900px/560px conferidas pelo CSSOM.
+
 ## Próximo passo
-- **Conferir a página no browser.** Duas rodadas de mudança entraram sem revisão visual: as
-  correções de contraste/tamanho e a saída do runtime. É o próximo passo antes de qualquer coisa.
+- **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
+  (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.
+- **Deploy não foi feito.** `vercel --prod` está pendente de aprovação do dono.
 - Esperando do dono: arquivo novo do vídeo de scroll-scrub (câmera 3D).
 - Número de WhatsApp do CTA (`558293270904`) por confirmar com o cliente.
 - Tracking negativo em display (`-0.02em` a `-0.03em`) passa de -0,5px em tamanhos grandes:

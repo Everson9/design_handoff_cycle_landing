@@ -21,6 +21,10 @@ Cycle. Este arquivo destila o que estava espalhado em CSS inline.
 | `--muted` | `#555555` | **decorativo apenas** — ênfase negativa, nunca texto que precisa ser lido | 2,6:1 ✗ |
 | `--blue` | `#3D7EFF` | acento, CTA, destaque de plano/coluna | 5,0:1 sobre `--surface` ✓ |
 
+**Texto sobre preenchimento azul é `--bg` (#0B0B0D), nunca branco.** Branco sobre `--blue` dá 2,7:1
+e reprova; o escuro dá 5,1:1. Vale para o botão de WhatsApp, o hover do CTA da navbar e o badge do
+plano — que já fazia certo e virou a regra.
+
 **Regra do `--muted`:** ele existe para *apagar* uma palavra de propósito, não para escrever com ela.
 Hoje tem exatamente um uso legítimo: `"Depois de um clique."` na seção Percepção, onde o texto sumir
 é o efeito pretendido. Qualquer outro uso em texto é bug.
@@ -65,6 +69,27 @@ navbar mobile e numeração; foi tudo subido para 11px.)
 Fora display, tracking negativo é proibido.
 
 ---
+
+## Composição — o que é proibido aqui
+
+- **Eyebrow (rótulo pequeno em caps acima de um título) não existe nesta página.** Havia seis, um por
+  seção, e eram o principal motivo de a LP parecer template gerado. O título carrega o próprio peso.
+  Informação que só o rótulo dava vira **subtítulo abaixo do título**, em corpo, cor `--mid`.
+  Rótulo *dentro* de um componente (badge de plano, label de fan card, cabeçalho de coluna) é outra
+  coisa e continua valendo.
+- **Caixa não é estrutura.** Grade de cards iguais com uma palavra dentro lê como placeholder. Quando
+  o conteúdo é uma sequência, ele usa o dispositivo de trilho (abaixo), não seis bordas.
+
+## Dispositivos estruturais
+
+- **Trilho de etapas (`.step-track` / `.step-cell`)** — sequência numerada sem caixa: fio de cabelo
+  no topo, células separadas por fio vertical, número em `38px/700` `--blue`, nome em `16px/600`.
+  6 colunas → 3 (≤900px) → 2 (≤560px). É o mesmo dispositivo do "Como funciona" no scroll-scrub;
+  sequência nova nasce assim.
+- **Hero (`.hero-copy`)** — a linha da marca no display do próprio sistema
+  (`clamp(40px,7vw,96px)`, peso 300, tracking `-0.03em`), ancorada à esquerda na mesma coluna de
+  1200px do resto da página, com o subtítulo em `16px` `#C9C9CE` logo abaixo. O gradiente do vídeo
+  fecha em `rgba(11,11,13,0.9)` embaixo justamente para o display ter contraste.
 
 ## Escala de movimento
 
@@ -128,6 +153,8 @@ frame, porque vídeo amarrado ao scroll é o pior caso dessa lista.
   clique** — sem player, sem cookie, sem requisição.
 - **Foco:** anel de 2px `--blue` com 2px de offset (`:focus-visible`). Já aplicado no
   `.phone-screen`; **todo controle novo nasce com ele**.
+- **Barra de progresso do scrub:** anima `transform: scaleX()` com `transform-origin:left`, nunca
+  `width` — largura recalcula layout a cada frame do scroll.
 
 ## Tela vazia / erro
 
