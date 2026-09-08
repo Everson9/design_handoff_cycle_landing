@@ -231,7 +231,7 @@
        (portrait) viewport crops in hard, blowing the framing up way past intended.
        Switch to contain there so the full shot stays visible instead of zoomed in. */
     @media (max-width: 700px), (max-aspect-ratio: 4/5) {
-      #hero-video, #scrub-video { object-fit: contain!important; }
+      #hero-video { object-fit: contain!important; }
     }
     /* Quem marcou "reduzir movimento" no sistema nao ve nada disso se mexer.
        Nao e preferencia estetica: movimento grande dispara enjoo e enxaqueca em
@@ -609,7 +609,11 @@
 <section id="scroll-video" style="position:relative;height:560vh;">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden;background:#000000;">
 
-    <video id="scrub-video" muted playsinline preload="none" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.9;">
+    <!-- object-fit:contain, nao cover: o video e 16:9 e a janela costuma ser mais larga
+         que alta, entao cover cortava cerca de 20% em cima e embaixo e comia os aneis
+         do logo. O fundo da secao e do video sao pretos, entao contain nao deixa tarja
+         visivel e a animacao aparece inteira, na maior altura possivel. -->
+    <video id="scrub-video" muted playsinline preload="none" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0.9;">
       <source data-src="uploads/cycle-logo-scrub.mp4" type="video/mp4">
     </video>
 

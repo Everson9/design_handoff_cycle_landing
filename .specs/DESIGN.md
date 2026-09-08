@@ -160,6 +160,12 @@ deslocamento (`opacity`, `color`, `background-color`, `border-color`, `box-shado
 zerar tudo faria a página piscar de estado em estado. O retorno de pressão também fica — é feedback,
 não decoração.
 
+**Vídeo do scroll-scrub usa `object-fit: contain`, não `cover`.** O vídeo é 16:9 e a janela costuma
+ser mais larga que alta; `cover` cortava cerca de 20% em cima e embaixo, comendo os anéis do logo.
+Como o fundo da seção e o do vídeo são pretos, `contain` não deixa tarja visível e ainda usa toda a
+altura disponível. O vídeo do hero segue em `cover`, porque é imagem fotográfica e ali a tarja
+apareceria.
+
 **Scroll-scrub:** a seção de câmera 3D amarra `video.currentTime` ao progresso do scroll
 (`height:500vh`, filho `sticky` de `100vh`). É a única animação dirigida por scroll contínuo.
 
