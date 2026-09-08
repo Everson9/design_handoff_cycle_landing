@@ -236,6 +236,12 @@ transform, 6 hovers neutralizados, zero erro de JS, sem overflow horizontal.
   11px (nosso piso), 5 da gradiente do Instagram (marca de terceiro, documentada em prosa), 1 falso
   positivo (`background:#000` lido como cor de texto), marquee e travessão intencionais.
 
+## 2026-09-08 (parte 11) — varredura de CSS morto
+- Auditoria cruzando todo seletor do `<style>` contra o markup e o JS: 4 classes sem nenhum uso —
+  `.card-hover`, `.tl-item`, `.marquee-track` e `.case-video` — mais o `@keyframes marquee`, que só
+  existia para a marquee removida. 10 regras apagadas, 1 KB a menos.
+- `.phone-close` aparece na mesma varredura mas **fica**: é criada por JavaScript, não pelo markup.
+
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
   (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.

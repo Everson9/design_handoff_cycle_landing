@@ -59,8 +59,6 @@
     .fi.stagger > *:nth-child(6) { transition-delay:400ms; }
     .fi.up { opacity:1;transform:translateY(0); }
     /* CARDS */
-    .card-hover { transition:border-color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui); }
-    .card-hover:hover { border-color:rgba(61,126,255,0.35)!important;background:#12121A!important; }
     /* HERO — a linha da Cycle no tamanho de display do proprio sistema,
        ancorada na mesma coluna de 1200px do resto da pagina. */
     .hero-copy { position:relative;z-index:1;width:100%;max-width:1200px;margin:0 auto;padding:0 40px 56px; }
@@ -152,19 +150,12 @@
     .fan-card-label { font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:6px; }
     .fan-card-desc { font-size:11px;color:var(--mid);line-height:1.5; }
     /* TIMELINE */
-    .tl-item { flex:1;position:relative; }
-    .tl-item:not(:last-child)::after { content:'';position:absolute;top:20px;left:calc(50% + 24px);width:calc(100% - 48px);height:1px;background:var(--border); }
     /* SCROLL-MARQUEE */
-    @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-    .marquee-track { display:flex;width:max-content;animation:marquee 18s linear infinite; }
     /* PLANS */
     .plan-card { padding:52px 44px;border:1px solid var(--border);background:var(--surface);transition:border-color var(--d-state) var(--e-ui); }
     .plan-card.highlight { border-color:var(--blue); }
     /* CASES */
-    .case-video { aspect-ratio:16/9;background:#0D0D11;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;cursor:pointer;transition:background var(--d-state) var(--e-ui); }
-    .case-video:hover { background:#111118; }
     .play-btn { width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;transition:border-color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
-    .case-video:hover .play-btn { border-color:var(--blue);background:rgba(61,126,255,0.1); }
     @keyframes scrollLine { 0%{opacity:0;transform:scaleY(0);transform-origin:top} 50%{opacity:1;transform:scaleY(1);transform-origin:top} 100%{opacity:0;transform:scaleY(1);transform-origin:bottom} }
     #main-nav.scrolled { background:rgba(11,11,13,0.95)!important;border-bottom-color:var(--border)!important;backdrop-filter:blur(16px); }
     /* DEVICE MOCKUP — celular. Os cases sao Shorts (9:16): moldura vertical, que e
@@ -290,7 +281,6 @@
       .fi, .slide-left, .slide-right { opacity:1 !important;transform:none !important; }
       .fi.stagger > * { opacity:1 !important;transform:none !important;transition-delay:0ms !important; }
       .mapa-est .d { opacity:1 !important;transform:none !important; }
-      .marquee-track { animation: none !important; }
       /* Os fan cards recebem transform por JavaScript, entao o seletor universal
          acima nao os alcanca. */
       .fan-card { transform:none !important; }
