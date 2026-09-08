@@ -102,10 +102,18 @@ Stack: **HTML + CSS + JS puro**, sem framework e sem bundler.
 - Receita de compressão gravada no `CONVENTIONS.md`.
 - Verificado no browser: o vídeo carrega, `duration` 8s, scrub responde ao scroll.
 
+## 2026-09-08 — NO AR
+- `git push` (3 commits) + `vercel --prod` como `everson9`. Deployment
+  `dpl_B4Ex6t9JvhMttY54yTGtcvmoRiTm`, `readyState: READY`, target production.
+- **https://designhandoffcyclelanding.vercel.app**
+- Conferido no ar: `<h1>` "O conteúdo passa. A percepção permanece.", trilho com 6 etapas, 2
+  molduras de celular com `data-yt`, scrub apontando pro `cycle-logo-scrub.mp4`, preços 1.790 e
+  2.790, e **nenhum resquício de `x-dc`** no HTML servido.
+- Assets: `/` 200, vídeos e logo 200, **`support.js` 404** — o runtime do handoff saiu do ar junto.
+
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
   (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.
-- **Deploy não foi feito.** `vercel --prod` está pendente de aprovação do dono.
 - **6,1 MB de assets órfãos em `uploads/`** (nenhum referenciado no HTML): `Design sem nome.mp4`
   (2,3 MB), `hero-video.mp4` e `Apresentacao inicial.mp4` (860 KB cada, sobras do hero antigo) e
   dois PNGs do ElevenLabs (2,2 MB). Apagar depende do dono dizer que não vai usar.
