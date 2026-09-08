@@ -121,6 +121,7 @@ Escala de duração: `0.3s` (hover/estado) · `0.4s` (entrada) · `0.45s` (deslo
 |-------|-------|-----|
 | `--e-ui` | `cubic-bezier(0.23, 1, 0.32, 1)` | tudo que é controle e entrada: hover, fade, slide, nav |
 | `--e-drawer` | `cubic-bezier(0.32, 0.72, 0, 1)` | menu mobile — painel que cobre a tela |
+| `--e-pop` | `cubic-bezier(0.34, 1.15, 0.64, 1)` | entrada dos fan cards — a única curva com overshoot da página |
 | `--e-pop` | `cubic-bezier(0.34,1.15,0.64,1)` | **só** a entrada do fan card — passa de 1 e volta (overshoot). Curva de chegada, nunca de hover nem de controle |
 | `linear` | — | só a barra de progresso do scrub e a marquee, onde velocidade constante é o certo |
 

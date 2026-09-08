@@ -25,6 +25,7 @@
        para, --e-drawer e a curva de painel que entra pela borda. */
     --e-ui: cubic-bezier(0.23, 1, 0.32, 1);
     --e-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+    --e-pop: cubic-bezier(0.34, 1.15, 0.64, 1);
       --blue-dim: rgba(61,126,255,0.12);
       --bg: #0B0B0D;
       --surface: #101012;
@@ -81,7 +82,7 @@
       width:230px;height:370px;border-radius:16px;overflow:hidden;
       position:absolute;bottom:0;
       border:1px solid #1e1e26;
-      transition:transform 0.55s cubic-bezier(0.34,1.15,0.64,1),box-shadow 0.4s var(--e-ui),opacity 0.45s var(--e-ui);
+      transition:transform 0.55s var(--e-pop),box-shadow 0.4s var(--e-ui),opacity 0.45s var(--e-ui);
       transform-origin:bottom center;
       opacity:0;
     }
