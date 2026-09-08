@@ -30,6 +30,19 @@ Decisão de 08/09/2026, com motivo escrito em `AGENTS.md`.
 - **Manrope 300 em display** e o tracking negativo largo: exceção **documentada e aprovada** em
   `.specs/DESIGN.md`. Não subir peso nem afrouxar tracking sem reabrir aquele arquivo.
 
+## Armadilhas que já morderam aqui
+
+- **Nunca reescrever valor de `transition` quebrando na vírgula.** `cubic-bezier(0.34,1.15,0.64,1)`
+  tem vírgulas dentro dos parênteses; um split ingênuo produz CSS inválido, o navegador descarta a
+  declaração inteira e a animação some sem erro nenhum no console. Foi assim que a entrada dos fan
+  cards morreu em produção.
+- **`const`/`let` usados por uma função ficam ANTES da chamada dela**, não no fim do
+  `DOMContentLoaded`. Declaração de função sobe (hoisting), `const`/`let` não: atribuir a uma
+  variável ainda na zona morta temporal derruba o resto do callback junto — no caso, o `setupFan()`
+  que vinha depois parou de rodar.
+- **`node --check` não pega nenhum dos dois.** Um é CSS, o outro é erro de execução. Só abrir a
+  página e ler `window.onerror` pega.
+
 ## Proibido aqui
 
 - **Reintroduzir o runtime do handoff.** `support.js`, `_ds/_ds_bundle.js`, `<x-dc>`, `<helmet>` e

@@ -111,6 +111,37 @@ Stack: **HTML + CSS + JS puro**, sem framework e sem bundler.
   2.790, e **nenhum resquício de `x-dc`** no HTML servido.
 - Assets: `/` 200, vídeos e logo 200, **`support.js` 404** — o runtime do handoff saiu do ar junto.
 
+## 2026-09-08 (parte 5) — ajustes do dono + duas regressões minhas
+**Regressões que eu tinha introduzido, ambas achadas por causa do feedback dele:**
+1. **A entrada dos fan cards estava morta em produção.** Ao trocar as curvas de `ease` para token,
+   meu script quebrou o valor de `transition` na vírgula — e `cubic-bezier(0.34,1.15,0.64,1)` tem
+   vírgulas dentro. Virou `cubic-bezier(0.34,1.15 var(--e-ui),0.64 var(--e-ui),1)`, CSS inválido,
+   declaração descartada em silêncio. Era a única vítima. Curva restaurada.
+2. **Zona morta temporal derrubando metade do JS** (esta rodada, não chegou a produção):
+   `let acordarScrub` estava declarado depois de `setupScrub()` ser chamado. O erro estourava dentro
+   do `DOMContentLoaded` e matava tudo depois dele — inclusive o `setupFan()`. Declarações movidas
+   pro topo do callback. `node --check` não pega nenhuma das duas.
+
+**Ajustes pedidos:**
+- Hero: display de `clamp(40px,7vw,96px)` para `clamp(34px,5.4vw,72px)` e ancorado mais embaixo
+  (padding de 136px para 88px) — o texto disputava com o assunto do vídeo.
+- Painel de abertura do scrub saiu do centro (em cima do logo) para o rodapé do quadro, com o mesmo
+  gradiente dos outros painéis, e o título caiu para `clamp(28px,3.6vw,52px)`.
+- Seção do scrub de 400vh para 560vh: mais scroll por segundo de vídeo, movimento mais suave.
+- Celular dos cases de 300px para 392px, **com a capa real do Short** (`oardefault.jpg` 1080×1920
+  baixado do YouTube, reescalado para 720px e servido do próprio domínio — assim a página continua
+  sem falar com o YouTube antes do clique).
+
+**Performance (a queixa de "travado"):** o `scrubLoop` rodava `requestAnimationFrame` a 60fps
+**a página inteira, do load até fechar a aba**, mesmo com a seção a várias telas de distância. Agora
+dorme fora da seção e ao chegar no alvo. Medido no browser, parado no topo da página:
+**121 rAF/s antes → 0 depois.** O `tick()` também parou de reescrever `opacity`/`transform`/
+`pointerEvents` dos 3 painéis a cada frame (9 escritas por frame com o mesmo valor); agora só escreve
+na troca de estágio. E o `offsetHeight`, que forçava layout todo frame, é medido uma vez e no resize.
+
+Conferido com a página aberta: nenhum erro de JS, scrub em 5,96s a 75% do progresso (exato), barra
+em `scaleX(0.75)`, painéis corretos e os 5 fan cards abrindo.
+
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
   (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.

@@ -86,10 +86,15 @@ Fora display, tracking negativo é proibido.
   no topo, células separadas por fio vertical, número em `38px/700` `--blue`, nome em `16px/600`.
   6 colunas → 3 (≤900px) → 2 (≤560px). É o mesmo dispositivo do "Como funciona" no scroll-scrub;
   sequência nova nasce assim.
-- **Hero (`.hero-copy`)** — a linha da marca no display do próprio sistema
-  (`clamp(40px,7vw,96px)`, peso 300, tracking `-0.03em`), ancorada à esquerda na mesma coluna de
-  1200px do resto da página, com o subtítulo em `16px` `#C9C9CE` logo abaixo. O gradiente do vídeo
-  fecha em `rgba(11,11,13,0.9)` embaixo justamente para o display ter contraste.
+- **Hero (`.hero-copy`)** — a linha da marca em `clamp(34px,5.4vw,72px)`, peso 300, tracking
+  `-0.03em`, ancorada à esquerda na mesma coluna de 1200px do resto da página, com o subtítulo em
+  `16px` `#C9C9CE` logo abaixo. O gradiente do vídeo fecha em `rgba(11,11,13,0.9)` embaixo
+  justamente para o display ter contraste.
+- **Texto sobre vídeo fica no rodapé do quadro, nunca no centro.** O centro é onde o assunto do
+  vídeo está; texto ali disputa com a imagem e perde. Vale para o hero e para o painel de abertura
+  do scroll-scrub, que era centralizado em cima do logo e desceu.
+- **Mockup de case:** `max-width:392px` (320px abaixo de 900px) e **capa do vídeo obrigatória**
+  (`.phone-poster`, servida do próprio domínio). Tela preta com um play não diz o que é o case.
 
 ## Escala de movimento
 
@@ -97,18 +102,18 @@ Tudo disparado por `IntersectionObserver`, nunca por timer.
 
 | Nome | Estado de repouso | Ativo | Transição |
 |------|-------------------|-------|-----------|
-| `.fi` (fade-in padrão) | `opacity:0; translateY(24px)` | `opacity:1; translateY(0)` | `0.4s ease` |
-| `.slide-left` | `opacity:0; translateX(-72px)` | `translateX(0)` | `0.45s ease` |
-| `.slide-right` | `opacity:0; translateX(72px)` | `translateX(0)` | `0.45s ease` |
+| `.fi` (fade-in padrão) | `opacity:0; translateY(24px)` | `opacity:1; translateY(0)` | `0.4s var(--e-ui)` |
+| `.slide-left` | `opacity:0; translateX(-72px)` | `translateX(0)` | `0.45s var(--e-ui)` |
+| `.slide-right` | `opacity:0; translateX(72px)` | `translateX(0)` | `0.45s var(--e-ui)` |
 | Fan cards (entrada) | `opacity:0; translateY(200px)` | neutro | stagger `90ms` |
-| Navbar (scroll >60px) | transparente | `rgba(11,11,13,0.95)` + `blur(16px)` | `0.4s ease` |
-| Hover de card | — | `translateY(-5px)` + sombra | `0.3s` |
-| Hover de fan card | — | `translateY(-32px) scale(1.18)` | `0.3s` |
+| Navbar (scroll >60px) | transparente | `rgba(11,11,13,0.95)` + `blur(16px)` | `0.4s var(--e-ui)` |
+| Hover de card | — | `translateY(-5px)` + sombra | `0.3s var(--e-ui)` |
+| Hover de fan card | — | `translateY(-32px) scale(1.18)` | `0.3s var(--e-ui)`; a **entrada** do fan card usa `0.55s var(--e-pop)` |
 
 Stagger padrão entre irmãos: **60ms** (cards de coluna), **90ms** (fan).
 As animações de coluna são **bidirecionais** — saem ao rolar de volta. As demais, uma vez só.
 
-Escala de duração: `0.3s` (hover/estado) · `0.4s` (entrada) · `0.45s` (deslocamento maior).
+Escala de duração: `0.3s` (hover/estado) · `0.4s` (entrada) · `0.45s` (deslocamento maior) · `0.55s`–`0.6s` (**só** entrada de fan card e revelação grande de seção). Acima de 300ms porque isto é **entrada de LP**, não controle de app — a regra dos 300ms da casa vale pra UI que responde a clique, e essas transições são disparadas por scroll. Hover e estado, que SÃO resposta a ação, ficam em 0.3s.
 
 ### Curvas
 
@@ -116,6 +121,7 @@ Escala de duração: `0.3s` (hover/estado) · `0.4s` (entrada) · `0.45s` (deslo
 |-------|-------|-----|
 | `--e-ui` | `cubic-bezier(0.23, 1, 0.32, 1)` | tudo que é controle e entrada: hover, fade, slide, nav |
 | `--e-drawer` | `cubic-bezier(0.32, 0.72, 0, 1)` | menu mobile — painel que cobre a tela |
+| `--e-pop` | `cubic-bezier(0.34,1.15,0.64,1)` | **só** a entrada do fan card — passa de 1 e volta (overshoot). Curva de chegada, nunca de hover nem de controle |
 | `linear` | — | só a barra de progresso do scrub e a marquee, onde velocidade constante é o certo |
 
 **`ease` puro é proibido.** É a curva padrão do navegador: desacelera de menos e faz
