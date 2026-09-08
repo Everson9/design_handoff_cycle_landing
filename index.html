@@ -4,28 +4,9 @@
 <meta charset="utf-8">
 <title>Cycle — Consultoria Estratégica de Conteúdo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="./support.js"></script>
-</head>
-<body>
-<x-dc>
-<template id="__bundler_thumbnail" data-bg-color="#0B0B0D">
-  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
-    <rect width="1200" height="800" fill="#0B0B0D"/>
-    <text x="600" y="380" font-family="sans-serif" font-size="80" font-weight="300" fill="#F5F5F5" text-anchor="middle" letter-spacing="-2">cycle</text>
-    <circle cx="490" cy="370" r="48" fill="none" stroke="#3D7EFF" stroke-width="3" opacity="0.6"/>
-    <line x1="510" y1="340" x2="545" y2="370" stroke="#3D7EFF" stroke-width="4" stroke-linecap="round"/>
-    <line x1="510" y1="355" x2="545" y2="370" stroke="#3D7EFF" stroke-width="4" stroke-linecap="round"/>
-    <line x1="510" y1="370" x2="545" y2="370" stroke="#3D7EFF" stroke-width="4" stroke-linecap="round"/>
-    <line x1="510" y1="385" x2="545" y2="370" stroke="#3D7EFF" stroke-width="4" stroke-linecap="round"/>
-    <line x1="510" y1="400" x2="545" y2="370" stroke="#3D7EFF" stroke-width="4" stroke-linecap="round"/>
-    <text x="600" y="440" font-family="sans-serif" font-size="16" fill="#555" text-anchor="middle" letter-spacing="4">CONSULTORIA ESTRATÉGICA DE CONTEÚDO</text>
-  </svg>
-</template>
-<helmet>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap">
-  <script src="_ds/photographer-x-c3d7aab7-d639-401f-82bd-9354e60db94a/_ds_bundle.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -39,6 +20,11 @@
     }
     :root {
       --blue: #3D7EFF;
+    /* Escala de movimento — ver .specs/DESIGN.md. `ease` (a curva padrao do
+       navegador) desacelera de menos e faz tudo parecer lento; --e-ui chega e
+       para, --e-drawer e a curva de painel que entra pela borda. */
+    --e-ui: cubic-bezier(0.23, 1, 0.32, 1);
+    --e-drawer: cubic-bezier(0.32, 0.72, 0, 1);
       --blue-dim: rgba(61,126,255,0.12);
       --bg: #0B0B0D;
       --surface: #101012;
@@ -48,36 +34,36 @@
       --mid: #888;
     }
     /* NAV */
-    .nav-link { font-size:12px;font-weight:500;letter-spacing:0.1em;color:#666;text-decoration:none;transition:color 0.3s ease; }
+    .nav-link { font-size:12px;font-weight:500;letter-spacing:0.1em;color:#666;text-decoration:none;transition:color 0.3s var(--e-ui); }
     .nav-link:hover { color:#F5F5F5; }
-    .nav-cta { font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#0B0B0D;background:#F5F5F5;text-decoration:none;padding:10px 24px;border-radius:100px;transition:background 0.3s ease,color 0.3s ease; }
+    .nav-cta { font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:#0B0B0D;background:#F5F5F5;text-decoration:none;padding:10px 24px;border-radius:100px;transition:background 0.3s var(--e-ui),color 0.3s var(--e-ui); }
     .nav-cta:hover { background:#3D7EFF;color:#fff; }
     /* FADE */
-    .fi { opacity:0;transform:translateY(24px);transition:opacity 0.4s ease,transform 0.4s ease; }
+    .fi { opacity:0;transform:translateY(24px);transition:opacity 0.4s var(--e-ui),transform 0.4s var(--e-ui); }
     .fi.up { opacity:1;transform:translateY(0); }
     /* CARDS */
-    .card-hover { transition:border-color 0.3s ease,background 0.3s ease; }
+    .card-hover { transition:border-color 0.3s var(--e-ui),background 0.3s var(--e-ui); }
     .card-hover:hover { border-color:rgba(61,126,255,0.35)!important;background:#12121A!important; }
-    .inc-card { padding:36px;border:1px solid var(--border);background:var(--surface);cursor:default;transition:border-color 0.3s,background 0.3s; }
+    .inc-card { padding:36px;border:1px solid var(--border);background:var(--surface);cursor:default;transition:border-color 0.3s var(--e-ui),background 0.3s var(--e-ui); }
     .inc-card:hover { border-color:rgba(61,126,255,0.3);background:#12121A; }
     /* STEP */
-    .step-row { padding:36px 0;border-top:1px solid var(--border);display:grid;grid-template-columns:140px 1fr;gap:24px;align-items:start;transition:background 0.3s; }
+    .step-row { padding:36px 0;border-top:1px solid var(--border);display:grid;grid-template-columns:140px 1fr;gap:24px;align-items:start;transition:background 0.3s var(--e-ui); }
     .step-row:hover { background:rgba(61,126,255,0.03); }
     /* SLIDE CARDS */
-    .slide-left  { opacity:0;transform:translateX(-72px);transition:opacity 0.45s ease,transform 0.45s ease; }
-    .slide-right { opacity:0;transform:translateX(72px);transition:opacity 0.45s ease,transform 0.45s ease; }
+    .slide-left  { opacity:0;transform:translateX(-72px);transition:opacity 0.45s var(--e-ui),transform 0.45s var(--e-ui); }
+    .slide-right { opacity:0;transform:translateX(72px);transition:opacity 0.45s var(--e-ui),transform 0.45s var(--e-ui); }
     .slide-left.in, .slide-right.in { opacity:1;transform:translateX(0); }
     .slide-left.out  { opacity:0;transform:translateX(-72px); }
     .slide-right.out { opacity:0;transform:translateX(72px); }
     /* Hover lift global */
     .slide-left:hover, .slide-right:hover { transform:translateX(0) translateY(-5px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.4); }
-    .inc-card { transition:border-color 0.3s,background 0.3s,transform 0.25s ease,box-shadow 0.25s ease; }
+    .inc-card { transition:border-color 0.3s var(--e-ui),background 0.3s var(--e-ui),transform 0.25s var(--e-ui),box-shadow 0.25s var(--e-ui); }
     .inc-card:hover { transform:translateY(-5px);box-shadow:0 12px 32px rgba(0,0,0,0.4); }
-    .plan-card { transition:border-color 0.3s,transform 0.25s ease,box-shadow 0.25s ease; }
+    .plan-card { transition:border-color 0.3s var(--e-ui),transform 0.25s var(--e-ui),box-shadow 0.25s var(--e-ui); }
     .plan-card:hover { transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.5); }
-    .tablet-frame { transition:transform 0.3s ease,box-shadow 0.3s ease; }
-    .tablet-frame:hover { transform:translateY(-6px);box-shadow:0 0 0 1px #1A1A22,0 40px 100px rgba(0,0,0,0.8)!important; }
-    .step-row { transition:background 0.3s,transform 0.25s ease; }
+    .phone-frame { transition:transform 0.3s var(--e-ui),box-shadow 0.3s var(--e-ui); }
+    .phone-frame:hover { transform:translateY(-6px);box-shadow:0 0 0 1px #1A1A22,0 40px 100px rgba(0,0,0,0.8)!important; }
+    .step-row { transition:background 0.3s var(--e-ui),transform 0.25s var(--e-ui); }
     .step-row:hover { background:rgba(61,126,255,0.03);transform:translateX(4px); }
     /* FAN CARDS */
     .fan-wrap { display:flex;align-items:flex-end;justify-content:center;height:540px;position:relative;margin-top:0px;overflow:visible; }
@@ -85,15 +71,15 @@
       width:230px;height:370px;border-radius:16px;overflow:hidden;
       position:absolute;bottom:0;
       border:1px solid #1e1e26;
-      transition:transform 0.55s cubic-bezier(0.34,1.15,0.64,1),box-shadow 0.4s ease,opacity 0.45s ease;
+      transition:transform 0.55s cubic-bezier(0.34,1.15 var(--e-ui),0.64 var(--e-ui),1) var(--e-ui),box-shadow 0.4s var(--e-ui),opacity 0.45s var(--e-ui);
       transform-origin:bottom center;
       opacity:0;
     }
     .fan-card.fanned { opacity:1; }
     .fan-card-img { width:100%;height:62%;display:block;background:#0D0D14; }
     .fan-card-body { padding:16px 18px;background:#0F0F18;height:38%;display:flex;flex-direction:column;justify-content:center; }
-    .fan-card-label { font-size:9px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:6px; }
-    .fan-card-desc { font-size:11px;color:#555;line-height:1.5; }
+    .fan-card-label { font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:6px; }
+    .fan-card-desc { font-size:11px;color:var(--mid);line-height:1.5; }
     /* TIMELINE */
     .tl-item { flex:1;position:relative; }
     .tl-item:not(:last-child)::after { content:'';position:absolute;top:20px;left:calc(50% + 24px);width:calc(100% - 48px);height:1px;background:var(--border); }
@@ -101,24 +87,29 @@
     @keyframes marquee { from { transform:translateX(0); } to { transform:translateX(-50%); } }
     .marquee-track { display:flex;width:max-content;animation:marquee 18s linear infinite; }
     /* PLANS */
-    .plan-card { padding:52px 44px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.3s; }
+    .plan-card { padding:52px 44px;border:1px solid var(--border);background:var(--surface);transition:border-color 0.3s var(--e-ui); }
     .plan-card.highlight { border-color:var(--blue); }
     /* CASES */
-    .case-video { aspect-ratio:16/9;background:#0D0D11;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;cursor:pointer;transition:background 0.3s; }
+    .case-video { aspect-ratio:16/9;background:#0D0D11;display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--border);position:relative;overflow:hidden;cursor:pointer;transition:background 0.3s var(--e-ui); }
     .case-video:hover { background:#111118; }
-    .play-btn { width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;transition:border-color 0.3s,background 0.3s; }
+    .play-btn { width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;transition:border-color 0.3s var(--e-ui),background 0.3s var(--e-ui); }
     .case-video:hover .play-btn { border-color:var(--blue);background:rgba(61,126,255,0.1); }
     @keyframes scrollLine { 0%{opacity:0;transform:scaleY(0);transform-origin:top} 50%{opacity:1;transform:scaleY(1);transform-origin:top} 100%{opacity:0;transform:scaleY(1);transform-origin:bottom} }
     #main-nav.scrolled { background:rgba(11,11,13,0.95)!important;border-bottom-color:var(--border)!important;backdrop-filter:blur(16px); }
-    /* DEVICE MOCKUP — tablet */
-    .tablet-frame { background:#0A0A0D;border-radius:20px;border:2px solid #2A2A32;padding:10px;box-shadow:0 0 0 1px #1A1A22,0 32px 80px rgba(0,0,0,0.7);position:relative; }
-    .tablet-screen { border-radius:12px;overflow:hidden;aspect-ratio:16/10;background:#0D0D11;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative; }
-    .tablet-screen:hover .play-btn { border-color:var(--blue);background:rgba(61,126,255,0.12); }
-    .tablet-btn { width:6px;height:6px;border-radius:50%;background:#222;margin:8px auto 0;}
-    .process-item { transition:background 0.3s ease,transform 0.3s ease; cursor:default; }
+    /* DEVICE MOCKUP — celular. Os cases sao Shorts (9:16): moldura vertical, que e
+       tambem o formato em que o cliente final assiste o conteudo da Cycle. */
+    .phone-frame { width:100%;max-width:300px;margin:0 auto;background:#0A0A0D;border-radius:38px;border:2px solid #2A2A32;padding:9px;box-shadow:0 0 0 1px #1A1A22,0 32px 80px rgba(0,0,0,0.7);position:relative; }
+    .phone-screen { border-radius:30px;overflow:hidden;aspect-ratio:9/16;background:#0D0D11;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:background 0.3s var(--e-ui); }
+    .phone-screen:hover { background:#111118; }
+    .phone-screen:hover .play-btn { border-color:var(--blue);background:rgba(61,126,255,0.12); }
+    .phone-screen:focus-visible { outline:2px solid var(--blue);outline-offset:3px; }
+    .phone-screen.playing .play-btn, .phone-screen.playing .phone-notch { opacity:0;pointer-events:none; }
+    .phone-screen iframe { position:absolute;inset:0;width:100%;height:100%;border:0; }
+    .phone-notch { position:absolute;top:14px;left:50%;transform:translateX(-50%);width:74px;height:5px;border-radius:3px;background:#1A1A20;z-index:2;transition:opacity 0.3s var(--e-ui); }
+    .process-item { transition:background 0.3s var(--e-ui),transform 0.3s var(--e-ui); cursor:default; }
     .process-item:hover { background:rgba(61,126,255,0.06); transform:translateY(-4px); }
     .process-item:hover .process-num { color:#6d9fff; }
-    .diff-card { transition:background 0.3s ease,transform 0.3s ease,border-color 0.3s ease; cursor:default; }
+    .diff-card { transition:background 0.3s var(--e-ui),transform 0.3s var(--e-ui),border-color 0.3s var(--e-ui); cursor:default; }
     .diff-card:hover { background:rgba(61,126,255,0.1); border-color:rgba(61,126,255,0.4); transform:translateY(-4px); }
     .diff-card:hover .diff-num { color:rgba(61,126,255,0.6); }
     .ig-cta:hover { border-color:transparent!important;background:linear-gradient(135deg,#4f5bd5,#962fbf,#d62976,#fa7e1e,#feda75)!important; }
@@ -142,7 +133,7 @@
 
       #scroll-video { height:320vh!important; }
 
-      .tablet-frame { max-width:100%; }
+      .phone-frame { max-width:250px; }
 
       /* These slide in from +-72px off-screen — that transform paints past the
          viewport edge and can leak into document scrollWidth on some engines.
@@ -157,9 +148,9 @@
       .fan-card { position:static!important;flex:0 0 auto!important;width:220px!important;height:340px!important;transform:none!important;opacity:1!important;scroll-snap-align:start;margin-right:14px; }
     }
 
-    .mobile-menu-link { font-size:18px;font-weight:500;color:#F5F5F5;text-decoration:none;letter-spacing:0.02em;opacity:0;transform:translateY(14px);transition:opacity 0.35s ease,transform 0.35s ease,color 0.3s ease; }
+    .mobile-menu-link { font-size:18px;font-weight:500;color:#F5F5F5;text-decoration:none;letter-spacing:0.02em;opacity:0;transform:translateY(14px);transition:opacity 0.35s var(--e-drawer),transform 0.35s var(--e-drawer),color 0.3s var(--e-ui); }
     .mobile-menu-link:hover { color:var(--blue); }
-    #mobile-menu.open { opacity:1!important;visibility:visible!important;pointer-events:auto!important;transition:opacity 0.3s ease!important; }
+    #mobile-menu.open { opacity:1!important;visibility:visible!important;pointer-events:auto!important;transition:opacity 0.3s var(--e-drawer)!important; }
     #mobile-menu.open .mobile-menu-link { opacity:1;transform:translateY(0); }
     .mobile-menu-link:nth-child(1) { transition-delay:0.05s; }
     .mobile-menu-link:nth-child(2) { transition-delay:0.1s; }
@@ -169,7 +160,7 @@
     @media (max-width: 560px) {
       #main-nav { padding:8px 16px!important; }
       #main-nav img { height:42px!important; }
-      .nav-cta { padding:7px 12px!important;font-size:9px!important;letter-spacing:0.1em!important; }
+      .nav-cta { padding:7px 12px!important;font-size:11px!important;letter-spacing:0.1em!important; }
       .nav-toggle { display:flex!important; }
       section > div, footer > div { padding-left:16px!important;padding-right:16px!important; }
       .inc-card { padding:20px!important; }
@@ -183,11 +174,27 @@
     @media (max-width: 700px), (max-aspect-ratio: 4/5) {
       #hero-video, #scrub-video { object-fit: contain!important; }
     }
+    /* Quem marcou "reduzir movimento" no sistema nao ve nada disso se mexer.
+       Nao e preferencia estetica: movimento grande dispara enjoo e enxaqueca em
+       quem tem sensibilidade vestibular, e esta pagina e quase toda movimento.
+       Os elementos continuam aparecendo — o que sai e o deslocamento. */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .fi, .slide-left, .slide-right { opacity:1 !important;transform:none !important; }
+      .marquee-track { animation: none !important; }
+      .phone-frame:hover { transform:none !important; }
+    }
   </style>
-</helmet>
+</head>
+<body>
 
 <!-- NAV -->
-<nav id="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:100;padding:8px 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:transparent;border-bottom:1px solid transparent;transition:background 0.4s ease,border-color 0.4s ease;">
+<nav id="main-nav" style="position:fixed;top:0;left:0;right:0;z-index:100;padding:8px 18px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;background:transparent;border-bottom:1px solid transparent;transition:background 0.4s var(--e-ui),border-color 0.4s var(--e-ui);">
   <img src="uploads/logo-cycle.png" alt="Cycle" style="height:110px;object-fit:contain;flex-shrink:0;">
   <div style="display:flex;align-items:center;gap:36px;">
     <a href="#percepcao" class="nav-link">Percepção</a>
@@ -202,7 +209,7 @@
 </nav>
 
 <!-- MOBILE MENU -->
-<div id="mobile-menu" style="display:flex;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;background:rgba(11,11,13,0.98);backdrop-filter:blur(12px);flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s ease,visibility 0s linear 0.3s;">
+<div id="mobile-menu" style="display:flex;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;background:rgba(11,11,13,0.98);backdrop-filter:blur(12px);flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.3s var(--e-ui),visibility 0s linear 0.3s;">
   <a href="#percepcao" class="mobile-menu-link">Percepção</a>
   <a href="#sistema" class="mobile-menu-link">Sistema</a>
   <a href="#planos" class="mobile-menu-link">Planos</a>
@@ -219,7 +226,7 @@
     <p style="font-size:12px;font-weight:500;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,245,245,0.4);">Consultoria Estratégica de Conteúdo</p>
   </div>
   <div style="position:absolute;bottom:48px;left:50%;transform:translateX(-50%);z-index:1;">
-    <div style="width:1px;height:52px;background:#F5F5F5;animation:scrollLine 1.8s ease infinite;opacity:0.3;"></div>
+    <div style="width:1px;height:52px;background:#F5F5F5;animation:scrollLine 1.8s var(--e-ui) infinite;opacity:0.3;"></div>
   </div>
 </section>
 
@@ -244,29 +251,29 @@
   <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
     <div class="fi" style="margin-bottom:72px;text-align:center;">
       <h2 style="font-size:clamp(28px,4vw,56px);font-weight:300;letter-spacing:-0.02em;margin-bottom:12px;">O problema não é falta de conteúdo.</h2>
-      <p style="font-size:clamp(22px,2.5vw,38px);font-weight:300;color:var(--blue);">É falta de direção.</p>
+      <p style="font-size:clamp(24px,2.5vw,38px);font-weight:300;color:var(--blue);">É falta de direção.</p>
     </div>
     <!-- Cards animados -->
     <div class="g2" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start;">
       <!-- Empresa Comum — deslizam da esquerda -->
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;padding-left:4px;">Empresa comum</p>
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);margin-bottom:12px;padding-left:4px;">Empresa comum</p>
         <div class="slide-left" style="background:var(--surface);border:1px solid var(--border);padding:24px 28px;transition-delay:0ms;">
-          <p style="font-size:15px;color:#555;font-weight:400;">Publica quando lembra</p>
+          <p style="font-size:15px;color:var(--mid);font-weight:400;">Publica quando lembra</p>
         </div>
         <div class="slide-left" style="background:var(--surface);border:1px solid var(--border);padding:24px 28px;transition-delay:60ms;">
-          <p style="font-size:15px;color:#555;font-weight:400;">Mostra apenas serviços</p>
+          <p style="font-size:15px;color:var(--mid);font-weight:400;">Mostra apenas serviços</p>
         </div>
         <div class="slide-left" style="background:var(--surface);border:1px solid var(--border);padding:24px 28px;transition-delay:120ms;">
-          <p style="font-size:15px;color:#555;font-weight:400;">Segue tendências</p>
+          <p style="font-size:15px;color:var(--mid);font-weight:400;">Segue tendências</p>
         </div>
         <div class="slide-left" style="background:var(--surface);border:1px solid var(--border);padding:24px 28px;transition-delay:180ms;">
-          <p style="font-size:15px;color:#555;font-weight:400;">Comunica sem estratégia</p>
+          <p style="font-size:15px;color:var(--mid);font-weight:400;">Comunica sem estratégia</p>
         </div>
       </div>
       <!-- Empresa Estratégica — deslizam da direita -->
       <div style="display:flex;flex-direction:column;gap:8px;">
-        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;padding-left:4px;">Empresa estratégica</p>
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:12px;padding-left:4px;">Empresa estratégica</p>
         <div class="slide-right" style="background:var(--surface);border:1px solid rgba(61,126,255,0.25);padding:24px 28px;transition-delay:0ms;">
           <p style="font-size:15px;color:#F5F5F5;font-weight:500;">Planeja antes de produzir</p>
         </div>
@@ -282,7 +289,7 @@
       </div>
     </div>
     <div class="fi" style="text-align:center;margin-top:56px;">
-      <p style="font-size:13px;color:var(--muted);letter-spacing:0.04em;font-weight:500;">Empresas não são lembradas pelo quanto publicam. São lembradas pela forma como comunicam.</p>
+      <p style="font-size:13px;color:var(--mid);letter-spacing:0.04em;font-weight:500;">Empresas não são lembradas pelo quanto publicam. São lembradas pela forma como comunicam.</p>
     </div>
   </div>
 </section>
@@ -305,7 +312,7 @@
   <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
     <div class="fi g2" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-bottom:-20px;">
       <div>
-        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Sistema Cycle</p>
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Sistema Cycle</p>
         <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;line-height:1.2;">Conteúdo que fortalece a percepção da sua marca.</h2>
       </div>
       <div style="padding-top:8px;">
@@ -365,48 +372,48 @@
 <section id="incluso" style="padding:120px 0;">
   <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
     <div class="fi" style="margin-bottom:64px;">
-      <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Incluso em todos os planos</p>
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Incluso em todos os planos</p>
       <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;">O que você recebe.</h2>
     </div>
     <div class="fi g2" style="display:grid;grid-template-columns:repeat(2,1fr);gap:2px;">
       <div class="inc-card">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">01</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--mid);text-transform:uppercase;margin-bottom:12px;">01</p>
         <p style="font-size:16px;font-weight:500;">Diagnóstico Estratégico</p>
       </div>
       <div class="inc-card">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">02</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--mid);text-transform:uppercase;margin-bottom:12px;">02</p>
         <p style="font-size:16px;font-weight:500;">Planejamento Editorial</p>
       </div>
       <div class="inc-card">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">03</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--mid);text-transform:uppercase;margin-bottom:12px;">03</p>
         <p style="font-size:16px;font-weight:500;">Reunião Estratégica</p>
       </div>
       <div class="inc-card">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">04</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--mid);text-transform:uppercase;margin-bottom:12px;">04</p>
         <p style="font-size:16px;font-weight:500;">Roteiros</p>
       </div>
       <div class="inc-card">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">05</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--mid);text-transform:uppercase;margin-bottom:12px;">05</p>
         <p style="font-size:16px;font-weight:500;">Captação</p>
       </div>
       <div class="inc-card">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">06</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--mid);text-transform:uppercase;margin-bottom:12px;">06</p>
         <p style="font-size:16px;font-weight:500;">Direção Criativa</p>
       </div>
       <div class="inc-card">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">07</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--mid);text-transform:uppercase;margin-bottom:12px;">07</p>
         <p style="font-size:16px;font-weight:500;">Edição</p>
       </div>
       <div class="inc-card">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">08</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--mid);text-transform:uppercase;margin-bottom:12px;">08</p>
         <p style="font-size:16px;font-weight:500;">Conteúdos Principais</p>
       </div>
       <div class="inc-card">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">09</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--mid);text-transform:uppercase;margin-bottom:12px;">09</p>
         <p style="font-size:16px;font-weight:500;">Conteúdos Complementares</p>
       </div>
       <div class="inc-card">
-        <p style="font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-bottom:12px;">10</p>
+        <p style="font-size:11px;font-weight:600;letter-spacing:0.14em;color:var(--mid);text-transform:uppercase;margin-bottom:12px;">10</p>
         <p style="font-size:16px;font-weight:500;">Acompanhamento</p>
       </div>
     </div>
@@ -419,18 +426,18 @@
 <section id="planos" style="padding:120px 0;">
   <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
     <div class="fi" style="margin-bottom:64px;">
-      <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Investimento</p>
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Investimento</p>
       <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;">Escolha seu sistema.</h2>
     </div>
     <div class="fi g2" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
       <!-- Performance — destaque -->
       <div class="plan-card highlight">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;">
-          <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);">Destaque</p>
-          <span style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0B0B0D;background:var(--blue);padding:5px 12px;border-radius:100px;">Performance</span>
+          <p style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);">Destaque</p>
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0B0B0D;background:var(--blue);padding:5px 12px;border-radius:100px;">Performance</span>
         </div>
         <h3 style="font-size:14px;font-weight:500;color:var(--mid);margin-bottom:8px;">Sistema Cycle</h3>
-        <p style="font-size:52px;font-weight:700;letter-spacing:-0.02em;line-height:1;margin-bottom:8px;">R$ 2.790<span style="font-size:18px;font-weight:400;color:var(--muted);">/mês</span></p>
+        <p style="font-size:52px;font-weight:700;letter-spacing:-0.02em;line-height:1;margin-bottom:8px;">R$ 2.790<span style="font-size:18px;font-weight:400;color:var(--mid);">/mês</span></p>
         <p style="font-size:14px;color:var(--mid);margin-bottom:44px;line-height:1.7;">Para empresas que desejam fortalecer a percepção e acelerar sua autoridade.</p>
         <div style="display:flex;flex-direction:column;gap:0;">
           <div style="padding:16px 0;border-bottom:1px solid var(--border);font-size:14px;color:#ccc;display:flex;align-items:center;gap:12px;">
@@ -447,11 +454,11 @@
       <!-- Presença -->
       <div class="plan-card">
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;">
-          <p style="font-size:10px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:transparent;">—</p>
-          <span style="font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);border:1px solid var(--border);padding:5px 12px;border-radius:100px;">Presença</span>
+          <p style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:transparent;">—</p>
+          <span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);border:1px solid var(--border);padding:5px 12px;border-radius:100px;">Presença</span>
         </div>
         <h3 style="font-size:14px;font-weight:500;color:var(--mid);margin-bottom:8px;">Sistema Cycle</h3>
-        <p style="font-size:52px;font-weight:700;letter-spacing:-0.02em;line-height:1;margin-bottom:8px;">R$ 3.790<span style="font-size:18px;font-weight:400;color:var(--muted);">/mês</span></p>
+        <p style="font-size:52px;font-weight:700;letter-spacing:-0.02em;line-height:1;margin-bottom:8px;">R$ 3.790<span style="font-size:18px;font-weight:400;color:var(--mid);">/mês</span></p>
         <p style="font-size:14px;color:var(--mid);margin-bottom:44px;line-height:1.7;">Para empresas que desejam liderar através da comunicação.</p>
         <div style="display:flex;flex-direction:column;gap:0;">
           <div style="padding:16px 0;border-bottom:1px solid var(--border);font-size:14px;color:#ccc;display:flex;align-items:center;gap:12px;">
@@ -467,7 +474,7 @@
       </div>
     </div>
     <!-- TODO: confirmar plano Essencial com o cliente -->
-    <p style="font-size:12px;color:var(--muted);margin-top:20px;text-align:center;">* Plano Essencial disponível — entre em contato.</p>
+    <p style="font-size:12px;color:var(--mid);margin-top:20px;text-align:center;">* Plano Essencial disponível — entre em contato.</p>
   </div>
 </section>
 
@@ -477,21 +484,20 @@
 <section id="resultados" style="padding:120px 0;">
   <div style="max-width:1200px;margin:0 auto;padding:0 40px;">
     <div class="fi" style="margin-bottom:80px;">
-      <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Cases</p>
+      <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:20px;">Cases</p>
       <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;">Resultados na prática.</h2>
     </div>
     <!-- Case 1: Esthilion — mockup esquerda, info direita -->
     <div class="fi g2" style="display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;">
-      <!-- tablet mockup -->
+      <!-- mockup celular -->
       <div style="padding:20px;">
-        <div class="tablet-frame">
-          <!-- TODO: link YouTube Esthilion -->
-          <div class="tablet-screen">
+        <div class="phone-frame">
+          <div class="phone-screen" data-yt="ub6zUp817z8" role="button" tabindex="0" aria-label="Assistir ao case Esthilion no YouTube">
+            <div class="phone-notch"></div>
             <div class="play-btn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="#F5F5F5"><polygon points="6,4 20,12 6,20"/></svg>
             </div>
           </div>
-          <div class="tablet-btn"></div>
         </div>
       </div>
       <!-- info -->
@@ -499,12 +505,12 @@
         <img loading="lazy" src="uploads/logo-esthilion.png" alt="Esthilion" style="height:180px;object-fit:contain;align-self:center;filter:brightness(0) invert(1);opacity:0.85;">
         <div style="display:flex;flex-direction:column;gap:24px;">
           <div>
-            <p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Objetivo</p>
+            <p style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);margin-bottom:10px;">Objetivo</p>
             <p style="font-size:16px;color:#ccc;line-height:1.65;">Fortalecer percepção premium.</p>
           </div>
           <div style="width:40px;height:1px;background:var(--border);"></div>
           <div>
-            <p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Resultado</p>
+            <p style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);margin-bottom:10px;">Resultado</p>
             <p style="font-size:16px;color:#ccc;line-height:1.65;">Comunicação consistente e percepção de autoridade no mercado de estética.</p>
           </div>
         </div>
@@ -525,26 +531,25 @@
         <img loading="lazy" src="uploads/logo-downtown.png" alt="Downtown Beer Garden" style="height:150px;object-fit:contain;align-self:center;filter:brightness(0) invert(1);opacity:0.85;">
         <div style="display:flex;flex-direction:column;gap:24px;">
           <div>
-            <p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Objetivo</p>
+            <p style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);margin-bottom:10px;">Objetivo</p>
             <p style="font-size:16px;color:#ccc;line-height:1.65;">Fortalecer posicionamento e percepção da experiência.</p>
           </div>
           <div style="width:40px;height:1px;background:var(--border);"></div>
           <div>
-            <p style="font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Solução</p>
+            <p style="font-size:11px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);margin-bottom:10px;">Solução</p>
             <p style="font-size:16px;color:#ccc;line-height:1.65;">Conteúdo voltado para experiência, ambiente e conexão com o público.</p>
           </div>
         </div>
       </div>
-      <!-- tablet mockup -->
+      <!-- mockup celular -->
       <div style="padding:20px;">
-        <div class="tablet-frame">
-          <!-- TODO: link YouTube Downtown -->
-          <div class="tablet-screen">
+        <div class="phone-frame">
+          <div class="phone-screen" data-yt="D89qBf99R4g" role="button" tabindex="0" aria-label="Assistir ao case Downtown Beer Garden no YouTube">
+            <div class="phone-notch"></div>
             <div class="play-btn">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="#F5F5F5"><polygon points="6,4 20,12 6,20"/></svg>
             </div>
           </div>
-          <div class="tablet-btn"></div>
         </div>
       </div>
     </div>
@@ -583,7 +588,7 @@
     <div style="position:absolute;bottom:0;left:0;right:0;height:30%;background:linear-gradient(to bottom,transparent,#08080A);z-index:1;"></div>
 
     <!-- PANEL 1: intro text (visível no início) -->
-    <div id="panel-intro" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;transition:opacity 0.5s ease,transform 0.5s ease;">
+    <div id="panel-intro" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:2;transition:opacity 0.5s var(--e-ui),transform 0.5s var(--e-ui);">
       <div style="text-align:center;">
         <p style="font-size:11px;font-weight:600;letter-spacing:0.22em;text-transform:uppercase;color:rgba(245,245,245,0.35);margin-bottom:20px;">Role para explorar</p>
         <h2 style="font-size:clamp(32px,5vw,72px);font-weight:300;letter-spacing:-0.03em;line-height:1.05;">Cada detalhe<br>tem uma razão.</h2>
@@ -591,65 +596,65 @@
     </div>
 
     <!-- PANEL 2: Como funciona (sobe do baixo) -->
-    <div id="panel-como" style="position:absolute;inset:0;z-index:3;display:flex;align-items:flex-end;opacity:0;transform:translateY(80px);transition:opacity 0.6s ease,transform 0.6s ease;pointer-events:none;">
+    <div id="panel-como" style="position:absolute;inset:0;z-index:3;display:flex;align-items:flex-end;opacity:0;transform:translateY(80px);transition:opacity 0.6s var(--e-ui),transform 0.6s var(--e-ui);pointer-events:none;">
       <div style="width:100%;padding:16px 80px 28px;background:linear-gradient(to top,rgba(8,8,10,0.98) 48%,transparent);">
-        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;">Processo</p>
-        <h2 style="font-size:clamp(22px,2.5vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:14px;">Como funciona.</h2>
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;">Processo</p>
+        <h2 style="font-size:clamp(24px,2.5vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:14px;">Como funciona.</h2>
         <div class="process-grid" style="display:flex;overflow-x:auto;gap:0;border-top:1px solid rgba(255,255,255,0.08);scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;">
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px 18px 0;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">01</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">01</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Diagnóstico</p>
-            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Análise da percepção atual</p>
+            <p style="font-size:12px;color:var(--mid);line-height:1.5;">Análise da percepção atual</p>
           </div>
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">02</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">02</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Planejamento</p>
-            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Estratégia e calendário</p>
+            <p style="font-size:12px;color:var(--mid);line-height:1.5;">Estratégia e calendário</p>
           </div>
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">03</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">03</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Captação</p>
-            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Produção no cliente</p>
+            <p style="font-size:12px;color:var(--mid);line-height:1.5;">Produção no cliente</p>
           </div>
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">04</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">04</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Produção</p>
-            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Edição e direção criativa</p>
+            <p style="font-size:12px;color:var(--mid);line-height:1.5;">Edição e direção criativa</p>
           </div>
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 22px;border-right:1px solid rgba(255,255,255,0.06);">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">05</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">05</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Entrega</p>
-            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Conteúdos publicados</p>
+            <p style="font-size:12px;color:var(--mid);line-height:1.5;">Conteúdos publicados</p>
           </div>
           <div class="process-item" style="flex:0 0 auto;width:170px;scroll-snap-align:start;padding:18px 0 18px 22px;">
-            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s ease;">06</p>
+            <p class="process-num" style="font-size:38px;font-weight:700;color:var(--blue);letter-spacing:-0.02em;margin-bottom:12px;line-height:1;transition:color 0.3s var(--e-ui);">06</p>
             <p style="font-size:15px;font-weight:600;margin-bottom:7px;">Evolução</p>
-            <p style="font-size:12px;color:var(--muted);line-height:1.5;">Melhoria contínua</p>
+            <p style="font-size:12px;color:var(--mid);line-height:1.5;">Melhoria contínua</p>
           </div>
         </div>
       </div>
     </div>
 
     <!-- PANEL 3: Por que a Cycle (sobe do baixo) -->
-    <div id="panel-porque" style="position:absolute;inset:0;z-index:4;display:flex;align-items:flex-end;opacity:0;transform:translateY(80px);transition:opacity 0.6s ease,transform 0.6s ease;pointer-events:none;">
+    <div id="panel-porque" style="position:absolute;inset:0;z-index:4;display:flex;align-items:flex-end;opacity:0;transform:translateY(80px);transition:opacity 0.6s var(--e-ui),transform 0.6s var(--e-ui);pointer-events:none;">
       <div style="width:100%;padding:16px 80px 28px;background:linear-gradient(to top,rgba(8,8,10,0.98) 48%,transparent);">
-        <p style="font-size:10px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;">Diferenciais</p>
-        <h2 style="font-size:clamp(22px,2.5vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:14px;">Por que a Cycle?</h2>
+        <p style="font-size:11px;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue);margin-bottom:16px;">Diferenciais</p>
+        <h2 style="font-size:clamp(24px,2.5vw,36px);font-weight:300;letter-spacing:-0.02em;margin-bottom:14px;">Por que a Cycle?</h2>
         <div class="diff-grid" style="display:flex;overflow-x:auto;gap:2px;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;">
           <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s ease;">01</p>
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s var(--e-ui);">01</p>
             <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Estratégia antes da produção.</h3>
           </div>
           <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s ease;">02</p>
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s var(--e-ui);">02</p>
             <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Conteúdo com propósito.</h3>
           </div>
           <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s ease;">03</p>
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s var(--e-ui);">03</p>
             <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Consistência acima de volume.</h3>
           </div>
           <div class="diff-card" style="flex:0 0 auto;width:220px;scroll-snap-align:start;padding:24px 22px;background:rgba(16,16,18,0.85);border:1px solid rgba(255,255,255,0.06);">
-            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s ease;">04</p>
+            <p class="diff-num" style="font-size:26px;font-weight:700;color:rgba(61,126,255,0.2);letter-spacing:-0.02em;margin-bottom:10px;line-height:1;transition:color 0.3s var(--e-ui);">04</p>
             <h3 style="font-size:13px;font-weight:500;line-height:1.4;">Fortalecimento da percepção da marca.</h3>
           </div>
         </div>
@@ -676,12 +681,12 @@
       <img loading="lazy" src="uploads/logo-cycle.png" alt="Cycle" style="height:64px;object-fit:contain;opacity:0.6;">
       <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center;">
         <!-- TODO: número WhatsApp -->
-        <a href="https://wa.me/558293270904" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:12px;background:var(--blue);color:#fff;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:opacity 0.3s ease;">
+        <a href="https://wa.me/558293270904" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:12px;background:var(--blue);color:#fff;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:opacity 0.3s var(--e-ui);">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
           Falar no WhatsApp
         </a>
         <!-- TODO: link Instagram -->
-        <a href="https://www.instagram.com/cycleprod/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:12px;background:transparent;border:1px solid var(--border);color:#F5F5F5;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:border-color 0.3s ease,background 0.3s ease;" class="ig-cta">
+        <a href="https://www.instagram.com/cycleprod/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:12px;background:transparent;border:1px solid var(--border);color:#F5F5F5;font-family:'Manrope',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;text-decoration:none;padding:16px 40px;border-radius:100px;transition:border-color 0.3s var(--e-ui),background 0.3s var(--e-ui);" class="ig-cta">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
           Ver bastidores no Instagram
         </a>
@@ -698,22 +703,20 @@
     <img loading="lazy" src="uploads/logo-cycle.png" alt="Cycle" style="height:64px;object-fit:contain;opacity:0.55;">
     <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:center;">
       <!-- TODO: número WhatsApp -->
-      <a href="https://wa.me/558293270904" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" class="nav-link">WhatsApp</a>
+      <a href="https://wa.me/558293270904" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.3s var(--e-ui);" class="nav-link">WhatsApp</a>
       <!-- TODO: link Instagram -->
-      <a href="https://www.instagram.com/cycleprod/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" class="nav-link">
+      <a href="https://www.instagram.com/cycleprod/" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.3s var(--e-ui);" class="nav-link">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="2.5" width="19" height="19" rx="5"/><circle cx="12" cy="12" r="4.4"/><circle cx="17.2" cy="6.8" r="1.1" fill="currentColor" stroke="none"/></svg>
         Instagram
       </a>
       <!-- TODO: e-mail -->
-      <a href="mailto:contato@cycle.com.br" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.3s;" class="nav-link">E-mail</a>
+      <a href="mailto:contato@cycle.com.br" style="font-size:11px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--mid);text-decoration:none;transition:color 0.3s var(--e-ui);" class="nav-link">E-mail</a>
     </div>
-    <p style="font-size:11px;color:#2A2A2E;letter-spacing:0.06em;">© 2025 Cycle. Todos os direitos reservados.</p>
+    <p style="font-size:11px;color:var(--mid);letter-spacing:0.06em;">© 2025 Cycle. Todos os direitos reservados.</p>
   </div>
 </footer>
-</x-dc>
-<script type="text/x-dc" data-dc-script>
-class Component extends DCLogic {
-  componentDidMount() {
+<script>
+document.addEventListener('DOMContentLoaded', function () {
     // Fade-in on scroll (one-way)
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -738,10 +741,9 @@ class Component extends DCLogic {
     // then explicitly call play(), so decode only starts once things are stable.
     const heroVideo = document.getElementById('hero-video');
     if (heroVideo) {
-      // The bundler's DOM hydration was dropping the `muted` boolean attribute at
-      // runtime, which makes Chrome reject autoplay with NotAllowedError even though
-      // the source markup has muted written on it. Force it via the JS property,
-      // which always sticks regardless of what happened to the attribute.
+      // Force muted via the JS property, not just the attribute: Chrome rejects
+      // autoplay with NotAllowedError on any video it does not consider muted at
+      // play() time, and the property is what it actually reads.
       heroVideo.muted = true;
       heroVideo.defaultMuted = true;
       const tryPlay = () => { heroVideo.muted = true; return heroVideo.play().catch(() => {}); };
@@ -817,14 +819,43 @@ class Component extends DCLogic {
       mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
     }
 
+    // Cases — embed do YouTube so no clique (facade)
+    setupCases();
+
     // Scroll-scrub video
-    this.setupScrub();
+    setupScrub();
 
     // Fan cards — JS-driven hover + scroll-in arc animation
-    this.setupFan();
+    setupFan();
+
+  // Os cases sao Shorts do YouTube. O iframe so entra no clique: antes disso a
+  // pagina nao fala com o YouTube, nao carrega o player e nao pede cookie.
+  function setupCases() {
+    document.querySelectorAll('.phone-screen[data-yt]').forEach(screen => {
+      const play = () => {
+        if (screen.dataset.loaded) return;
+        const id = screen.getAttribute('data-yt');
+        if (!id) return;
+        screen.dataset.loaded = '1';
+        const frame = document.createElement('iframe');
+        frame.src = 'https://www.youtube-nocookie.com/embed/' + id +
+          '?autoplay=1&rel=0&playsinline=1&modestbranding=1';
+        frame.title = screen.getAttribute('aria-label') || 'Video do case';
+        frame.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+        frame.allowFullscreen = true;
+        screen.appendChild(frame);
+        screen.classList.add('playing');
+      };
+      screen.addEventListener('click', play);
+      screen.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); play(); }
+      });
+    });
   }
 
-  setupScrub() {
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function setupScrub() {
     const section = document.getElementById('scroll-video');
     const video   = document.getElementById('scrub-video');
     const bar     = document.getElementById('scrub-progress');
@@ -874,7 +905,13 @@ class Component extends DCLogic {
     video.addEventListener('loadedmetadata', () => { videoReady = true; });
 
     const show = (el) => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; el.style.pointerEvents = 'auto'; };
-    const hide = (el, down) => { el.style.opacity = '0'; el.style.transform = down ? 'translateY(80px)' : 'translateY(-40px)'; el.style.pointerEvents = 'none'; };
+    // Sob movimento reduzido os paineis ainda trocam (e conteudo), mas sem
+    // deslocamento — so o fade.
+    const hide = (el, down) => {
+      el.style.opacity = '0';
+      el.style.transform = prefersReducedMotion.matches ? 'none' : (down ? 'translateY(80px)' : 'translateY(-40px)');
+      el.style.pointerEvents = 'none';
+    };
 
     let rafPending = false;
 
@@ -885,7 +922,9 @@ class Component extends DCLogic {
       const scrolled = Math.max(0, -rect.top);
       const p = Math.min(1, Math.max(0, scrolled / totalH));
 
-      if (videoReady && video.duration) {
+      // O scrub amarra o video ao scroll: e exatamente o tipo de movimento que
+      // provoca enjoo. Sob movimento reduzido o video fica parado no primeiro frame.
+      if (videoReady && video.duration && !prefersReducedMotion.matches) {
         targetTime = p * video.duration;
       }
 
@@ -939,7 +978,7 @@ class Component extends DCLogic {
     requestAnimationFrame(scrubLoop);
   }
 
-  setupFan() {
+  function setupFan() {
     const wrap = document.querySelector('.fan-wrap');
     if (!wrap) return;
 
@@ -1042,7 +1081,7 @@ class Component extends DCLogic {
       cards.forEach((_, i) => applyResting(i));
     });
   }
-}
+});
 </script>
 </body>
 </html>

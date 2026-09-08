@@ -10,13 +10,63 @@ trabalho, planos, cases e CTA pro WhatsApp. No ecossistema aparece como **design
 - **Vídeos trazidos pelo dono:** ler `~/Vault/design-handoff/videos.md` se existir — links de YouTube/Instagram que a skill
   `video-nota` transcreveu e classificou pra este projeto. Cada entrada aponta pro `.md` completo em `~/Vault/_inbox/videos/`;
   É **pauta pra discutir com o dono**, não regra pra aplicar: ele decide ali o que entra, o que adapta e o que descarta. Abrir a transcrição só quando a conversa pedir. Gatilho: "tem vídeo pra discutir", "o que eu trouxe do radar", "vamos ver aquele vídeo".
+- **Antes de codar feature nova:** feature nova, mudança de schema em banco com dado real,
+  cobrança/assinatura, auth/permissão, migração ou integração nova com terceiro **não começa
+  em código** — dispara a skill `plano-sob-fogo`: interrogatório de uma pergunta por vez, com
+  `AskUserQuestion`, até fechar o `PLAN.md` em `.specs/planos/<slug>.md` (com **Fora de escopo**
+  escrito) e o dono aprovar. Bug, ajuste de texto, rename e revisão de código pronto seguem
+  direto, sem plano. Gatilhos: "me interroga", "testa meu plano", "planeja antes", "não codifica ainda".
+- **FRONT — vale pra qualquer porta de entrada.** Se a conversa envolve tela, componente,
+  layout, estilo, cor, tipografia, animação, ícone, responsivo ou "tá feio/genérico" —
+  **em qualquer forma**: reparo de bug visual, ajuste, restyle, reimplementação, refatoração,
+  feature nova, tela nova, componente novo, projeto novo, ou o dono só comentando o visual —
+  a sessão **carrega o contexto de front ANTES de escrever a primeira linha**, sem o dono pedir:
+  1. **`.specs/DESIGN.md`** — paleta, escala de texto, escala de movimento, estado de componente,
+     tela vazia/erro. Valor visual que não está lá **não se inventa no arquivo de tela**: ou entra
+     no `DESIGN.md` primeiro (com o motivo), ou usa o que já existe.
+     **Não existe `DESIGN.md` e o projeto tem front? Escrever um ANTES de mexer** — extraindo do
+     código o que já está decidido e perguntando ao dono o que falta, com a skill `plano-sob-fogo`.
+  2. **`.specs/codebase/CONVENTIONS.md`** — o que já está certo neste projeto e não se "conserta",
+     e o que é proibido aqui.
+  3. **Skill certa pro caso:** `frontend-design` (direção visual de tela ou fluxo novo) ·
+     `svg-draw` (ícone, ilustração, mascote, diagrama, dar vida a elemento) · `svg-animations`
+     (consulta de sintaxe SVG/SMIL) · `animate` (motion de UI: entra/sai, hover, drawer, toast, transição — decide SE anima antes de escrever) · `improve-animations` (auditar o movimento de uma tela/app pronto e sair com plano) · `review-animations` (revisar diff de motion, só sob pedido) ·
+     `web-perf` (tela lenta, Core Web Vitals) ·
+     `agent-browser` / `agent-browser-dogfood` (conferir a tela depois de pronta, nunca antes).
+  **Piso de legibilidade — vale em TODO projeto, o modelo não fura sem perguntar.**
+  A estética que a IA produz por padrão é fina, pequena, com tracking negativo largo e
+  cinza sobre cinza: fica bonita em print e é ruim de ler no celular. Aqui não entra.
+  - **Peso mínimo 600.** Peso 300 e 400 são proibidos em título e em botão.
+  - **Corpo nunca abaixo de 15px**; texto de apoio nunca abaixo de 11px.
+  - **`letterSpacing` negativo no máximo -0.5px**, e só acima de 24px.
+  - **Contraste do texto principal ≥ 4.5:1.** Cinza sobre cinza é reprovado.
+  - **`line-height` 1.4 no corpo.**
+  Quer furar o piso num caso específico? **Pergunta antes**, com o motivo — não fura calado.
+  **Piso de movimento — vale em TODO projeto** (tabelas do Emil Kowalski, skills `animate`/`review-animations`): ação vista 100+ vezes/dia ou disparada por teclado **não anima**; entra/sai usa `ease-out` (**`ease-in` em UI é proibido**), movimento na tela usa `ease-in-out`; curva forte, não a do navegador — `cubic-bezier(0.23, 1, 0.32, 1)` em UI, `cubic-bezier(0.32, 0.72, 0, 1)` em drawer; **UI abaixo de 300ms** (tooltip 125–200, dropdown 150–250, modal/drawer 200–500); **nunca `scale(0)`** — entra de `scale(0.9–0.97)` + opacity, e popover escala a partir do gatilho (modal fica no centro); `prefers-reduced-motion` sai junto com a animação, nunca depois. Valor de movimento decidido num projeto vira degrau da **escala de movimento** no `.specs/DESIGN.md`, não fica solto no arquivo de tela.
+**O dono NUNCA digita comando nem cita nome de skill.** "faz essa feature", "muda isso na LP", "cria uma LP nova", "tá feio" — o pedido já É o gatilho: a sessão carrega `DESIGN.md`/`CONVENTIONS.md` e as skills sozinha, e se o projeto não tem `DESIGN.md` ela escreve antes de tocar em tela. **Antes de dar tela por pronta**, ela mesma revisa o movimento contra o piso (skill `review-animations`) e o texto contra o piso de legibilidade, e conserta o que reprovar — sem pedir, sem perguntar se pode. **Neste projeto, e só aqui, o `impeccable` está EM TESTE** (`.claude/skills/impeccable/`, fora do git): quando a sessão terminar uma tela ou um bloco visual, ela roda sozinha a crítica dele (`/impeccable critique <alvo>`) e trata o resultado como **parecer, não ordem** — o que contradiz o `.specs/DESIGN.md` ou o piso da casa é descartado com uma linha de motivo, o que acrescenta vira emenda no `.specs/DESIGN.md`. O `DESIGN.md` que ele quiser escrever na raiz fica separado, como material do teste; **o arquivo com autoridade continua sendo `.specs/DESIGN.md`**. O veredito do teste se fecha no `RADAR.md`.
+  **Escolha de fonte, quando não existe `DESIGN.md`:** herda o que a casa já usa —
+  **Barlow Condensed** em app/produto, **Poppins** em LP de venda, **pilha do sistema**
+  em painel interno. Fonte diferente disso **não entra sozinha**: a sessão pergunta antes,
+  mostrando 2 ou 3 opções com amostra do texto real do projeto.
+  **O `DESIGN.md` trava vocabulário, não composição.** Layout, hierarquia, o que é grande e o que
+  some, o que se move e por quê, densidade, quebrar a grade de propósito — é tudo da sessão, e ela
+  deve ousar. Achou que a escala atrapalha o que a tela precisa ser? O defeito é da escala: propor
+  a emenda no `DESIGN.md`, nunca contornar no arquivo de tela.
 
 ## Regra que define este projeto
-- **O HTML aqui é protótipo de referência, NÃO é código de produção.** `index.html` e `support.js` existem
-  pra mostrar o resultado pixel-perfect — cor, tipografia, espaçamento, interação.
-- A tarefa é **recriar** esse design no codebase de destino, com as bibliotecas que ele já usa.
-  Copiar o HTML direto pra produção é usar o handoff errado.
-- Sem codebase de destino definido, o padrão recomendado é **Next.js + Tailwind**.
+- **`index.html` É a produção.** Nasceu como pacote de handoff, mas a LP da Cycle está no ar a partir
+  deste arquivo (Vercel, `.vercel/project.json`), e o histórico do git mostra ajuste fino feito direto
+  nele. Editar aqui é editar o site.
+- **Fica em HTML/CSS/JS puro. Decidido em 08/09/2026, não reabrir sem motivo novo.** Uma landing de
+  uma tela, sem login, sem dados e sem estado não ganha nada com React/Next: o custo real seria
+  reescrever as animações de scroll (`IntersectionObserver` e o scrub de vídeo por `currentTime`) em
+  `useRef` + `requestAnimationFrame`, que é exatamente onde esse tipo de coisa quebra em React.
+  Só reabrir se a Cycle virar site de várias páginas, blog ou área logada.
+- **O runtime do handoff foi arrancado** (08/09/2026): `support.js` (60 KB), `_ds/_ds_bundle.js`
+  (24 KB), as tags `<x-dc>`/`<helmet>` e o `<template id="__bundler_thumbnail">`. Existiam só para
+  hidratar uma página estática. **Não reintroduzir**, e não tratar mais `support.js` como intocável:
+  ele não existe.
+- O gargalo desta LP é **peso de mídia**, não JavaScript. Antes de "otimizar" código, olhar `uploads/`.
 
 ## Ao encerrar / pausar (fazer sem o usuário pedir)
 1. Atualizar `.specs/STATE.md`: o que foi feito, o que ficou aberto, próximo passo.
