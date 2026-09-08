@@ -84,8 +84,12 @@ Fora display, tracking negativo é proibido.
 
 - **Trilho de etapas (`.step-track` / `.step-cell`)** — sequência numerada sem caixa: fio de cabelo
   no topo, células separadas por fio vertical, número em `38px/700` `--blue`, nome em `16px/600`.
-  6 colunas → 3 (≤900px) → 2 (≤560px). É o mesmo dispositivo do "Como funciona" no scroll-scrub;
-  sequência nova nasce assim.
+  6 colunas → 3 (≤900px) → 2 (≤560px). Usado hoje no "Como funciona" do scroll-scrub.
+- **Ciclo (`.ciclo`)** — a seção de entregas. As 6 etapas em volta de um anel de `470px` que se
+  desenha quando a seção entra (`stroke-dashoffset` de 100 a 0 em 1,6s), com os marcos acendendo em
+  cascata de 250ms e a frase de apoio no miolo. A marca se chama Cycle e o logo é um círculo de
+  raios: aqui o processo *é* a identidade, não uma lista com enfeite. Abaixo de 760px o anel some e
+  vira coluna, com um fio vertical que desce no mesmo tempo.
 - **Hero (`.hero-copy`)** — a linha da marca em `clamp(34px,5.4vw,72px)`, peso 300, tracking
   `-0.03em`, ancorada à esquerda na mesma coluna de 1200px do resto da página, com o subtítulo em
   `16px` `#C9C9CE` logo abaixo. O gradiente do vídeo fecha em `rgba(11,11,13,0.9)` embaixo
@@ -177,8 +181,10 @@ apareceria.
 - **CTA navbar:** repouso `--text` sobre `--bg` (pill invertido) → hover `--blue` com texto branco.
 - **Card (incluso / plano):** repouso borda `--border` → hover `translateY(-5px)` +
   `box-shadow: 0 12px 32px rgba(0,0,0,0.4)`.
-- **Plano em destaque:** borda `--blue` e badge preenchido; o outro fica com badge outlined.
-  A diferença entre planos é **borda + badge**, não tamanho.
+- **Plano em destaque:** borda `--blue`, badge preenchido, rótulo "Destaque" e bolinhas de item em
+  `--blue`; o outro fica com badge outlined e bolinhas em `--mid`. A diferença entre planos é
+  **borda, badge e cor de marcador**, nunca tamanho. O destaque fica no **Presença** (o plano maior),
+  porque é a aposta de ticket da Cycle.
 - **Mockup de case (`.phone-frame`):** moldura de **celular, `aspect-ratio:9/16`**, `max-width:300px`
   (250px abaixo de 900px). Os cases são Shorts — vertical é o formato nativo do conteúdo e o
   formato em que o cliente final assiste. Era um tablet 16/10; trocado em 08/09/2026.

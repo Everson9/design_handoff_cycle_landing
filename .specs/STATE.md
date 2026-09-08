@@ -196,6 +196,19 @@ transform, 6 hovers neutralizados, zero erro de JS, sem overflow horizontal.
 - Regra corrigida no `CONVENTIONS.md`: a única verificação válida de enquadramento é olhar o quadro,
   não medir brilho de borda.
 
+## 2026-09-08 (parte 9) — limpeza de assets, ciclo e destaque de plano
+- **6,1 MB de órfãos apagados** (`Design sem nome.mp4`, `hero-video.mp4`, `Apresentacao inicial.mp4`
+  e os dois PNGs do ElevenLabs). O site publicava 9,5 MB e passa a publicar **3,4 MB** — 64% do peso
+  era arquivo que ninguém referenciava. Nenhuma referência quebrada.
+- **A seção de entregas virou o ciclo.** Era um trilho horizontal que o dono achou simples demais.
+  Agora são as 6 etapas em volta de um anel que se desenha ao entrar na tela, marcos acendendo em
+  cascata, e a frase de apoio no miolo. O argumento: a marca se chama Cycle e o logo é um círculo de
+  raios — o processo passa a ser a identidade em vez de uma lista. Abaixo de 760px vira coluna com
+  fio vertical descendo.
+- **Destaque de plano movido para o Presença** (R$ 2.790). Estava no Performance, o mais barato, o
+  que contradizia a aposta de ticket. Trocaram borda, badge, rótulo e a cor das bolinhas de item.
+- Plano Essencial: dono confirmou que existe, sob consulta. A nota do rodapé fica.
+
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
   (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.
