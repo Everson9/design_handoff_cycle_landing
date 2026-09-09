@@ -242,6 +242,17 @@ transform, 6 hovers neutralizados, zero erro de JS, sem overflow horizontal.
   existia para a marquee removida. 10 regras apagadas, 1 KB a menos.
 - `.phone-close` aparece na mesma varredura mas **fica**: é criada por JavaScript, não pelo markup.
 
+## 2026-09-08 (parte 12) — alias parado e descrições no celular
+- **O link fixo `cycle-agency.vercel.app` apontava para um deploy de 67 dias atrás.** Os deploys
+  novos iam todos para o domínio padrão (`designhandoffcyclelanding.vercel.app`), então quem abrisse
+  o link antigo via a LP velha e ninguém percebia. Reapontado para o deploy atual. **Todo deploy de
+  produção daqui pra frente tem que reapontar esse alias junto:**
+  `vercel alias set <deployment-url> cycle-agency.vercel.app`.
+- No mapa "O que você recebe", abaixo de 900px a descrição de cada estação truncava no meio da
+  palavra ("Roteirizaçã"). Descrição escondida no celular (`.mapa-est .d { display:none; }` dentro
+  do `@media (max-width:900px)`) e a estação encolheu de 180px para 152px, cabendo mais etapa na
+  faixa rolável. No desktop nada muda — o hover e a descrição continuam iguais.
+
 ## Próximo passo
 - **Conferir no celular de verdade.** Esta build do `agent-browser` não tem emulação de viewport
   (`viewport` e `mobile` não existem), então o mobile foi conferido pelo CSSOM e não renderizado.
