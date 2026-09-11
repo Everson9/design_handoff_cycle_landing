@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8">
+<script>document.documentElement.className += " js";</script>
 <title>Cycle — Consultoria Estratégica de Conteúdo</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -132,6 +133,10 @@
     .slide-right { opacity:0;transform:translateX(72px);transition:opacity var(--d-travel) var(--e-ui),transform var(--d-travel) var(--e-ui); }
     .slide-left.in, .slide-right.in { opacity:1;transform:translateX(0); }
     .slide-left.out  { opacity:0;transform:translateX(-72px); }
+    /* Em repouso os cards esperam 72px fora do lugar. Em tela estreita isso passa
+       da borda e entra no scrollWidth, criando barra horizontal. `clip` corta sem
+       criar caixa de rolagem — `hidden` quebraria o sticky do scroll-scrub. */
+    #problema { overflow-x:clip; }
     .slide-right.out { opacity:0;transform:translateX(72px); }
     /* Hover lift global */
     .plan-card { transition:border-color var(--d-state) var(--e-ui),transform 0.25s var(--e-ui),box-shadow 0.25s var(--e-ui); }
@@ -155,6 +160,61 @@
     /* SCROLL-MARQUEE */
     /* PLANS */
     .plan-card { padding:52px 44px;border:1px solid var(--border);background:var(--surface);transition:border-color var(--d-state) var(--e-ui); }
+    /* ENTREGAS — o que o plano faz e o argumento; o valor e o desfecho. Cada linha
+       entra por baixo com wipe de clip-path, o fio cresce da esquerda e o numero
+       acende, como as estacoes do mapa da secao de entregas. */
+    .plan-card { display:flex;flex-direction:column; }
+    .entregas { list-style:none;margin:0 0 40px;padding:0;display:flex;flex-direction:column; }
+    .entrega { position:relative;padding:20px 0;display:flex;align-items:baseline;gap:16px; }
+    .entrega-n { font-size:12px;font-weight:700;letter-spacing:0.12em;color:var(--border);flex-shrink:0;font-variant-numeric:tabular-nums;transition:color var(--d-travel) var(--e-ui); }
+    .entrega-t { font-size:17px;font-weight:600;line-height:1.4;color:var(--text); }
+    .entrega-fio { position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--border);transform:scaleX(0);transform-origin:left center;transition:transform 0.55s var(--e-ui); }
+    .entrega:last-child .entrega-fio { display:none; }
+    .entrega-forte .entrega-t { color:var(--text); }
+    .plan-card.highlight .entrega-forte .entrega-n { color:var(--blue); }
+    .js .entrega { opacity:0;transform:translateY(14px);clip-path:inset(0 0 100% 0);transition:opacity 0.5s var(--e-ui),transform 0.5s var(--e-ui),clip-path 0.5s var(--e-ui); }
+    .fi.up .entrega { opacity:1;transform:none;clip-path:inset(0 0 0 0); }
+    .fi.up .entrega-n { color:var(--mid); }
+    .fi.up .plan-card.highlight .entrega-n { color:var(--blue); }
+    .fi.up .entrega-fio { transform:scaleX(1); }
+    .entrega:nth-child(1) { transition-delay:80ms; }
+    .entrega:nth-child(2) { transition-delay:150ms; }
+    .entrega:nth-child(3) { transition-delay:220ms; }
+    .entrega:nth-child(4) { transition-delay:290ms; }
+    .entrega:nth-child(5) { transition-delay:360ms; }
+    .entrega:nth-child(1) .entrega-fio, .entrega:nth-child(1) .entrega-n { transition-delay:120ms; }
+    .entrega:nth-child(2) .entrega-fio, .entrega:nth-child(2) .entrega-n { transition-delay:190ms; }
+    .entrega:nth-child(3) .entrega-fio, .entrega:nth-child(3) .entrega-n { transition-delay:260ms; }
+    .entrega:nth-child(4) .entrega-fio, .entrega:nth-child(4) .entrega-n { transition-delay:330ms; }
+    .entrega:nth-child(5) .entrega-fio, .entrega:nth-child(5) .entrega-n { transition-delay:400ms; }
+    .plan-card.highlight .entrega:nth-child(1) { transition-delay:140ms; }
+    .plan-card.highlight .entrega:nth-child(2) { transition-delay:210ms; }
+    .plan-card.highlight .entrega:nth-child(3) { transition-delay:280ms; }
+    .plan-card.highlight .entrega:nth-child(4) { transition-delay:350ms; }
+    .plan-card.highlight .entrega:nth-child(5) { transition-delay:420ms; }
+    /* PRECO — rodape do card. Antes do clique existe so o lugar guardado; o valor
+       entra pelo mesmo wipe das entregas, para ler como a ultima linha da lista. */
+    .preco { margin-top:auto;padding-top:28px;border-top:1px solid var(--border);display:grid; }
+    .preco > p { grid-area:1/1;margin:0; }
+    .preco-espera { font-size:13px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);cursor:pointer;align-self:center;transition:opacity 0.24s var(--e-ui),color var(--d-state) var(--e-ui); }
+    .preco-real { font-size:clamp(38px,10vw,52px);font-weight:700;letter-spacing:-0.02em;line-height:1; }
+    /* Tabular so enquanto conta: mantem a largura estavel durante a subida e sai
+       depois, porque o numero parado fica largo demais em tabular. */
+    .preco.contando .preco-real { font-variant-numeric:tabular-nums; }
+    .preco-sufixo { font-size:18px;font-weight:500;color:var(--mid); }
+    .js .preco-real { opacity:0;transform:translateY(12px);clip-path:inset(0 0 100% 0);transition:opacity 0.28s var(--e-ui),transform 0.28s var(--e-ui),clip-path 0.28s var(--e-ui); }
+    html:not(.js) .preco-espera { display:none; }
+    #planos.revelado .preco-espera { opacity:0;pointer-events:none; }
+    #planos.revelado .preco-real { opacity:1;transform:none;clip-path:inset(0 0 0 0); }
+    #planos.revelado .plan-card.highlight .preco-real { transition-delay:70ms; }
+    /* BOTAO DE REVELAR */
+    .planos-revelar { display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:48px; }
+    .planos-nota { font-size:13px;font-weight:500;color:var(--mid);letter-spacing:0.01em;transition:opacity 0.24s var(--e-ui); }
+    .btn-revelar { display:inline-flex;align-items:center;gap:10px;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--text);background:transparent;border:1px solid var(--border);border-radius:100px;padding:13px 28px;cursor:pointer;transition:border-color var(--d-state) var(--e-ui),color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
+    .btn-revelar:active { transform:scale(0.97); }
+    .btn-revelar:focus-visible { outline:2px solid var(--blue);outline-offset:2px; }
+    .btn-revelar-seta { transition:transform 0.24s var(--e-ui);flex-shrink:0; }
+    #planos.revelado .btn-revelar-seta { transform:rotate(180deg); }
     .plan-card.highlight { border-color:var(--blue); }
     /* CASES */
     .play-btn { width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;transition:border-color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
@@ -203,6 +263,12 @@
       section > div, footer > div { padding-left:20px!important;padding-right:20px!important; }
 
       .g2 { grid-template-columns:1fr!important;gap:32px!important; }
+      /* O -20px do titulo do Sistema e ajuste fino de desktop; com uma coluna so,
+         ele puxa o leque de cards por cima da ultima linha do paragrafo. */
+      #sistema .g2 { margin-bottom:24px!important; }
+      /* 44px de padding lateral come metade da largura util de um celular. */
+      .plan-card { padding:36px 24px!important; }
+      .entrega { padding:17px 0; }
       .g2[style*="gap:2px"] { gap:2px!important; }
       .g2[style*="gap:16px"] { gap:16px!important; }
 
@@ -228,10 +294,17 @@
     @media (hover: hover) and (pointer: fine) {
       .slide-left:hover, .slide-right:hover { transform:translateX(0) translateY(-5px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.4); }
       .plan-card:hover { transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.5); }
+      .btn-revelar:hover { border-color:var(--blue);color:var(--blue);background:rgba(61,126,255,0.08); }
+      .preco-espera:hover { color:var(--text); }
       .phone-frame:hover { transform:translateY(-6px);box-shadow:0 0 0 1px #1A1A22,0 40px 100px rgba(0,0,0,0.8)!important; }
       .phone-screen:hover .phone-poster { transform:scale(1.03); }
       .process-item:hover { background:rgba(61,126,255,0.06); transform:translateY(-4px); }
       .diff-card:hover { background:rgba(61,126,255,0.1); border-color:rgba(61,126,255,0.4); transform:translateY(-4px); }
+    }
+    /* O -20px do titulo do Sistema so cabe em tela larga: abaixo de 1320px a coluna
+       estreita, o paragrafo cresce e o leque de cards sobe por cima da ultima linha. */
+    @media (max-width: 1320px) {
+      #sistema .g2 { margin-bottom:24px!important; }
     }
     @media (max-width: 1150px) {
       .fan-wrap { height:auto!important;min-height:0!important;overflow-x:auto!important;overflow-y:visible!important;justify-content:flex-start!important;padding:4px 20px 24px;scroll-snap-type:x proximity; }
@@ -257,6 +330,9 @@
       .hero-copy p { font-size:15px;margin-top:22px; }
       #scroll-video { height:340vh!important; }
       .fan-card { width:180px!important;height:290px!important; }
+      /* Com 40px de padding lateral o rotulo do CTA quebra em duas linhas e o icone
+         fica orfao na borda. Menos tracking e menos padding cabem em uma linha. */
+      .wa-cta, .ig-cta { padding:15px 22px!important;font-size:11px!important;letter-spacing:0.12em!important;justify-content:center; }
     }
 
     /* Both videos are 16:9 landscape footage — object-fit:cover on a tall/narrow
@@ -282,12 +358,16 @@
       }
       .fi, .slide-left, .slide-right { opacity:1 !important;transform:none !important; }
       .fi.stagger > * { opacity:1 !important;transform:none !important;transition-delay:0ms !important; }
+      .entrega { transform:none !important;clip-path:none !important;transition-delay:0ms !important; }
+      .entrega-fio { transform:scaleX(1) !important;transition-delay:0ms !important; }
+      .preco-real { transform:none !important;clip-path:none !important;transition-delay:0ms !important; }
       .mapa-est .d { opacity:1 !important;transform:none !important; }
       /* Os fan cards recebem transform por JavaScript, entao o seletor universal
          acima nao os alcanca. */
       .fan-card { transform:none !important; }
       .phone-frame:hover, .plan-card:hover, .process-item:hover,
-      .diff-card:hover,    }
+      .diff-card:hover { transform:none !important; }
+    }
   </style>
 </head>
 <body>
@@ -513,58 +593,89 @@
     <div class="fi" style="margin-bottom:64px;">
       <h2 style="font-size:clamp(28px,3.5vw,48px);font-weight:300;letter-spacing:-0.02em;">Escolha seu sistema.</h2>
     </div>
-    <div class="fi stagger g2" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
+    <div id="planos-grid" class="fi g2" style="display:grid;grid-template-columns:1fr 1fr;gap:2px;">
       <!-- Performance -->
       <div class="plan-card">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;">
           <p style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:transparent;">—</p>
           <span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--mid);border:1px solid var(--border);padding:5px 12px;border-radius:100px;">Performance</span>
         </div>
         <h3 style="font-size:14px;font-weight:500;color:var(--mid);margin-bottom:8px;">Sistema Cycle</h3>
-        <p style="font-size:52px;font-weight:700;letter-spacing:-0.02em;line-height:1;margin-bottom:8px;">R$ 1.790<span style="font-size:18px;font-weight:400;color:var(--mid);">/mês</span></p>
-        <p style="font-size:14px;color:var(--mid);margin-bottom:44px;line-height:1.7;">Para empresas que desejam fortalecer a percepção e acelerar sua autoridade.</p>
-        <div style="display:flex;flex-direction:column;gap:0;">
-          <div style="padding:16px 0;border-bottom:1px solid var(--border);font-size:14px;color:#ccc;display:flex;align-items:center;gap:12px;">
-            <span style="width:4px;height:4px;background:var(--mid);border-radius:50%;flex-shrink:0;"></span>Reunião de alinhamento
-          </div>
-          <div style="padding:16px 0;border-bottom:1px solid var(--border);font-size:14px;color:#ccc;display:flex;align-items:center;gap:12px;">
-            <span style="width:4px;height:4px;background:var(--mid);border-radius:50%;flex-shrink:0;"></span>Diagnóstico de comunicação
-          </div>
-          <div style="padding:16px 0;font-size:14px;color:#ccc;display:flex;align-items:center;gap:12px;">
-            <span style="width:4px;height:4px;background:var(--mid);border-radius:50%;flex-shrink:0;"></span>Produção de 8 conteúdos
-          </div>
+        <p style="font-size:15px;color:var(--mid);margin-bottom:40px;line-height:1.6;max-width:34ch;">Para empresas que desejam fortalecer a percepção e acelerar sua autoridade.</p>
+        <ul class="entregas">
+          <li class="entrega">
+            <span class="entrega-n">01</span>
+            <span class="entrega-t">Reunião de alinhamento</span>
+            <span class="entrega-fio" aria-hidden="true"></span>
+          </li>
+          <li class="entrega">
+            <span class="entrega-n">02</span>
+            <span class="entrega-t">Diagnóstico de comunicação</span>
+            <span class="entrega-fio" aria-hidden="true"></span>
+          </li>
+          <li class="entrega entrega-forte">
+            <span class="entrega-n">03</span>
+            <span class="entrega-t">Produção de 8 conteúdos</span>
+            <span class="entrega-fio" aria-hidden="true"></span>
+          </li>
+        </ul>
+        <!-- Rodape do card: o valor e o desfecho da lista, nao a abertura dela. -->
+        <div class="preco">
+          <p class="preco-espera">Valor do sistema</p>
+          <p class="preco-real"><span class="preco-num" data-valor="1.790">R$ 1.790</span><span class="preco-sufixo">/mês</span></p>
         </div>
-            </div>
+      </div>
       <!-- Presença — destaque -->
       <div class="plan-card highlight">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;">
           <p style="font-size:11px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;color:var(--blue);">Destaque</p>
           <span style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#0B0B0D;background:var(--blue);padding:5px 12px;border-radius:100px;">Presença</span>
         </div>
         <h3 style="font-size:14px;font-weight:500;color:var(--mid);margin-bottom:8px;">Sistema Cycle</h3>
-        <p style="font-size:52px;font-weight:700;letter-spacing:-0.02em;line-height:1;margin-bottom:8px;">R$ 2.790<span style="font-size:18px;font-weight:400;color:var(--mid);">/mês</span></p>
-        <p style="font-size:14px;color:var(--mid);margin-bottom:44px;line-height:1.7;">Para empresas que desejam liderar através da comunicação.</p>
-        <div style="display:flex;flex-direction:column;gap:0;">
-          <div style="padding:16px 0;border-bottom:1px solid var(--border);font-size:14px;color:#ccc;display:flex;align-items:center;gap:12px;">
-            <span style="width:4px;height:4px;background:var(--blue);border-radius:50%;flex-shrink:0;"></span>Reunião de alinhamento
-          </div>
-          <div style="padding:16px 0;border-bottom:1px solid var(--border);font-size:14px;color:#ccc;display:flex;align-items:center;gap:12px;">
-            <span style="width:4px;height:4px;background:var(--blue);border-radius:50%;flex-shrink:0;"></span>Diagnóstico de comunicação
-          </div>
-          <div style="padding:16px 0;border-bottom:1px solid var(--border);font-size:14px;color:#ccc;display:flex;align-items:center;gap:12px;">
-            <span style="width:4px;height:4px;background:var(--blue);border-radius:50%;flex-shrink:0;"></span>Produção de 12 conteúdos
-          </div>
-          <div style="padding:16px 0;border-bottom:1px solid var(--border);font-size:14px;color:#ccc;display:flex;align-items:center;gap:12px;">
-            <span style="width:4px;height:4px;background:var(--blue);border-radius:50%;flex-shrink:0;"></span>Calendário editorial
-          </div>
-          <div style="padding:16px 0;font-size:14px;color:#ccc;display:flex;align-items:center;gap:12px;">
-            <span style="width:4px;height:4px;background:var(--blue);border-radius:50%;flex-shrink:0;"></span>Social media
-          </div>
+        <p style="font-size:15px;color:var(--mid);margin-bottom:40px;line-height:1.6;max-width:34ch;">Para empresas que desejam liderar através da comunicação.</p>
+        <ul class="entregas">
+          <li class="entrega">
+            <span class="entrega-n">01</span>
+            <span class="entrega-t">Reunião de alinhamento</span>
+            <span class="entrega-fio" aria-hidden="true"></span>
+          </li>
+          <li class="entrega">
+            <span class="entrega-n">02</span>
+            <span class="entrega-t">Diagnóstico de comunicação</span>
+            <span class="entrega-fio" aria-hidden="true"></span>
+          </li>
+          <li class="entrega entrega-forte">
+            <span class="entrega-n">03</span>
+            <span class="entrega-t">Produção de 12 conteúdos</span>
+            <span class="entrega-fio" aria-hidden="true"></span>
+          </li>
+          <li class="entrega">
+            <span class="entrega-n">04</span>
+            <span class="entrega-t">Calendário editorial</span>
+            <span class="entrega-fio" aria-hidden="true"></span>
+          </li>
+          <li class="entrega">
+            <span class="entrega-n">05</span>
+            <span class="entrega-t">Social media</span>
+            <span class="entrega-fio" aria-hidden="true"></span>
+          </li>
+        </ul>
+        <!-- Rodape do card: o valor e o desfecho da lista, nao a abertura dela. -->
+        <div class="preco">
+          <p class="preco-espera">Valor do sistema</p>
+          <p class="preco-real"><span class="preco-num" data-valor="2.790">R$ 2.790</span><span class="preco-sufixo">/mês</span></p>
         </div>
-            </div>
+      </div>
     </div>
-    <!-- TODO: confirmar plano Essencial com o cliente -->
-    <p style="font-size:12px;color:var(--mid);margin-top:20px;text-align:center;">* Plano Essencial disponível — entre em contato.</p>
+    <!-- Revelacao do preco: o cliente pediu que o valor nao fosse a primeira coisa
+         que a pagina diz. O card mostra o sistema; o numero vem depois, no clique. -->
+    <div class="planos-revelar">
+      <p class="planos-nota" id="planos-nota">Primeiro o sistema. Depois o preço.</p>
+      <button type="button" id="btn-revelar" class="btn-revelar" aria-expanded="false" aria-controls="planos-grid">
+        <span class="btn-revelar-txt">Ver os valores</span>
+        <svg class="btn-revelar-seta" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -784,6 +895,8 @@
           Ver bastidores no Instagram
         </a>
       </div>
+      <!-- TODO: confirmar plano Essencial com o cliente -->
+      <p style="font-size:13px;color:var(--mid);line-height:1.6;">Precisa de algo menor que os dois sistemas? Existe o Plano Essencial — fale com a gente.</p>
     </div>
   </div>
 </section>
@@ -833,6 +946,69 @@ document.addEventListener('DOMContentLoaded', function () {
         observer.observe(el);
       }
     });
+
+    // PLANOS — a lista de entregas e o argumento; o valor e a ultima linha dela.
+    // O estado vive numa classe da secao, entao o CSS cuida do wipe; o JS so conta
+    // o numero subindo, que e a parte que CSS nao faz.
+    const btnRevelar = document.getElementById('btn-revelar');
+    const secPlanos = document.getElementById('planos');
+    if (btnRevelar && secPlanos) {
+      const txt = btnRevelar.querySelector('.btn-revelar-txt');
+      const nota = document.getElementById('planos-nota');
+      const NOTA_FECHADO = 'Primeiro o sistema. Depois o preço.';
+      const NOTA_ABERTO = 'Sem fidelidade. Começa pela reunião de alinhamento.';
+      const nums = Array.from(secPlanos.querySelectorAll('.preco-num'));
+      const fmt = new Intl.NumberFormat('pt-BR');
+      let contagem = null;
+
+      const contar = () => {
+        if (contagem) cancelAnimationFrame(contagem);
+        if (prefersReducedMotion.matches) {
+          nums.forEach((n) => { n.textContent = 'R$ ' + fmt.format(Number(n.dataset.valor.replace(/\./g, ''))); });
+          return;
+        }
+        const caixas = nums.map((n) => n.closest('.preco'));
+        caixas.forEach((c) => c && c.classList.add('contando'));
+        const inicio = performance.now();
+        const DUR = 520;
+        const passo = (agora) => {
+          const t = Math.min(1, (agora - inicio) / DUR);
+          // ease-out forte: o numero chega e para, no lugar de frear devagar
+          const e = 1 - Math.pow(1 - t, 3);
+          nums.forEach((n) => {
+            const alvo = Number(n.dataset.valor.replace(/\./g, ''));
+            n.textContent = 'R$ ' + fmt.format(Math.round(alvo * e));
+          });
+          if (t < 1) { contagem = requestAnimationFrame(passo); }
+          else { caixas.forEach((c) => c && c.classList.remove('contando')); }
+        };
+        contagem = requestAnimationFrame(passo);
+      };
+
+      const alternar = () => {
+        const aberto = secPlanos.classList.toggle('revelado');
+        btnRevelar.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+        if (txt) txt.textContent = aberto ? 'Ocultar os valores' : 'Ver os valores';
+        if (nota) nota.textContent = aberto ? NOTA_ABERTO : NOTA_FECHADO;
+        if (!aberto) return;
+        contar();
+        // O botao fica embaixo dos dois cards; no celular eles empilham e o valor
+        // revelado pode estar 600px acima do dedo. Sem isto o clique nao mostra nada.
+        const preco = secPlanos.querySelector('.preco');
+        if (preco) {
+          const r = preco.getBoundingClientRect();
+          if (r.top < 0 || r.bottom > window.innerHeight) {
+            preco.scrollIntoView({ block: 'center', behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' });
+          }
+        }
+      };
+      btnRevelar.addEventListener('click', alternar);
+      // "Valor do sistema" no rodape do card e o lugar guardado: quem quer o numero
+      // clica ali antes de procurar botao.
+      secPlanos.querySelectorAll('.preco-espera').forEach((m) => {
+        m.addEventListener('click', () => { if (!secPlanos.classList.contains('revelado')) alternar(); });
+      });
+    }
 
     // Hero video — letting the HTML parser kick off decode immediately (autoplay+eager
     // source) races with the browser's hardware decoder init and sometimes stalls on

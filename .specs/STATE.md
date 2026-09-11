@@ -7,6 +7,49 @@ produção**: está no ar pela Vercel e é editado direto. Nasceu como pacote de
 Stack: **HTML + CSS + JS puro**, sem framework e sem bundler.
 
 ## Onde parei
+- 2026-09-11 — **seção de planos reescrita: a entrega virou o argumento, o preço virou o desfecho.**
+  Pedido do dono: o cliente não queria preço logo de cara, e depois pediu que as descrições do que o
+  plano oferece fossem o protagonista, com motion envolvente.
+  - Ordem do cartão agora: badge → "Sistema Cycle" + uma linha de posicionamento → **lista de
+    entregas** → preço no rodapé. Entrega em 17px/600 branco, numerada `01…05` (azul no Presença),
+    com fio de 1px entre as linhas. O parágrafo de apoio encolheu para uma linha em `--mid`.
+  - Entrada: cada linha entra com wipe de `clip-path: inset(0 0 100% 0)` + `translateY(14px)` +
+    opacity, 0.5s `--e-ui`, stagger 70ms; o fio cresce da esquerda (`scaleX`) e o número acende de
+    `--border` para `--mid`/`--blue` — o gesto das estações do mapa de entregas. Card em destaque
+    começa 60ms depois.
+  - Preço: em repouso o rodapé mostra só "Valor do sistema" (clicável). No clique (botão ou rodapé)
+    o valor entra pelo mesmo wipe em 0.28s e **conta subindo em 520ms** (ease-out cúbico,
+    `tabular-nums` só durante a contagem). `prefers-reduced-motion`: sem wipe, sem deslocamento, sem
+    contagem.
+  - `.js` no `<html>`: o estado escondido só existe com JavaScript de pé. Sem JS (ou com o script
+    quebrado) a seção nasce legível inteira — antes o preço era HTML puro, e o gate não podia
+    transformar isso em dois cards vazios.
+  - Botão `VER OS VALORES` (pill, seta que gira, 0.24s, press 0.97, foco azul). Se o valor revelado
+    estiver fora da viewport, o clique leva a tela até ele.
+  - A nota abaixo dos cards **troca de texto** em vez de sumir: "Primeiro o sistema. Depois o preço."
+    → "Sem fidelidade. Começa pela reunião de alinhamento." (frase escolhida pelo dono).
+  - "Plano Essencial" saiu da hora da comparação e virou convite no CTA final.
+- **Varredura de responsividade (390 / 768 / 1024 / 1280 / 1440):** `scrollWidth == clientWidth` em
+  todas (nenhuma barra horizontal) e nenhum texto abaixo de 11px. Três defeitos achados e corrigidos:
+  1. `#sistema`: o `margin-bottom:-20px` do título (ajuste fino de desktop largo) puxava o leque de
+     cards por cima da última linha do parágrafo — 20px de sobreposição medida em 390px e em 1024px.
+     Agora `margin-bottom:24px` abaixo de 1320px.
+  2. `#problema`: os cards `.slide-left/.slide-right` esperam 72px fora do lugar; entre 900 e 1280px
+     isso entrava no `scrollWidth` e criava barra horizontal. `overflow-x:clip` na seção (não
+     `hidden`, que quebraria o sticky do scroll-scrub).
+  3. CTA final abaixo de 560px: o rótulo quebrava em duas linhas e o ícone ficava órfão na borda —
+     menos padding e menos tracking, cabe em uma linha.
+  Método: como o `agent-browser` desta máquina não tem `viewport`/`resize`, a medição foi feita com
+  um harness de iframe no scratchpad + uma cópia instrumentada da página que devolve as medidas por
+  `postMessage`. Vale repetir assim na próxima.
+- Parecer do `impeccable critique` na seção (20/32): acatei cor fora do vocabulário, fallback sem JS,
+  clique invisível no celular e o fim de seção sem reasseguração. Descartei o reveal por card (dois
+  botões para a mesma ação) e o redesenho do delta 8 vs 12 conteúdos (decisão de composição do dono,
+  não conserto) — **esse delta continua sendo a pergunta aberta da seção**.
+- `.specs/DESIGN.md` emendado: cartão de plano, entrada das entregas, preço-desfecho, botão de
+  revelar, nota que troca de texto, e o degrau de preço virou `clamp(38px,10vw,52px)`.
+
+## Onde parei (anterior)
 - 2026-09-08 — sessão de encaixe no ecossistema. Nenhuma feature nova.
 - Escrito `.specs/DESIGN.md`: paleta, escala de texto, escala de movimento, estado de componente,
   tela vazia/erro — destilado do `index.html` + `README.md`.

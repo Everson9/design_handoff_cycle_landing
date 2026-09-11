@@ -26,8 +26,9 @@ e reprova; o escuro dá 5,1:1. Vale para o botão de WhatsApp, o hover do CTA da
 plano — que já fazia certo e virou a regra.
 
 **Regra do `--muted`:** ele existe para *apagar* uma palavra de propósito, não para escrever com ela.
-Hoje tem exatamente um uso legítimo: `"Depois de um clique."` na seção Percepção, onde o texto sumir
-é o efeito pretendido. Qualquer outro uso em texto é bug.
+Hoje tem exatamente um uso legítimo: `"Depois de um clique."` na seção Percepção, onde o texto
+sumir é o efeito pretendido. Qualquer outro uso em texto é bug — e cor nova inventada no arquivo de
+tela para "quase apagar" também: o token do apagamento já existe.
 
 Superfície escura extra: `#0F0F18` (corpo dos fan cards), `#0A0A0D` + borda `#2A2A32` (moldura tablet
 dos cases). São locais, não viram token.
@@ -48,7 +49,7 @@ Família: **Manrope** (Google Fonts), pesos 300/400/500/600/700/800.
 | Display CTA final | `clamp(32px,5.5vw,80px)` | 300 | `-0.03em` |
 | Título de seção | `clamp(28px,3.5vw,48px)` | 300 | `-0.02em` |
 | Subtítulo de seção | `clamp(24px,2.5vw,38px)` | 300 | `-0.02em` |
-| Preço | `52px` | 700 | `-0.02em` |
+| Preço | `clamp(38px,10vw,52px)` | 700 | `-0.02em` |
 | Corpo | `15px` / `16px` | 400–500 | 0 |
 | Apoio | `12px` / `13px` | 400–500 | 0 a `0.06em` |
 | Label / eyebrow | `11px` uppercase | 600–700 | `0.14em` a `0.2em` |
@@ -173,6 +174,36 @@ apareceria.
 - **CTA navbar:** repouso `--text` sobre `--bg` (pill invertido) → hover `--blue` com texto branco.
 - **Card (incluso / plano):** repouso borda `--border` → hover `translateY(-5px)` +
   `box-shadow: 0 12px 32px rgba(0,0,0,0.4)`.
+- **Cartão de plano — a entrega é o argumento, o preço é o desfecho.** A ordem dentro do card é
+  badge → "Sistema Cycle" + uma linha de posicionamento → **lista de entregas** → preço, no rodapé.
+  A lista é o maior texto do card: item em **17px/600 em `--text`**, numerado `01…05` em 12px/700
+  (`--mid`; `--blue` no plano em destaque), com fio de 1px entre os itens. O corpo de apoio caiu
+  para `--mid` e uma linha só — quem lê o card lê *o que a Cycle faz*, não um parágrafo.
+- **Entrada das entregas (`.entrega`):** cada linha entra por baixo com **wipe de
+  `clip-path: inset(0 0 100% 0)` → `inset(0)`** + `translateY(14px)` + opacity, `0.5s var(--e-ui)`,
+  **stagger de 70ms**; o fio cresce da esquerda (`scaleX(0)→1`, origem à esquerda, `0.55s`) e o
+  número acende de `--border` para `--mid`/`--blue` — o mesmo gesto das estações do mapa de
+  entregas, que é o dispositivo da casa. O card em destaque começa 60ms depois, para a cascata ler
+  como uma coisa só e terminar no Presença.
+- **Preço (`.preco` / `.preco-espera` / `.preco-real`):** o valor não abre o card, fecha. Em repouso
+  o rodapé mostra só **"Valor do sistema"** (13px caps, `--mid`, clicável); no clique — do botão ou
+  do próprio rodapé — o valor entra **pelo mesmo wipe das entregas** em 0.28s, lendo como a última
+  linha da lista, e o número **conta subindo até o valor em 520ms** com ease-out cúbico. A contagem
+  é `tabular-nums` só enquanto sobe (largura estável) e sai depois, porque número parado em tabular
+  fica largo demais. Movimento reduzido: sem wipe, sem deslocamento e **sem contagem** — o valor
+  aparece direto.
+  **O estado escondido vive atrás de `.js` no `<html>`**: sem JavaScript, ou com o script quebrado,
+  o preço nasce visível e o rodapé de espera some — nunca os dois ao mesmo tempo.
+  **O gate é visual, não é segredo:** o preço está no HTML e aparece em ctrl+F, view-source e no
+  índice do Google. Serve para ordenar a leitura, não para qualificar lead.
+- **Botão de revelar (`.btn-revelar`):** pill de borda `--border`, label 12px 600 em caps, seta que
+  gira 180° no estado aberto; hover leva borda e texto para `--blue`. Segue o piso de controle da
+  casa: 0.24s, `--e-ui`, `:active scale(0.97)` e anel de foco azul. Quando o valor revelado fica
+  fora da viewport (celular, onde os cards empilham e o botão está embaixo dos dois), o clique leva
+  a tela até o preço — clique que não mostra nada é clique perdido.
+- **A nota abaixo dos cards troca de texto, não some.** O último momento da seção não pode ser o
+  valor sozinho: antes do clique ela diz o porquê da ordem ("Primeiro o sistema. Depois o preço."),
+  depois do clique ela diz o que vem a seguir ("Sem fidelidade. Começa pela reunião de alinhamento.").
 - **Plano em destaque:** borda `--blue`, badge preenchido, rótulo "Destaque" e bolinhas de item em
   `--blue`; o outro fica com badge outlined e bolinhas em `--mid`. A diferença entre planos é
   **borda, badge e cor de marcador**, nunca tamanho. O destaque fica no **Presença** (o plano maior),
