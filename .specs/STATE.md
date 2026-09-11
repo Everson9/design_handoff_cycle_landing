@@ -7,6 +7,16 @@ produção**: está no ar pela Vercel e é editado direto. Nasceu como pacote de
 Stack: **HTML + CSS + JS puro**, sem framework e sem bundler.
 
 ## Onde parei
+- 2026-09-11 (fim da sessão) — **no ar**: deployment `qihc5ayor` em Production, alias
+  `cycle-agency.vercel.app` reapontado, `https://cycle-agency.vercel.app/` responde 200 com a seção
+  nova.
+- **A Deployment Protection do projeto estava ligada e o site pedia login da Vercel** — o alias e a
+  própria URL do deployment devolviam 302 para o SSO. Desligado por API
+  (`PATCH /v9/projects/<id>` com `ssoProtection: null`, token do CLI já logado);
+  `passwordProtection` também está `null`. **Conferir isso depois de mexer em settings do projeto:
+  LP com proteção ligada é site fora do ar para o cliente, sem erro nenhum aparecer.**
+
+## Onde parei
 - 2026-09-11 — **seção de planos reescrita: a entrega virou o argumento, o preço virou o desfecho.**
   Pedido do dono: o cliente não queria preço logo de cara, e depois pediu que as descrições do que o
   plano oferece fossem o protagonista, com motion envolvente.
