@@ -7,6 +7,14 @@ produção**: está no ar pela Vercel e é editado direto. Nasceu como pacote de
 Stack: **HTML + CSS + JS puro**, sem framework e sem bundler.
 
 ## Onde parei
+- 2026-09-11 — menu ganhou **Entregas** (`#incluso`), entre Sistema e Planos: era a única seção de
+  venda fora da navegação (quem clicava em Sistema pulava direto para Planos e nunca via as seis
+  etapas). `#problema`, o case 2, o scroll-video e o `#cta` continuam fora de propósito — transição,
+  continuação de Cases, respiro visual e destino do botão da navbar.
+- **`section[id] { scroll-margin-top }`** (140px desktop / 76px abaixo de 560px): a navbar é fixa e
+  tem a altura do logo, então todo salto do menu deixava o título da seção escondido atrás dela.
+  Valia para os quatro links antigos também.
+
 - 2026-09-11 (fim da sessão) — **no ar**: deployment `qihc5ayor` em Production, alias
   `cycle-agency.vercel.app` reapontado, `https://cycle-agency.vercel.app/` responde 200 com a seção
   nova.

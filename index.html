@@ -42,6 +42,9 @@
       --muted: #555;
       --mid: #888;
     }
+    /* A navbar e fixa e tem a altura do logo: sem isto o salto do menu para a
+       ancora deixa o titulo da secao escondido atras dela. */
+    section[id] { scroll-margin-top:140px; }
     /* NAV */
     .nav-link { font-size:12px;font-weight:500;letter-spacing:0.1em;color:#666;text-decoration:none;transition:color var(--d-state) var(--e-ui); }
     .nav-link:hover { color:#F5F5F5; }
@@ -319,10 +322,12 @@
     .mobile-menu-link:nth-child(2) { transition-delay:0.1s; }
     .mobile-menu-link:nth-child(3) { transition-delay:0.15s; }
     .mobile-menu-link:nth-child(4) { transition-delay:0.2s; }
+    .mobile-menu-link:nth-child(5) { transition-delay:0.25s; }
 
     @media (max-width: 560px) {
       #main-nav { padding:8px 16px!important; }
       #main-nav img { height:42px!important; }
+      section[id] { scroll-margin-top:76px; }
       .nav-cta { padding:7px 12px!important;font-size:11px!important;letter-spacing:0.1em!important; }
       .nav-toggle { display:flex!important; }
       section > div, footer > div { padding-left:16px!important;padding-right:16px!important; }
@@ -378,6 +383,7 @@
   <div style="display:flex;align-items:center;gap:36px;">
     <a href="#percepcao" class="nav-link">Percepção</a>
     <a href="#sistema" class="nav-link">Sistema</a>
+    <a href="#incluso" class="nav-link">Entregas</a>
     <a href="#planos" class="nav-link">Planos</a>
     <a href="#resultados" class="nav-link">Cases</a>
     <button id="nav-toggle" class="nav-toggle" aria-label="Abrir menu" aria-expanded="false" style="display:none;background:transparent;border:1px solid var(--border);border-radius:8px;width:38px;height:38px;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;">
@@ -391,6 +397,7 @@
 <div id="mobile-menu" style="display:flex;position:fixed;top:0;left:0;right:0;bottom:0;z-index:99;background:rgba(11,11,13,0.98);backdrop-filter:blur(12px);flex-direction:column;align-items:center;justify-content:center;gap:28px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity var(--d-state) var(--e-ui),visibility 0s linear 0.3s;">
   <a href="#percepcao" class="mobile-menu-link">Percepção</a>
   <a href="#sistema" class="mobile-menu-link">Sistema</a>
+  <a href="#incluso" class="mobile-menu-link">Entregas</a>
   <a href="#planos" class="mobile-menu-link">Planos</a>
   <a href="#resultados" class="mobile-menu-link">Cases</a>
 </div>
