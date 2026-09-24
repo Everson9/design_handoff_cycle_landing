@@ -199,7 +199,7 @@
        entra pelo mesmo wipe das entregas, para ler como a ultima linha da lista. */
     .preco { margin-top:auto;padding-top:28px;border-top:1px solid var(--border);display:grid; }
     .preco > p { grid-area:1/1;margin:0; }
-    .preco-espera { justify-self:start;align-self:center;transition:opacity 0.24s var(--e-ui),border-color var(--d-state) var(--e-ui),color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
+    .preco-espera { grid-area:1/1;justify-self:start;align-self:center;transition:opacity 0.24s var(--e-ui),border-color var(--d-state) var(--e-ui),color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
     .preco-real { font-size:clamp(38px,10vw,52px);font-weight:700;letter-spacing:-0.02em;line-height:1; }
     /* Tabular so enquanto conta: mantem a largura estavel durante a subida e sai
        depois, porque o numero parado fica largo demais em tabular. */
@@ -207,16 +207,17 @@
     .preco-sufixo { font-size:18px;font-weight:500;color:var(--mid); }
     .js .preco-real { opacity:0;transform:translateY(12px);clip-path:inset(0 0 100% 0);transition:opacity 0.28s var(--e-ui),transform 0.28s var(--e-ui),clip-path 0.28s var(--e-ui); }
     html:not(.js) .preco-espera { display:none; }
-    .plan-card.revelado .preco-espera { opacity:0;pointer-events:none;visibility:hidden;transition:opacity 0.24s var(--e-ui),visibility 0s linear 0.24s; }
+    /* Revelado, o botao desce para baixo do valor e vira "Ocultar". */
+    .plan-card.revelado .preco-espera { grid-area:2/1;margin-top:20px; }
     .plan-card.revelado .preco-real { opacity:1;transform:none;clip-path:inset(0 0 0 0); }
-    .preco-real:focus { outline:none; }
     /* BOTAO DE REVELAR */
     .planos-revelar { display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:48px; }
     .planos-nota { font-size:13px;font-weight:500;color:var(--mid);letter-spacing:0.01em;transition:opacity 0.24s var(--e-ui); }
     .btn-revelar { display:inline-flex;align-items:center;gap:10px;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--text);background:transparent;border:1px solid var(--border);border-radius:100px;padding:13px 28px;cursor:pointer;transition:border-color var(--d-state) var(--e-ui),color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
     .btn-revelar:active { transform:scale(0.97); }
     .btn-revelar:focus-visible { outline:2px solid var(--blue);outline-offset:2px; }
-    .btn-revelar-seta { flex-shrink:0; }
+    .btn-revelar-seta { flex-shrink:0;transition:transform 0.24s var(--e-ui); }
+    .plan-card.revelado .btn-revelar-seta { transform:rotate(180deg); }
     .plan-card.highlight { border-color:var(--blue); }
     /* CASES */
     .play-btn { width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;transition:border-color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
@@ -627,7 +628,7 @@
         <!-- Rodape do card: o valor e o desfecho da lista, nao a abertura dela. -->
         <div class="preco">
           <button type="button" class="preco-espera btn-revelar" aria-expanded="false">
-            <span>Ver o valor</span>
+            <span class="btn-revelar-txt">Ver o valor</span>
             <svg class="btn-revelar-seta" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <p class="preco-real"><span class="preco-num" data-valor="1.790">R$ 1.790</span><span class="preco-sufixo">/mês</span></p>
@@ -671,7 +672,7 @@
         <!-- Rodape do card: o valor e o desfecho da lista, nao a abertura dela. -->
         <div class="preco">
           <button type="button" class="preco-espera btn-revelar" aria-expanded="false">
-            <span>Ver o valor</span>
+            <span class="btn-revelar-txt">Ver o valor</span>
             <svg class="btn-revelar-seta" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
           <p class="preco-real"><span class="preco-num" data-valor="2.790">R$ 2.790</span><span class="preco-sufixo">/mês</span></p>
@@ -960,6 +961,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const secPlanos = document.getElementById('planos');
     if (secPlanos) {
       const nota = document.getElementById('planos-nota');
+      const NOTA_FECHADO = 'Primeiro o sistema. Depois o preço.';
       const NOTA_ABERTO = 'Sem fidelidade. Começa pela reunião de alinhamento.';
       const fmt = new Intl.NumberFormat('pt-BR');
 
@@ -986,15 +988,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const caixa = card.querySelector('.preco');
         const n = card.querySelector('.preco-num');
         if (!btn || !caixa || !n) return;
+        const txt = btn.querySelector('.btn-revelar-txt');
         btn.addEventListener('click', () => {
-          if (card.classList.contains('revelado')) return;
-          card.classList.add('revelado');
-          btn.setAttribute('aria-expanded', 'true');
-          contar(caixa, n);
-          // O botao some no clique; o foco vai para o valor, nao se perde.
-          const real = caixa.querySelector('.preco-real');
-          if (real) { real.tabIndex = -1; real.focus({ preventScroll: true }); }
-          if (nota) nota.textContent = NOTA_ABERTO;
+          const aberto = card.classList.toggle('revelado');
+          btn.setAttribute('aria-expanded', aberto ? 'true' : 'false');
+          if (txt) txt.textContent = aberto ? 'Ocultar' : 'Ver o valor';
+          if (aberto) contar(caixa, n);
+          if (nota) nota.textContent = secPlanos.querySelector('.plan-card.revelado') ? NOTA_ABERTO : NOTA_FECHADO;
         });
       });
     }

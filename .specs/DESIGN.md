@@ -200,7 +200,8 @@ apareceria.
 - **Botão de revelar (`.btn-revelar`):** pill de borda `--border`, label 12px 600 em caps, seta para
   baixo; hover leva borda e texto para `--blue`. Segue o piso de controle da casa: 0.24s, `--e-ui`,
   `:active scale(0.97)` e anel de foco azul. Mora no rodapé de cada card, no lugar do preço, e some
-  em fade quando o preço entra. Não há botão global nem "ocultar"; o foco vai para o valor revelado.
+  com o preço aberto desce para baixo do valor e vira **"Ocultar"** (seta gira 180°), que fecha só
+  aquele card. Não há botão global.
 - **A nota abaixo dos cards troca de texto, não some.** O último momento da seção não pode ser o
   valor sozinho: antes do clique ela diz o porquê da ordem ("Primeiro o sistema. Depois o preço."),
   depois do primeiro preço revelado ela diz o que vem a seguir ("Sem fidelidade. Começa pela reunião de alinhamento.").
