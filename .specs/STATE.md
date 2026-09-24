@@ -7,6 +7,18 @@ produção**: está no ar pela Vercel e é editado direto. Nasceu como pacote de
 Stack: **HTML + CSS + JS puro**, sem framework e sem bundler.
 
 ## Onde parei
+- 2026-09-24 — **preço revela por card, não os dois juntos.** O botão global "Ver os valores" saiu;
+  cada card tem o próprio "Ver o valor" no rodapé, que revela só aquele preço e depois desce para
+  baixo do valor como "Ocultar" (fecha só aquele card). A nota abaixo dos cards volta ao texto
+  fechado quando nenhum preço está aberto.
+- **Scroll-video encurtado**: 560/420/340vh → 320/260/230vh (desktop / ≤900px / ≤560px). O dono
+  achava que rolava demais; a suavidade vem do lerp de 0.12, não da altura. Snap por seção foi
+  descartado (sequestra a rolagem, vídeo andaria aos saltos). **Falta o dono sentir no celular** se a
+  medida ficou boa.
+- **No ar**: deployment `1rsy1cizh`, alias `cycle-agency.vercel.app` reapontado, 200.
+- Próximo passo: ajustar a altura do scroll-video se o dono ainda achar longo.
+
+## Onde parei (anterior)
 - 2026-09-11 — menu ganhou **Entregas** (`#incluso`), entre Sistema e Planos: era a única seção de
   venda fora da navegação (quem clicava em Sistema pulava direto para Planos e nunca via as seis
   etapas). `#problema`, o case 2, o scroll-video e o `#cta` continuam fora de propósito — transição,
