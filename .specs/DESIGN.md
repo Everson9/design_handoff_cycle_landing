@@ -164,7 +164,7 @@ altura disponível. O vídeo do hero segue em `cover`, porque é imagem fotográ
 apareceria.
 
 **Scroll-scrub:** a seção de câmera 3D amarra `video.currentTime` ao progresso do scroll
-(`height:500vh`, filho `sticky` de `100vh`). É a única animação dirigida por scroll contínuo.
+(`height:320vh` desktop, 260vh até 900px, 230vh até 560px — encurtada em 24/09/2026 porque rolava demais; a suavidade vem do lerp, não da altura; filho `sticky` de `100vh`). É a única animação dirigida por scroll contínuo.
 
 ---
 
@@ -186,8 +186,9 @@ apareceria.
   entregas, que é o dispositivo da casa. O card em destaque começa 60ms depois, para a cascata ler
   como uma coisa só e terminar no Presença.
 - **Preço (`.preco` / `.preco-espera` / `.preco-real`):** o valor não abre o card, fecha. Em repouso
-  o rodapé mostra só **"Valor do sistema"** (13px caps, `--mid`, clicável); no clique — do botão ou
-  do próprio rodapé — o valor entra **pelo mesmo wipe das entregas** em 0.28s, lendo como a última
+  o rodapé de cada card mostra só o botão **"Ver o valor"** (pill `.btn-revelar`), e **cada card
+  revela só o próprio preço** (24/09/2026: revelar os dois juntos punha a comparação na cara antes da
+  hora; quem quer o outro clica no outro). No clique o valor entra **pelo mesmo wipe das entregas** em 0.28s, lendo como a última
   linha da lista, e o número **conta subindo até o valor em 520ms** com ease-out cúbico. A contagem
   é `tabular-nums` só enquanto sobe (largura estável) e sai depois, porque número parado em tabular
   fica largo demais. Movimento reduzido: sem wipe, sem deslocamento e **sem contagem** — o valor
@@ -196,14 +197,13 @@ apareceria.
   o preço nasce visível e o rodapé de espera some — nunca os dois ao mesmo tempo.
   **O gate é visual, não é segredo:** o preço está no HTML e aparece em ctrl+F, view-source e no
   índice do Google. Serve para ordenar a leitura, não para qualificar lead.
-- **Botão de revelar (`.btn-revelar`):** pill de borda `--border`, label 12px 600 em caps, seta que
-  gira 180° no estado aberto; hover leva borda e texto para `--blue`. Segue o piso de controle da
-  casa: 0.24s, `--e-ui`, `:active scale(0.97)` e anel de foco azul. Quando o valor revelado fica
-  fora da viewport (celular, onde os cards empilham e o botão está embaixo dos dois), o clique leva
-  a tela até o preço — clique que não mostra nada é clique perdido.
+- **Botão de revelar (`.btn-revelar`):** pill de borda `--border`, label 12px 600 em caps, seta para
+  baixo; hover leva borda e texto para `--blue`. Segue o piso de controle da casa: 0.24s, `--e-ui`,
+  `:active scale(0.97)` e anel de foco azul. Mora no rodapé de cada card, no lugar do preço, e some
+  em fade quando o preço entra. Não há botão global nem "ocultar"; o foco vai para o valor revelado.
 - **A nota abaixo dos cards troca de texto, não some.** O último momento da seção não pode ser o
   valor sozinho: antes do clique ela diz o porquê da ordem ("Primeiro o sistema. Depois o preço."),
-  depois do clique ela diz o que vem a seguir ("Sem fidelidade. Começa pela reunião de alinhamento.").
+  depois do primeiro preço revelado ela diz o que vem a seguir ("Sem fidelidade. Começa pela reunião de alinhamento.").
 - **Plano em destaque:** borda `--blue`, badge preenchido, rótulo "Destaque" e bolinhas de item em
   `--blue`; o outro fica com badge outlined e bolinhas em `--mid`. A diferença entre planos é
   **borda, badge e cor de marcador**, nunca tamanho. O destaque fica no **Presença** (o plano maior),

@@ -199,7 +199,7 @@
        entra pelo mesmo wipe das entregas, para ler como a ultima linha da lista. */
     .preco { margin-top:auto;padding-top:28px;border-top:1px solid var(--border);display:grid; }
     .preco > p { grid-area:1/1;margin:0; }
-    .preco-espera { font-size:13px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--mid);cursor:pointer;align-self:center;transition:opacity 0.24s var(--e-ui),color var(--d-state) var(--e-ui); }
+    .preco-espera { justify-self:start;align-self:center;transition:opacity 0.24s var(--e-ui),border-color var(--d-state) var(--e-ui),color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
     .preco-real { font-size:clamp(38px,10vw,52px);font-weight:700;letter-spacing:-0.02em;line-height:1; }
     /* Tabular so enquanto conta: mantem a largura estavel durante a subida e sai
        depois, porque o numero parado fica largo demais em tabular. */
@@ -207,17 +207,16 @@
     .preco-sufixo { font-size:18px;font-weight:500;color:var(--mid); }
     .js .preco-real { opacity:0;transform:translateY(12px);clip-path:inset(0 0 100% 0);transition:opacity 0.28s var(--e-ui),transform 0.28s var(--e-ui),clip-path 0.28s var(--e-ui); }
     html:not(.js) .preco-espera { display:none; }
-    #planos.revelado .preco-espera { opacity:0;pointer-events:none; }
-    #planos.revelado .preco-real { opacity:1;transform:none;clip-path:inset(0 0 0 0); }
-    #planos.revelado .plan-card.highlight .preco-real { transition-delay:70ms; }
+    .plan-card.revelado .preco-espera { opacity:0;pointer-events:none;visibility:hidden;transition:opacity 0.24s var(--e-ui),visibility 0s linear 0.24s; }
+    .plan-card.revelado .preco-real { opacity:1;transform:none;clip-path:inset(0 0 0 0); }
+    .preco-real:focus { outline:none; }
     /* BOTAO DE REVELAR */
     .planos-revelar { display:flex;flex-direction:column;align-items:center;gap:16px;margin-top:48px; }
     .planos-nota { font-size:13px;font-weight:500;color:var(--mid);letter-spacing:0.01em;transition:opacity 0.24s var(--e-ui); }
     .btn-revelar { display:inline-flex;align-items:center;gap:10px;font-family:inherit;font-size:12px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--text);background:transparent;border:1px solid var(--border);border-radius:100px;padding:13px 28px;cursor:pointer;transition:border-color var(--d-state) var(--e-ui),color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
     .btn-revelar:active { transform:scale(0.97); }
     .btn-revelar:focus-visible { outline:2px solid var(--blue);outline-offset:2px; }
-    .btn-revelar-seta { transition:transform 0.24s var(--e-ui);flex-shrink:0; }
-    #planos.revelado .btn-revelar-seta { transform:rotate(180deg); }
+    .btn-revelar-seta { flex-shrink:0; }
     .plan-card.highlight { border-color:var(--blue); }
     /* CASES */
     .play-btn { width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;transition:border-color var(--d-state) var(--e-ui),background var(--d-state) var(--e-ui),transform var(--d-press) var(--e-ui); }
@@ -278,7 +277,7 @@
       #panel-como > div, #panel-porque > div { padding:16px 20px 24px!important; }
       #panel-intro h2 { font-size:clamp(24px,7vw,40px)!important; }
 
-      #scroll-video { height:420vh!important; }
+      #scroll-video { height:260vh!important; }
 
       .phone-frame { max-width:320px; }
 
@@ -298,7 +297,6 @@
       .slide-left:hover, .slide-right:hover { transform:translateX(0) translateY(-5px)!important;box-shadow:0 12px 32px rgba(0,0,0,0.4); }
       .plan-card:hover { transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.5); }
       .btn-revelar:hover { border-color:var(--blue);color:var(--blue);background:rgba(61,126,255,0.08); }
-      .preco-espera:hover { color:var(--text); }
       .phone-frame:hover { transform:translateY(-6px);box-shadow:0 0 0 1px #1A1A22,0 40px 100px rgba(0,0,0,0.8)!important; }
       .phone-screen:hover .phone-poster { transform:scale(1.03); }
       .process-item:hover { background:rgba(61,126,255,0.06); transform:translateY(-4px); }
@@ -333,7 +331,7 @@
       section > div, footer > div { padding-left:16px!important;padding-right:16px!important; }
       .hero-copy { padding:0 16px 88px; }
       .hero-copy p { font-size:15px;margin-top:22px; }
-      #scroll-video { height:340vh!important; }
+      #scroll-video { height:230vh!important; }
       .fan-card { width:180px!important;height:290px!important; }
       /* Com 40px de padding lateral o rotulo do CTA quebra em duas linhas e o icone
          fica orfao na borda. Menos tracking e menos padding cabem em uma linha. */
@@ -628,7 +626,10 @@
         </ul>
         <!-- Rodape do card: o valor e o desfecho da lista, nao a abertura dela. -->
         <div class="preco">
-          <p class="preco-espera">Valor do sistema</p>
+          <button type="button" class="preco-espera btn-revelar" aria-expanded="false">
+            <span>Ver o valor</span>
+            <svg class="btn-revelar-seta" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
           <p class="preco-real"><span class="preco-num" data-valor="1.790">R$ 1.790</span><span class="preco-sufixo">/mês</span></p>
         </div>
       </div>
@@ -669,19 +670,18 @@
         </ul>
         <!-- Rodape do card: o valor e o desfecho da lista, nao a abertura dela. -->
         <div class="preco">
-          <p class="preco-espera">Valor do sistema</p>
+          <button type="button" class="preco-espera btn-revelar" aria-expanded="false">
+            <span>Ver o valor</span>
+            <svg class="btn-revelar-seta" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
           <p class="preco-real"><span class="preco-num" data-valor="2.790">R$ 2.790</span><span class="preco-sufixo">/mês</span></p>
         </div>
       </div>
     </div>
     <!-- Revelacao do preco: o cliente pediu que o valor nao fosse a primeira coisa
-         que a pagina diz. O card mostra o sistema; o numero vem depois, no clique. -->
+         que a pagina diz. Cada card revela o proprio valor, no clique dele. -->
     <div class="planos-revelar">
       <p class="planos-nota" id="planos-nota">Primeiro o sistema. Depois o preço.</p>
-      <button type="button" id="btn-revelar" class="btn-revelar" aria-expanded="false" aria-controls="planos-grid">
-        <span class="btn-revelar-txt">Ver os valores</span>
-        <svg class="btn-revelar-seta" width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 5.5L7 9l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
     </div>
   </div>
 </section>
@@ -768,7 +768,7 @@
 <div style="border-top:1px solid var(--border);"></div>
 
 <!-- SCROLL-SCRUB VIDEO + OVERLAID SECTIONS -->
-<section id="scroll-video" style="position:relative;height:560vh;">
+<section id="scroll-video" style="position:relative;height:320vh;">
   <div style="position:sticky;top:0;height:100vh;overflow:hidden;background:#000000;">
 
     <!-- object-fit:contain, nao cover: o video e 16:9 e a janela costuma ser mais larga
@@ -957,63 +957,45 @@ document.addEventListener('DOMContentLoaded', function () {
     // PLANOS — a lista de entregas e o argumento; o valor e a ultima linha dela.
     // O estado vive numa classe da secao, entao o CSS cuida do wipe; o JS so conta
     // o numero subindo, que e a parte que CSS nao faz.
-    const btnRevelar = document.getElementById('btn-revelar');
     const secPlanos = document.getElementById('planos');
-    if (btnRevelar && secPlanos) {
-      const txt = btnRevelar.querySelector('.btn-revelar-txt');
+    if (secPlanos) {
       const nota = document.getElementById('planos-nota');
-      const NOTA_FECHADO = 'Primeiro o sistema. Depois o preço.';
       const NOTA_ABERTO = 'Sem fidelidade. Começa pela reunião de alinhamento.';
-      const nums = Array.from(secPlanos.querySelectorAll('.preco-num'));
       const fmt = new Intl.NumberFormat('pt-BR');
-      let contagem = null;
 
-      const contar = () => {
-        if (contagem) cancelAnimationFrame(contagem);
-        if (prefersReducedMotion.matches) {
-          nums.forEach((n) => { n.textContent = 'R$ ' + fmt.format(Number(n.dataset.valor.replace(/\./g, ''))); });
-          return;
-        }
-        const caixas = nums.map((n) => n.closest('.preco'));
-        caixas.forEach((c) => c && c.classList.add('contando'));
+      const contar = (caixa, n) => {
+        const alvo = Number(n.dataset.valor.replace(/\./g, ''));
+        if (prefersReducedMotion.matches) { n.textContent = 'R$ ' + fmt.format(alvo); return; }
+        caixa.classList.add('contando');
         const inicio = performance.now();
         const DUR = 520;
         const passo = (agora) => {
           const t = Math.min(1, (agora - inicio) / DUR);
           // ease-out forte: o numero chega e para, no lugar de frear devagar
           const e = 1 - Math.pow(1 - t, 3);
-          nums.forEach((n) => {
-            const alvo = Number(n.dataset.valor.replace(/\./g, ''));
-            n.textContent = 'R$ ' + fmt.format(Math.round(alvo * e));
-          });
-          if (t < 1) { contagem = requestAnimationFrame(passo); }
-          else { caixas.forEach((c) => c && c.classList.remove('contando')); }
+          n.textContent = 'R$ ' + fmt.format(Math.round(alvo * e));
+          if (t < 1) requestAnimationFrame(passo);
+          else caixa.classList.remove('contando');
         };
-        contagem = requestAnimationFrame(passo);
+        requestAnimationFrame(passo);
       };
 
-      const alternar = () => {
-        const aberto = secPlanos.classList.toggle('revelado');
-        btnRevelar.setAttribute('aria-expanded', aberto ? 'true' : 'false');
-        if (txt) txt.textContent = aberto ? 'Ocultar os valores' : 'Ver os valores';
-        if (nota) nota.textContent = aberto ? NOTA_ABERTO : NOTA_FECHADO;
-        if (!aberto) return;
-        contar();
-        // O botao fica embaixo dos dois cards; no celular eles empilham e o valor
-        // revelado pode estar 600px acima do dedo. Sem isto o clique nao mostra nada.
-        const preco = secPlanos.querySelector('.preco');
-        if (preco) {
-          const r = preco.getBoundingClientRect();
-          if (r.top < 0 || r.bottom > window.innerHeight) {
-            preco.scrollIntoView({ block: 'center', behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' });
-          }
-        }
-      };
-      btnRevelar.addEventListener('click', alternar);
-      // "Valor do sistema" no rodape do card e o lugar guardado: quem quer o numero
-      // clica ali antes de procurar botao.
-      secPlanos.querySelectorAll('.preco-espera').forEach((m) => {
-        m.addEventListener('click', () => { if (!secPlanos.classList.contains('revelado')) alternar(); });
+      // Cada card revela so o proprio valor: quem quer comparar clica no outro.
+      secPlanos.querySelectorAll('.plan-card').forEach((card) => {
+        const btn = card.querySelector('.preco-espera');
+        const caixa = card.querySelector('.preco');
+        const n = card.querySelector('.preco-num');
+        if (!btn || !caixa || !n) return;
+        btn.addEventListener('click', () => {
+          if (card.classList.contains('revelado')) return;
+          card.classList.add('revelado');
+          btn.setAttribute('aria-expanded', 'true');
+          contar(caixa, n);
+          // O botao some no clique; o foco vai para o valor, nao se perde.
+          const real = caixa.querySelector('.preco-real');
+          if (real) { real.tabIndex = -1; real.focus({ preventScroll: true }); }
+          if (nota) nota.textContent = NOTA_ABERTO;
+        });
       });
     }
 
