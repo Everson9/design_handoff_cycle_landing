@@ -1,0 +1,305 @@
+# HISTÓRICO
+
+Sessões fechadas e seções antigas movidas do STATE.md em 2026-11-05, texto integral e na ordem original.
+
+
+## Onde parei (anterior)
+- 2026-09-11 — menu ganhou **Entregas** (`#incluso`), entre Sistema e Planos: era a única seção de
+  venda fora da navegação (quem clicava em Sistema pulava direto para Planos e nunca via as seis
+  etapas). `#problema`, o case 2, o scroll-video e o `#cta` continuam fora de propósito — transição,
+  continuação de Cases, respiro visual e destino do botão da navbar.
+- **`section[id] { scroll-margin-top }`** (140px desktop / 76px abaixo de 560px): a navbar é fixa e
+  tem a altura do logo, então todo salto do menu deixava o título da seção escondido atrás dela.
+  Valia para os quatro links antigos também.
+
+- 2026-09-11 (fim da sessão) — **no ar**: deployment `qihc5ayor` em Production, alias
+  `cycle-agency.vercel.app` reapontado, `https://cycle-agency.vercel.app/` responde 200 com a seção
+  nova.
+- **A Deployment Protection do projeto estava ligada e o site pedia login da Vercel** — o alias e a
+  própria URL do deployment devolviam 302 para o SSO. Desligado por API
+  (`PATCH /v9/projects/<id>` com `ssoProtection: null`, token do CLI já logado);
+  `passwordProtection` também está `null`. **Conferir isso depois de mexer em settings do projeto:
+  LP com proteção ligada é site fora do ar para o cliente, sem erro nenhum aparecer.**
+
+## Onde parei
+- 2026-09-11 — **seção de planos reescrita: a entrega virou o argumento, o preço virou o desfecho.**
+  Pedido do dono: o cliente não queria preço logo de cara, e depois pediu que as descrições do que o
+  plano oferece fossem o protagonista, com motion envolvente.
+  - Ordem do cartão agora: badge → "Sistema Cycle" + uma linha de posicionamento → **lista de
+    entregas** → preço no rodapé. Entrega em 17px/600 branco, numerada `01…05` (azul no Presença),
+    com fio de 1px entre as linhas. O parágrafo de apoio encolheu para uma linha em `--mid`.
+  - Entrada: cada linha entra com wipe de `clip-path: inset(0 0 100% 0)` + `translateY(14px)` +
+    opacity, 0.5s `--e-ui`, stagger 70ms; o fio cresce da esquerda (`scaleX`) e o número acende de
+    `--border` para `--mid`/`--blue` — o gesto das estações do mapa de entregas. Card em destaque
+    começa 60ms depois.
+  - Preço: em repouso o rodapé mostra só "Valor do sistema" (clicável). No clique (botão ou rodapé)
+    o valor entra pelo mesmo wipe em 0.28s e **conta subindo em 520ms** (ease-out cúbico,
+    `tabular-nums` só durante a contagem). `prefers-reduced-motion`: sem wipe, sem deslocamento, sem
+    contagem.
+  - `.js` no `<html>`: o estado escondido só existe com JavaScript de pé. Sem JS (ou com o script
+    quebrado) a seção nasce legível inteira — antes o preço era HTML puro, e o gate não podia
+    transformar isso em dois cards vazios.
+  - Botão `VER OS VALORES` (pill, seta que gira, 0.24s, press 0.97, foco azul). Se o valor revelado
+    estiver fora da viewport, o clique leva a tela até ele.
+  - A nota abaixo dos cards **troca de texto** em vez de sumir: "Primeiro o sistema. Depois o preço."
+    → "Sem fidelidade. Começa pela reunião de alinhamento." (frase escolhida pelo dono).
+  - "Plano Essencial" saiu da hora da comparação e virou convite no CTA final.
+- **Varredura de responsividade (390 / 768 / 1024 / 1280 / 1440):** `scrollWidth == clientWidth` em
+  todas (nenhuma barra horizontal) e nenhum texto abaixo de 11px. Três defeitos achados e corrigidos:
+  1. `#sistema`: o `margin-bottom:-20px` do título (ajuste fino de desktop largo) puxava o leque de
+     cards por cima da última linha do parágrafo — 20px de sobreposição medida em 390px e em 1024px.
+     Agora `margin-bottom:24px` abaixo de 1320px.
+  2. `#problema`: os cards `.slide-left/.slide-right` esperam 72px fora do lugar; entre 900 e 1280px
+     isso entrava no `scrollWidth` e criava barra horizontal. `overflow-x:clip` na seção (não
+     `hidden`, que quebraria o sticky do scroll-scrub).
+  3. CTA final abaixo de 560px: o rótulo quebrava em duas linhas e o ícone ficava órfão na borda —
+     menos padding e menos tracking, cabe em uma linha.
+  Método: como o `agent-browser` desta máquina não tem `viewport`/`resize`, a medição foi feita com
+  um harness de iframe no scratchpad + uma cópia instrumentada da página que devolve as medidas por
+  `postMessage`. Vale repetir assim na próxima.
+- Parecer do `impeccable critique` na seção (20/32): acatei cor fora do vocabulário, fallback sem JS,
+  clique invisível no celular e o fim de seção sem reasseguração. Descartei o reveal por card (dois
+  botões para a mesma ação) e o redesenho do delta 8 vs 12 conteúdos (decisão de composição do dono,
+  não conserto) — **esse delta continua sendo a pergunta aberta da seção**.
+- `.specs/DESIGN.md` emendado: cartão de plano, entrada das entregas, preço-desfecho, botão de
+  revelar, nota que troca de texto, e o degrau de preço virou `clamp(38px,10vw,52px)`.
+
+## Onde parei (anterior)
+- 2026-09-08 — sessão de encaixe no ecossistema. Nenhuma feature nova.
+- Escrito `.specs/DESIGN.md`: paleta, escala de texto, escala de movimento, estado de componente,
+  tela vazia/erro — destilado do `index.html` + `README.md`.
+- Escrito `.specs/codebase/CONVENTIONS.md`: o que não se "conserta" aqui (CSS inline, arquivo único,
+  `support.js` gerado, `_ds/`) e o que é proibido.
+- Corrigido no `index.html` o que reprovava no piso de legibilidade:
+  - `--muted` (#555, 2,6:1) saiu de todo texto de leitura → `--mid` (#888, 5,4:1). 28 usos de
+    `color:var(--muted)` + 4 de `#555` literal + `.fan-card-desc` + o copyright do rodapé
+    (que era `#2A2A2E`, ~1,2:1). Sobrou **um** uso decorativo de propósito: "Depois de um clique."
+  - Texto abaixo de 11px eliminado: 9px (2) e 10px (26) → 11px.
+  - `clamp(22px,…)` → `clamp(24px,…)` em 3 displays, para o tracking negativo respeitar o gate
+    dos 24px.
+- `~/Vault/inventario.md`: entrada duplicada removida; o projeto agora é **LP de cliente**, não
+  "LP pessoal dormente".
+
+## 2026-09-08 — saída do runtime do handoff
+- Confirmado que o projeto já está em produção: `.vercel/project.json` + histórico do git com ajuste
+  fino direto no `index.html` ("Pull fan cards closer to the heading", "Narrow nav padding").
+  A regra "protótipo, recriar no destino" do `AGENTS.md` estava errada — foi reescrita.
+- **Decidido ficar em HTML puro.** React/Next não resolve nada numa LP de uma tela sem login nem
+  dados; o custo seria reescrever `IntersectionObserver` e o scrub de vídeo em `useRef` +
+  `requestAnimationFrame`, que é onde isso quebra.
+- **Runtime do handoff arrancado:** `support.js` (60 KB), `_ds/_ds_bundle.js` (24 KB), `<x-dc>`,
+  `<helmet>` e o `<template id="__bundler_thumbnail">`. Auditado antes: nenhuma tag de design system
+  era usada, nenhum atributo `data-dc-*`; o runtime só fornecia `DCLogic` e chamava
+  `componentDidMount`. **84 KB de JavaScript a menos.**
+- `class Component extends DCLogic` virou `document.addEventListener('DOMContentLoaded', ...)`, e os
+  métodos `setupScrub`/`setupFan` viraram funções locais (`this.` eliminado). `node --check` passa,
+  tags balanceadas, um `<head>` e um `<body>`.
+- `AGENTS.md` e `.specs/codebase/CONVENTIONS.md` reescritos em cima disso.
+
+## 2026-09-08 (parte 2) — cases em vídeo + passada de movimento
+- `support.js` e `_ds/` **apagados** do repo (estavam órfãos desde a saída do runtime).
+- **Cases embedados.** Esthilion `ub6zUp817z8`, Downtown `D89qBf99R4g` — os dois são **Shorts**,
+  vertical 9:16. O mockup era um tablet deitado 16/10: Short ali dentro ficaria com tarja preta em
+  ~80% da largura. **Moldura trocada para celular** (`.phone-frame`, 9:16, max-width 300px), que
+  além de resolver o corte é o formato em que o cliente final assiste.
+- Embed é **facade**: a tela escura com o play continua sendo o repouso, e o `<iframe>`
+  (`youtube-nocookie.com`) só entra no clique. Antes disso a página não fala com o YouTube — sem
+  player, sem cookie, sem requisição. Acessível por teclado (`role=button`, `tabindex`, Enter/Espaço,
+  `:focus-visible`).
+- **Passada de movimento** (escopo fechado, não tocou layout/cor/tipografia):
+  - 54 transições usavam `ease`, a curva padrão do navegador, e 17 segmentos não declaravam curva
+    nenhuma (herdando `ease`). Todos passaram a usar tokens: `--e-ui`
+    `cubic-bezier(0.23, 1, 0.32, 1)` e `--e-drawer` `cubic-bezier(0.32, 0.72, 0, 1)` no menu mobile.
+    Só a barra de progresso do scrub e a marquee seguem `linear`, onde é o certo.
+  - **`prefers-reduced-motion` não existia na página.** Agora existe: sai o deslocamento, fica o
+    conteúdo, e o scroll-scrub congela no primeiro frame — vídeo amarrado ao scroll é o pior caso
+    pra quem tem sensibilidade vestibular.
+- `DESIGN.md` atualizado: tabela de curvas, regra de movimento reduzido, mockup de celular e o
+  padrão facade viraram vocabulário travado.
+
+## 2026-09-08 (parte 3) — conteúdo do cliente + passada `impeccable bolder`
+- **Planos:** Performance R$ 1.790 (era 2.790) e Presença R$ 2.790 (era 3.790), com as listas
+  exatas que o dono passou. Saiu o "Tudo do X incluído" dos dois.
+- **"O que você recebe":** de 10 itens para 6 — Diagnóstico, Reunião, Roteirização, Captação,
+  Edição, Entrega (sem "estratégico" no nome).
+- **Passada de front** com a skill `impeccable` (comando `bolder`, escopo fechado em três alvos;
+  paleta, fonte, planos, cases e scrub não foram tocados):
+  - **Hero ganhou headline.** Não tinha nenhuma — só vídeo, nav e um rótulo de 12px. Subiu a linha
+    que a própria página já tinha na seção 4, *"O conteúdo passa. A percepção permanece."*, no
+    display do sistema, ancorada à esquerda na coluna de 1200px. **A seção 4 foi removida**, porque
+    passaria a repetir a mesma frase. O hero virou o `<h1>`; o da Percepção virou `<h2>`.
+  - **Os seis eyebrows foram deletados.** A craft floor da skill bane rótulo em caps acima de título
+    ("no brief earns it back") e era o tique que fazia a página parecer gerada. O único que carregava
+    informação ("Incluso em todos os planos") virou subtítulo abaixo do título.
+  - **As 6 caixas viraram trilho de etapas** (`.step-track`), o mesmo dispositivo que a página já
+    usava em "Como funciona": fio de cabelo, número grande em azul, sem borda em volta.
+- Detector da skill: 13 achados → 10. Corrigidos os reais: branco sobre azul dava 2,7:1 nos dois
+  CTAs (agora `--bg`, 5,1:1), e a barra do scrub animava `width` (agora `scaleX`). Os 10 que ficam
+  são justificados: 11px em label (nosso piso, documentado), marquee proposital, travessão em texto
+  em português, e um falso positivo (`background:#000` lido como cor de texto).
+- Verificado no browser: sem overflow horizontal, trilho em 6 colunas, h1 em 2 linhas a 88px, e as
+  regras de 900px/560px conferidas pelo CSSOM.
+
+## 2026-09-08 (parte 4) — vídeo novo do scrub
+- Dono confirmou: **WhatsApp `558293270904` está certo** e a **responsividade está ok**.
+- Vídeo novo (`Cycle_logo_rotation_animation_1080p`, 1920×1080, 24fps, 8s, 2,6 MB com áudio AAC)
+  entrou no lugar do `camera-scrub.mp4`, agora como `uploads/cycle-logo-scrub.mp4`.
+- **Comprimido para 1,8 MB (−31%), SSIM 0,996**, áudio removido. Varredura de 8 variantes:
+  CRF 20 com keyframe a cada 0,5s saiu *maior* que o original (2,9 MB) — keyframe denso custa mais
+  do que o CRF economiza. CRF 23 com `-g 24` foi o joelho da curva. Frame conferido lado a lado
+  contra o original: anéis finos e gradiente das hastes intactos, sem banding.
+- `camera-scrub.mp4` (4,8 MB) removido, já substituído. `uploads/` foi de 13 MB para 9,5 MB.
+- Receita de compressão gravada no `CONVENTIONS.md`.
+- Verificado no browser: o vídeo carrega, `duration` 8s, scrub responde ao scroll.
+
+## 2026-09-08 — NO AR
+- `git push` (3 commits) + `vercel --prod` como `everson9`. Deployment
+  `dpl_B4Ex6t9JvhMttY54yTGtcvmoRiTm`, `readyState: READY`, target production.
+- **https://designhandoffcyclelanding.vercel.app**
+- Conferido no ar: `<h1>` "O conteúdo passa. A percepção permanece.", trilho com 6 etapas, 2
+  molduras de celular com `data-yt`, scrub apontando pro `cycle-logo-scrub.mp4`, preços 1.790 e
+  2.790, e **nenhum resquício de `x-dc`** no HTML servido.
+- Assets: `/` 200, vídeos e logo 200, **`support.js` 404** — o runtime do handoff saiu do ar junto.
+
+## 2026-09-08 (parte 5) — ajustes do dono + duas regressões minhas
+**Regressões que eu tinha introduzido, ambas achadas por causa do feedback dele:**
+1. **A entrada dos fan cards estava morta em produção.** Ao trocar as curvas de `ease` para token,
+   meu script quebrou o valor de `transition` na vírgula — e `cubic-bezier(0.34,1.15,0.64,1)` tem
+   vírgulas dentro. Virou `cubic-bezier(0.34,1.15 var(--e-ui),0.64 var(--e-ui),1)`, CSS inválido,
+   declaração descartada em silêncio. Era a única vítima. Curva restaurada.
+2. **Zona morta temporal derrubando metade do JS** (esta rodada, não chegou a produção):
+   `let acordarScrub` estava declarado depois de `setupScrub()` ser chamado. O erro estourava dentro
+   do `DOMContentLoaded` e matava tudo depois dele — inclusive o `setupFan()`. Declarações movidas
+   pro topo do callback. `node --check` não pega nenhuma das duas.
+
+**Ajustes pedidos:**
+- Hero: display de `clamp(40px,7vw,96px)` para `clamp(34px,5.4vw,72px)` e ancorado mais embaixo
+  (padding de 136px para 88px) — o texto disputava com o assunto do vídeo.
+- Painel de abertura do scrub saiu do centro (em cima do logo) para o rodapé do quadro, com o mesmo
+  gradiente dos outros painéis, e o título caiu para `clamp(28px,3.6vw,52px)`.
+- Seção do scrub de 400vh para 560vh: mais scroll por segundo de vídeo, movimento mais suave.
+- Celular dos cases de 300px para 392px, **com a capa real do Short** (`oardefault.jpg` 1080×1920
+  baixado do YouTube, reescalado para 720px e servido do próprio domínio — assim a página continua
+  sem falar com o YouTube antes do clique).
+
+**Performance (a queixa de "travado"):** o `scrubLoop` rodava `requestAnimationFrame` a 60fps
+**a página inteira, do load até fechar a aba**, mesmo com a seção a várias telas de distância. Agora
+dorme fora da seção e ao chegar no alvo. Medido no browser, parado no topo da página:
+**121 rAF/s antes → 0 depois.** O `tick()` também parou de reescrever `opacity`/`transform`/
+`pointerEvents` dos 3 painéis a cada frame (9 escritas por frame com o mesmo valor); agora só escreve
+na troca de estágio. E o `offsetHeight`, que forçava layout todo frame, é medido uma vez e no resize.
+
+Conferido com a página aberta: nenhum erro de JS, scrub em 5,96s a 75% do progresso (exato), barra
+em `scaleX(0.75)`, painéis corretos e os 5 fan cards abrindo.
+
+## 2026-09-08 (parte 6) — ajustes finais + teste das skills
+- **Hero, terceira passada:** display para `clamp(26px,3.9vw,52px)` (49px na tela) e `padding-bottom`
+  de 88px para 56px. Sai de cima do assunto do vídeo.
+- **Vídeo do case não parava.** O iframe cobria a tela inteira do celular e não sobrava nada
+  clicável. Agora tem botão de fechar (canto superior direito, aparece só tocando), que remove o
+  iframe e devolve a capa; `Esc` faz o mesmo, e dá pra reabrir.
+- **Scrub 1080p → 720p com keyframe a cada 4 frames.** Mesmo tamanho (1,8 MB), mas a busca decodifica
+  no máximo 3 frames em 720p em vez de até 24 em 1080p. É o que faltava pro scrub parar de arrastar.
+- **`/impeccable document`:** escreveu `DESIGN.md` na raiz + `.impeccable/design.json` (6 componentes
+  com HTML/CSS, 6 regras nomeadas, 8 tokens de movimento). O `.specs/DESIGN.md` da casa **não foi
+  tocado** — conferido por hash contra backup. A entrevista qualitativa da Step 3 da skill foi
+  pulada porque o dono pediu pra finalizar; o North Star ("A Sala Escura de Projeção") e os nomes de
+  cor foram derivados do código, não perguntados.
+- **Teste de disparo automático das skills de movimento: passou.** A frase "audita o movimento da LP
+  inteira e me diz o que tá ruim", sem citar nome nenhum, carregou a skill de auditoria de animação.
+
+## 2026-09-08 (parte 7) — planos de movimento aplicados
+Quatro planos escritos em `plans/` (formato da skill: problema com código verbatim, alvo com valor
+exato, convenções do repo, passos, fronteiras, verificação) e aplicados na ordem 001 → 002 → 004 → 003.
+
+- **001 (ALTA):** as 7 regras de `:hover` que deslocam foram para dentro de
+  `@media (hover: hover) and (pointer: fine)`. No celular o tap disparava hover falso e o card ficava
+  preso elevado — e o celular é onde esta LP vive. Hover que só troca cor ficou fora do gate.
+- **002 (ALTA):** `:active` com `scale(0.97)` em `--d-press` no CTA da navbar, botão de play, botão
+  de fechar e CTA de WhatsApp (que ganhou a classe `.wa-cta`). A página tinha **zero** `:active`:
+  nenhum botão confirmava o toque.
+- **003 (MÉDIA):** o bloco de movimento reduzido zerava toda transição com seletor universal —
+  padrão que a própria doutrina desaconselha. Agora troca `transition-property` por uma lista sem
+  deslocamento em 200ms: fade e cor ficam, movimento sai. Ganhou também `.fan-card`, que escapava do
+  seletor universal por receber `transform` via JavaScript.
+- **004 (MÉDIA):** 5 tokens de duração (`--d-press/state/enter/travel/panel`) e escalonamento de 80ms
+  no trilho de etapas e nos cartões de plano, via modificador `.fi.stagger` no observer que já
+  existia. Durações de uso único ficaram literais de propósito.
+
+Verificado no browser contra a seção de verificação de cada plano: 1 bloco de gate com 7 regras,
+`.nav-cta` transicionando `transform`, 1 `.wa-cta`, 2 `.fi.stagger`, `transition-delay` de 0.24s na
+quarta célula, 6 células visíveis, bloco de movimento reduzido preservando opacidade e cor e cortando
+transform, 6 hovers neutralizados, zero erro de JS, sem overflow horizontal.
+
+## 2026-09-08 (parte 8) — corte do vídeo: diagnóstico errado meu, revertido
+- O dono reportou o logo cortado. Eu medi brilho nas bordas do quadro, vi valores altos em
+  5,00–5,25s e 6,75–7,00s, concluí que a exportação cortava, e **cortei o vídeo em 4,6s**.
+- **O diagnóstico estava errado.** Olhando os quadros inteiros do original, o logo **não está
+  cortado em momento nenhum**: o que a medição pegou era o *brilho dos rastros de luz* sangrando até
+  a borda, que é intencional. Brilho na borda não é sinal de corte numa animação com glow.
+- O que o dono via cortado era o `object-fit: cover` (recorta ~23% em janela mais larga que alta).
+  A troca para `contain` já tinha resolvido; o corte do vídeo foi correção em cima de correção.
+- **Revertido:** vídeo de volta aos 8s completos, reencodado do original em 720p g4 crf22 (1,8 MB).
+  O clímax com os rastros orbitando voltou.
+- **O original 1080p agora fica em `uploads/ORIGINAL-cycle-logo-1080p.mp4`**, fora do git
+  (`.gitignore`), para nunca mais depender de o arquivo estar na pasta de Downloads do dono.
+- Regra corrigida no `CONVENTIONS.md`: a única verificação válida de enquadramento é olhar o quadro,
+  não medir brilho de borda.
+
+## 2026-09-08 (parte 9) — limpeza de assets, ciclo e destaque de plano
+- **6,1 MB de órfãos apagados** (`Design sem nome.mp4`, `hero-video.mp4`, `Apresentacao inicial.mp4`
+  e os dois PNGs do ElevenLabs). O site publicava 9,5 MB e passa a publicar **3,4 MB** — 64% do peso
+  era arquivo que ninguém referenciava. Nenhuma referência quebrada.
+- **A seção de entregas virou o ciclo.** Era um trilho horizontal que o dono achou simples demais.
+  Agora são as 6 etapas em volta de um anel que se desenha ao entrar na tela, marcos acendendo em
+  cascata, e a frase de apoio no miolo. O argumento: a marca se chama Cycle e o logo é um círculo de
+  raios — o processo passa a ser a identidade em vez de uma lista. Abaixo de 760px vira coluna com
+  fio vertical descendo.
+- **Destaque de plano movido para o Presença** (R$ 2.790). Estava no Performance, o mais barato, o
+  que contradizia a aposta de ticket. Trocaram borda, badge, rótulo e a cor das bolinhas de item.
+- Plano Essencial: dono confirmou que existe, sob consulta. A nota do rodapé fica.
+- **CSS morto removido:** `.step-track`, `.step-cell` e `.step-row` (19 regras) ficaram órfãos quando
+  o trilho virou ciclo — nenhum deles era usado em outro lugar. O `DESIGN.md` afirmava que o trilho
+  era usado no "Como funciona" do scroll-scrub, o que era falso: aquela seção usa `.process-item`.
+
+## 2026-09-08 (parte 10) — o ciclo vira mapa, e o DESIGN.md fecha o drift
+- O ciclo em anel durou pouco: o dono achou **vago, sem interação, e com as laterais da LP vazias**.
+  As três críticas tinham a mesma resposta.
+- **A seção virou um mapa horizontal de borda a borda.** Sai da coluna de 1200px e atravessa a tela;
+  um fio percorre a largura toda com seis estações de 6% a 94%. A linha azul **avança conforme a
+  seção cruza a viewport** e cada estação acende quando a linha passa por ela. Medido no browser:
+  0% (0 acesas) → 38% (2) → 73% (4) → 100% (6).
+- **Interação:** com mouse, o ponto cresce 45%, o número sobe 3px e a descrição aparece. O espaço da
+  descrição fica sempre reservado, então não há salto de layout. Sem mouse (toque), a descrição já
+  nasce visível — o hover nunca seria disparado ali.
+- Descrições **adaptadas das que já existiam** no "Como funciona", a pedido do dono, não inventadas:
+  Diagnóstico → análise da percepção atual · Reunião → alinhamento de estratégia e calendário ·
+  Roteirização → roteiros e direção criativa · Captação → produção no cliente · Edição → edição e
+  finalização · Entrega → conteúdos publicados.
+- Custo de performance: **zero loop permanente**. O listener de scroll só age com a seção por perto
+  (IntersectionObserver com margem de 60%), é throttled por `requestAnimationFrame` e só escreve no
+  DOM quando o estágio muda de verdade.
+- **Drift do DESIGN.md fechado.** Com o arquivo na raiz, o detector passou a validar a página contra
+  os tokens e acusou 29 achados. Não era a página que estava errada: era o `DESIGN.md` que estava
+  incompleto. Documentados 5 neutros que a página realmente usa (`Chalk`, `Bone`, `Dusk`, `Ring`,
+  `Signal Lit`) e 13 papéis de tipo. **29 → 14**, e os 14 que ficam são justificados: 5 de label
+  11px (nosso piso), 5 da gradiente do Instagram (marca de terceiro, documentada em prosa), 1 falso
+  positivo (`background:#000` lido como cor de texto), marquee e travessão intencionais.
+
+## 2026-09-08 (parte 11) — varredura de CSS morto
+- Auditoria cruzando todo seletor do `<style>` contra o markup e o JS: 4 classes sem nenhum uso —
+  `.card-hover`, `.tl-item`, `.marquee-track` e `.case-video` — mais o `@keyframes marquee`, que só
+  existia para a marquee removida. 10 regras apagadas, 1 KB a menos.
+- `.phone-close` aparece na mesma varredura mas **fica**: é criada por JavaScript, não pelo markup.
+
+## 2026-09-08 (parte 12) — alias parado e descrições no celular
+- **O link fixo `cycle-agency.vercel.app` apontava para um deploy de 67 dias atrás.** Os deploys
+  novos iam todos para o domínio padrão (`designhandoffcyclelanding.vercel.app`), então quem abrisse
+  o link antigo via a LP velha e ninguém percebia. Reapontado para o deploy atual. **Todo deploy de
+  produção daqui pra frente tem que reapontar esse alias junto:**
+  `vercel alias set <deployment-url> cycle-agency.vercel.app`.
+- No mapa "O que você recebe", abaixo de 900px a descrição de cada estação truncava no meio da
+  palavra ("Roteirizaçã"). Descrição escondida no celular (`.mapa-est .d { display:none; }` dentro
+  do `@media (max-width:900px)`) e a estação encolheu de 180px para 152px, cabendo mais etapa na
+  faixa rolável. No desktop nada muda — o hover e a descrição continuam iguais.
+
